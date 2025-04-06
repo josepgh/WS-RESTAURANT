@@ -1,0 +1,22 @@
+1- Definir un vector amb els 7 tipus de pizzes diferents. Després imprimir el primer i l'últim element del vector.
+
+2- Crear un programa en PHP que permeti fer la comanda de pizzes per internet.
+El formulari ha de ser:
+Nom: [..............]
+Adreça: [...................]
+Jamon i formatge: [x]
+Quantitat: [...]
+Napolitana: [x]
+Quantitat: [...]
+BBQ: [x]
+Quantitat: [...]
+[Confirmar]
+
+Per a l'ingrés del nom, adreça i quantitat de pizzes, el camp ha de ser de tipus "text".
+Crear tres objectes de tipus "checkbox" per seleccionar els tipus de pizzes.
+Finalment, crear un botó per a l'enviament de dades: "submit".
+Desar en un fitxer de text anomenat "pedidos.txt" cada comanda, separades per una línia de punts entre cada comanda.
+
+3- Crear un programa que mostri el fitxer de comanda de pizzes per internet del punt anterior. Recordem que vam crear el fitxer de text anomenat "pedidos.txt" (desar la pàgina PHP al mateix directori on es troba el fitxer "pedidos.txt").
+
+4- Crear un vector associatiu que emmagatzemi els gustos de pizzes de 5 persones. Accedir a cada component pel seu nom. Imprimir un component del vector.

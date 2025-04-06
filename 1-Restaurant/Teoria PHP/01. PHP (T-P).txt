@@ -1,0 +1,16 @@
+Sabent que la funció rand ens retorna un valor aleatori entre un rang de dos enters:
+
+Crea una variable que emmagatzemi un número aleatori entre 1 i 100.
+Fes un programa que mostri per pantalla el valor generat.
+Mostra a més si és menor o igual a 50 o si és més gran.
+
+Definir tres variables enters. Després definir un string que incorpori aquestes variables i les substitueixi en temps d'execució.
+
+"Recorda que una variable es substitueix quan la cadena està tancada per cometes dobles."
+
+$preu=90;
+
+echo "El ordinador té un preu de $preu";
+Generar un valor aleatori entre 1 i 3.
+
+Després imprimir en castellà el número (Per exemple, si es genera el 3, després mostrar a la pàgina la cadena "tres").

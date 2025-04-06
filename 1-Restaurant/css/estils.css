@@ -1,0 +1,61 @@
+
+/* https://www.w3schools.com/colors/colors_names.asp */
+
+table, td, th{
+	
+	border: 1px solid;
+	text-align: center;
+}
+
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+
+th{
+	background-color: navy;
+	color: white;
+}
+
+
+tr:nth-child(even){
+/* 	background-color: PaleTurquoise; */
+	background-color: LightCyan;
+	/*opacity: 0.1;*/
+	}
+
+tr:nth-child(odd){
+	
+		background-color: PowderBlue;
+	
+/* 		background-color: Azure; */
+	
+/* 	background-color: Khaki; */
+	/*opacity: 0.1;*/
+	}
+
+tr:hover {
+	background-color: LightGreen;
+/* 	background-color: Lavender; */
+/* 	background-color: tomato;	 */
+	}
+
+table.botons, tr.botons{
+	border: colapse;
+	background-color: white;
+	
+/* 	width: 50%; */
+	text-align: left;
+/* 	background-color: white; */
+}	
+
+tr.error{
+	background-color: red;
+}
+.error {color: red;}
+
+/* tr.botons{ */
+/* 	text-align: left;	 */
+/* } */
+

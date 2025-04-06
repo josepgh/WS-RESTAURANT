@@ -1,0 +1,12 @@
+
+
+git init només si es en un lloc 'net'
+
+git remote add origin http:/.........git
+
+git config core.sparseCheckout true
+
+git sparse-checkout set directoriAbaixar
+
+git pull origin <branca>
+
