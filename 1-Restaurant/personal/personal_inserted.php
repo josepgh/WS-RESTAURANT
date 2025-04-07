@@ -28,7 +28,7 @@
     }
     else{ // si NO EXISTEIX A LA BD => L'INSERTA
 
-        $query = "insert into personal(nom, rol, email) values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[email]')";
+        $query = "insert into personal(nom, rol, email, username, password, host) values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[email]', '$_REQUEST[username]', '$_REQUEST[password]', '$_REQUEST[host]')";
         
         mysqli_query($conn, $query) or die("Error en l'insert de personal: ". mysqli_error($conn));
 
@@ -36,6 +36,34 @@
         echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
         echo "<h2>Rol:  " . "$_REQUEST[rol]" . "</h2>";
         echo "<h2>Email:  " . "$_REQUEST[email]" . "</h2>";
+        echo "<h2>Usename:  " . "$_REQUEST[username]" . "</h2>";
+        echo "<h2>Password:  " . "$_REQUEST[password]" . "</h2>";
+        echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
+
+
+        $query_nou_usuari = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
+        $query_grants_nou_usuari = "GRANT SELECT ON restaurantdb.* TO $_REQUEST[username]@$_REQUEST[host]";
+
+        echo "<tr><td> QUERY ALTA USUARI:  $query_nou_usuari</td></tr><br><br>";
+        echo "<tr><td> QUERY GRANTS USUARI:  $query_grants_nou_usuari</td></tr><br><br>";
+
+        // ChatGPT executa consulta per crear usuari
+        if (mysqli_query($conn, $query_nou_usuari)) {
+            echo "Usuari $_REQUEST[username]@$_REQUEST[host] creat amb exit.<br>";
+        } else {
+            echo "Error al crear l'usuari $_REQUEST[username]@$_REQUEST[host] . $conn->error . <br>";
+        }
+        
+        // ChatGPT executa consulta per grants usuari
+        if (mysqli_query($conn, $query_grants_nou_usuari)) {
+            echo "Grants usuari $_REQUEST[username]@$_REQUEST[host] atorgats amb exit.<br>";
+        } else {
+            echo "Error al donar grants a l'usuari $_REQUEST[username]@$_REQUEST[host] . $conn->error . <br>";
+        }
+        
+        
+        
+        
     }
     
  		    mysqli_close($conn);

@@ -29,7 +29,7 @@ SELECT * FROM reserves_view;
 SELECT * FROM factures_view;
 --SELECT * FROM factures_total;
 
-*/
+
 SELECT * FROM plats_view;
 
 SELECT * FROM reserves;
@@ -38,21 +38,6 @@ SELECT DISTINCT User FROM mysql.user;
 
 SELECT * FROM plats;
 
-SHOW GRANTS;
-
-/*
- SELECT * FROM JSON_TABLE(getColors(), '$[*]'
-             COLUMNS(name VARCHAR(30) PATH '$.name', category VARCHAR(30) PATH '$.category')) t;
-
-CALL GenerateNumbers(10);
-*/
---select * from  TABLE_PRIVILEGES;
---CALL LlistatPersonal();
---SELECT * FROM INFORMATION_SCHEMA.CATALOGS;
-
-SELECT User, Db, Host from mysql.db;
-show Grants for guillem@localhost;
-show Grants for cambrer1@localhost;
 
 SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_SCHEMA NOT LIKE 'mysql' AND CONSTRAINT_SCHEMA NOT LIKE 'sys';
@@ -63,5 +48,24 @@ WHERE CONSTRAINT_SCHEMA = 'burguerdb' OR CONSTRAINT_SCHEMA = 'llibres';
 SELECT * FROM INFORMATION_SCHEMA.TABLE_PRIVILEGES;
 SELECT * FROM personal;
 
+
+select * from grants_rol;
+
+select * from personal;
+
+select * from personal_view;
+
+SHOW GRANTS;
+SELECT User, Db, Host from mysql.db;
+*/
+
+SELECT User, Host, authentication_string FROM mysql.user;
+
+show Grants for cambrer33@localhost;
+show Grants for guillem@localhost;
+show Grants for cambrer1@localhost;
+--show Grants for matre66@localhost;
+
+SELECT 'FI';
 --COMMIT;
 

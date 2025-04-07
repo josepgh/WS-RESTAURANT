@@ -15,7 +15,7 @@
     	
 		<form action="personal_gestio.php" method="post">
 			INTRODUEIX L'EMAIL DE LA PERSONA: 
-			<input type="text" name="mail">
+			<input type="email" name="mail">
 			<input type="submit" value="Cercar">		
 		</form>
     	</td></tr>    	
@@ -28,6 +28,9 @@
     			<th>Nom</th>
     			<th>Rol</th>
     			<th>Email</th>
+    			<th>Username</th>
+    			<th>Password</th>
+    			<th>Host</th>
     			<th>Edita</th>
     			<th>Esborra</th>
     		</tr>
@@ -43,7 +46,7 @@
 
         if (($_REQUEST['mail'] == "")){
                 
-            $query = "select id_personal, nom, rol, email from personal";
+            $query = "select id_personal, nom, rol, email, username, password, host from personal";
             
 //             echo "<tr><td colspan = '6'> 1 l'email: $_REQUEST[mail] i la query: $query</td></tr>";
             
@@ -51,7 +54,7 @@
             
         }else{
             
-            $query = "select id_personal, nom, rol, email from personal where email = '$_REQUEST[mail]'";
+            $query = "select id_personal, nom, rol, email, username, password, host from personal where email = '$_REQUEST[mail]'";
             
                    
 //              echo "<tr><td colspan = '6'> 2 l'email:  $_REQUEST[mail] i la query: $query</td></tr>";
@@ -80,6 +83,9 @@
                             <td>" . $row['nom'] . "</td>
                             <td>" . $row['rol'] . "</td>
                             <td>" . $row['email'] . "</td>
+                            <td>" . $row['username'] . "</td>
+                            <td>" . $row['password'] . "</td>
+                            <td>" . $row['host'] . "</td>
                             <td><a href = 'personal_to_update.php?email=" . $row['email'] . "'>edita<a></td>
                             <td><a href = 'personal_to_delete.php?email=" . $row['email'] . "'>esborra<a></td>
                         </tr>
@@ -98,7 +104,7 @@
             // echo "<h1>" . $ _P OS T['m  ail'] . "</h1>";
             
             echo "<tr>
-                    <td colspan = '6'><br><h1>No existeix la persona amb email: " . $_POST['mail'] . "  <br>
+                    <td colspan = '9'><br><h1>No existeix la persona amb email: " . $_POST['mail'] . "  <br>
                     <a href = 'personal_to_insert.php?email=" . $_POST['mail'] . "  '> inserir </a></h1><br>
                     </td>
                 </tr>

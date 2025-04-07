@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
 	<h1>Afegir persona</h1>
     <form action="personal_inserted.php" method="post">
         <label for="nom">Nom:</label>
@@ -20,10 +19,23 @@
         <label for="r">Selecciona el rol:</label>
         <select id="r" name="rol" required>
             <option value="">-- Selecciona rol --</option>
+            <option value="maitre">Maitre</option>
             <option value="cuiner">Cuiner</option>
             <option value="cambrer">Cambrer</option>
             <option value="administrador">Administrador</option>
         </select>
+        <br><br>
+
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username" required>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input id="password" type="text" name="password" required>
+        <br><br>
+
+        <label for="host">Host:</label>
+        <input id="host" type="text" name="host" required>
         <br><br>
 
 

@@ -15,6 +15,23 @@
     $query = "delete from personal where email='$_REQUEST[email]'";
     
     mysqli_query($conn, $query) or die("Problemes amb el DELETE personal: " . mysqli_error($conn));
+
+    
+// ELIMINAR L'USUARI DE LA BD =========================================================
+
+    $query_elimina_usuari = "DROP USER IF EXISTS '$_REQUEST[username]'@'$_REQUEST[host]'";
+    
+    echo "<tr><td> QUERY eliminar USUARI:  $query_elimina_usuari</td></tr><br><br>";
+    
+    // Ejecutar la consulta para crear el usuario
+    if (mysqli_query($conn, $query_elimina_usuari)) {
+        echo "Usuari $_REQUEST[username]@$_REQUEST[host] eliminat amb exit.<br>";
+    } else {
+        echo "Error a l'eliminar l'usuari $_REQUEST[username] . $conn->error . <br>";
+    }
+    
+// ======================================================================================    
+    
     
 //     echo "<tr>
 //                     <td>" . "$_REQUEST[nom]" . "</td>
@@ -30,6 +47,9 @@
     echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
     echo "<h2>Rol:  " . "$_REQUEST[rol]" . "</h2>";
     echo "<h2>Email:  " . "$_REQUEST[email]" . "</h2>";
+    echo "<h2>Username:  " . "$_REQUEST[username]" . "</h2>";
+    echo "<h2>Password:  " . "$_REQUEST[password]" . "</h2>";
+    echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
     
 
     

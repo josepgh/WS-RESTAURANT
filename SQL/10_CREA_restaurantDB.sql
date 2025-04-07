@@ -18,6 +18,10 @@ SELECT NOW(), user(), current_user();
 DROP DATABASE IF EXISTS restaurantDB;
 DROP USER IF EXISTS cambrer1@localhost;
 DROP USER IF EXISTS guillem@localhost;
+DROP USER IF EXISTS matre55@localhost;
+DROP USER IF EXISTS matre66@localhost;
+DROP USER IF EXISTS matre77@localhost;
+
 
 START TRANSACTION;
 -- -----------------------------------------------------------------------------------
@@ -34,12 +38,23 @@ USE restaurantDB;
 --https://mariadb.com/kb/en/server-system-variables/#foreign_key_checks
 SET SESSION foreign_key_checks=OFF;
 
+CREATE TABLE grants_rol(
+						id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
+						,id_rol		VARCHAR(15) UNIQUE 
+									CHECK(id_rol IN ('maitre', 'cuiner', 'cambrer', 'administrador'))
+						,grants	VARCHAR(50)
+						);
+
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
+--					,id_rol		INTEGER
 					,nom 		VARCHAR(50)
-					,rol		VARCHAR(15) CHECK(rol IN
-								('cuiner', 'cambrer', 'administrador'))
+					,rol		VARCHAR(15) -- CHECK(rol IN ('maitre', 'cuiner', 'cambrer', 'administrador'))				
 					,email		VARCHAR(40) UNIQUE
+					,username	VARCHAR(15) UNIQUE
+					,password 	VARCHAR(15)
+					,host		VARCHAR(15)
+					,FOREIGN KEY (rol) REFERENCES grants_rol(id_rol)
 					);
 
 CREATE TABLE categories(
@@ -251,6 +266,12 @@ DELIMITER ;
 -- ---------------------------------------------------------------------------------
 -- https://mariadb.com/kb/en/create-view/
 
+CREATE OR REPLACE VIEW personal_view AS
+SELECT		p.id_personal, p.nom, p.rol, p.email, p.username, p.password, p.host, g.id_grant, g.id_rol, g.grants
+FROM 		personal p, grants_rol g
+WHERE 		p.rol = g.id_rol
+ORDER BY	p.username;
+
 CREATE OR REPLACE VIEW plats_view(categoria_plat, nom_plat, descripcio_plat, preu_plat) AS
 SELECT categories.nom, plats.nom, plats.descripcio, plats.preu
 FROM plats, categories
@@ -407,6 +428,22 @@ END IF;
 END; //
 DELIMITER ;
 
+
+--DELIMITER //
+--CREATE OR REPLACE TRIGGER set_personal_grants
+--BEFORE INSERT ON personal
+--FOR EACH ROW
+--BEGIN
+--DECLARE _grants VARCHAR(50);
+--DECLARE _user VARCHAR(50);
+--DECLARE _pass VARCHAR(15);
+--SELECT grants INTO _grants FROM grants_rol WHERE id_rol = NEW.id_rol;
+--SELECT CONCAT(NEW.username, '@', NEW.host) INTO _user;
+--SET NEW.nom = _user;
+--SET _pass = NEW.password;
+--CREATE OR REPLACE USER _user IDENTIFIED BY _pass;   
+--END; //
+--DELIMITER ;
 
 /*
 DELIMITER //

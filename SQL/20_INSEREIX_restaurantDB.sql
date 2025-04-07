@@ -12,6 +12,38 @@ USE restaurantDB;
 
 START TRANSACTION; -- PREVAL sobre el SET autocommit=TRUE del principi
 
+--INSERT INTO grants_rol VALUES(DEFAULT, '', '');
+--INSERT INTO grants_rol VALUES(DEFAULT, '', '');
+--INSERT INTO grants_rol VALUES(DEFAULT, '', '');
+INSERT INTO grants_rol VALUES(DEFAULT, 'cuiner', 'grants cuiner');
+INSERT INTO grants_rol VALUES(DEFAULT, 'cambrer', 'grants cambrer');
+INSERT INTO grants_rol VALUES(DEFAULT, 'maitre', 'grants maitre');
+INSERT INTO grants_rol VALUES(DEFAULT, 'administrador', 'grants administrador');
+
+
+--('maitre', 'cuiner', 'cambrer', 'administratiu')
+--INSERT INTO personal VALUES(DEFAULT, nom, rol, email, username, password, host);
+
+INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1@restaurant.com', 'cuiner1', 'cuiner1', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Vanessa', 'cambrer', 'cambrer1@restaurant.com', 'cambrer1', 'cambrer1', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Kevin José', 'cuiner', 'cuiner2@restaurant.com', 'cuiner2', 'cuiner2', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Carlos Enrique', 'cambrer', 'cambrer2@restaurant.com', 'cambrer2', 'cambrer2', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'maitre', 'maitre1@restaurant.com', 'maitre1', 'maitre1', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administrador', 'administrador1@restaurant.com', 'administrador1', 'administrador1', 'localhost');
+INSERT INTO personal VALUES(DEFAULT, 'Nicole', 'cambrer', 'cambrer3@restaurant.com', 'cambrer3', 'cambrer3', 'localhost');
+
+--('maitre', 'cuiner', 'cambrer', 'administratiu')
+--INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Vanessa', 'cambrer', 'cambrer1@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Kevin José', 'cuiner', 'cuiner2@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Carlos Enrique', 'cambrer', 'cambrer2@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'administratiu', 'administrador1@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administratiu', 'administrador2@email.com');
+--INSERT INTO personal VALUES(DEFAULT, 'Nicole', 'cuiner', 'cuiner3@email.com');
+
+
+
+
 --INSERT INTO categories VALUES(DEFAULT, '');
 INSERT INTO categories VALUES(DEFAULT, 'Entrants');
 INSERT INTO categories VALUES(DEFAULT, 'Principal');
@@ -70,14 +102,7 @@ INSERT INTO detalls_comanda VALUES(DEFAULT, 2, 2, 2);
 INSERT INTO detalls_comanda VALUES(DEFAULT, 2, 3, 4);
 INSERT INTO detalls_comanda VALUES(DEFAULT, 3, 1, 2);
 
---('Cuiner', 'Cambrer', 'Administrador')
-INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Vanessa', 'cambrer', 'cambrer1@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Kevin José', 'cuiner', 'cuiner2@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Carlos Enrique', 'cambrer', 'cambrer2@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'administrador', 'administrador1@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administrador', 'administrador2@email.com');
-INSERT INTO personal VALUES(DEFAULT, 'Nicole', 'cuiner', 'cuiner3@email.com');
+
 
 
 COMMIT;

@@ -11,7 +11,7 @@
     require("../functions/funcions.php");
     $conn = getConnexio();
 
-    $query = "select id_personal, nom, rol, email from personal where email = '$_REQUEST[email]'";
+    $query = "select id_personal, nom, rol, email, username, password, host from personal where email = '$_REQUEST[email]'";
     
     $registres = mysqli_query($conn, $query) or die("Problemes amb el select de personal: " . mysqli_error($conn));
     
@@ -40,7 +40,7 @@
         <!-- com el select esta DISABLED pasem el rol amagat EN EL REQUEST -->
         <input name="rol" type="hidden" value = "<?php echo $row['rol']?>">
 
-        <label for="r">Selecciona el rol:</label>
+        <label for="r">Rolllllll Selecciona el rol:</label>
 
         <select id="r" name="rol" disabled> <!-- si es posa disabled NO S'ENVIA EN EL REQUEST -->
         
@@ -51,6 +51,7 @@
 <!--  https://www.youtube.com/watch?v=Lafx7yrWHfw&ab_channel=CodePH -->
  
             <option value="">-- Selecciona rol --</option>
+            <option value="maitre" <?php echo ($row['rol'] == "maitre" ? "selected" : "")?>>Maitre</option>
             <option value="cuiner" <?php echo ($row['rol'] == "cuiner" ? "selected" : "")?>>Cuiner</option>
             <option value="cambrer" <?php echo ($row['rol'] == "cambrer" ? "selected" : "")?>>Cambrer</option>
             <option value="administrador" <?php echo ($row['rol'] == "administrador" ? "selected" : "")?>>Administrador</option>
@@ -59,8 +60,21 @@
 <!--  ============================================================================================ -->
 
         </select>
-        
        <br><br>
+               
+        <label for="u">Username:</label>
+        <input id="u" name="username" type="text" value = "<?php echo $row['username']?>" readonly>
+        <br><br>
+        
+        <label for="p">Password:</label>
+        <input id="p" name="password" type="text" value = "<?php echo $row['password']?>" readonly>
+        <br><br>
+        
+        <label for="h">Host:</label>
+        <input id="h" name="host" type="text" value = "<?php echo $row['host']?>" readonly>
+        <br><br>
+        
+
 
         <button type="submit">ESBORRAR DEFINITIVAMENT????</button>
     </form>
