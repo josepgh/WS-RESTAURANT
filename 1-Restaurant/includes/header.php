@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Proyecto PHP</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/estils.css">
 </head>
 <body>
 <!-- <nav> -->

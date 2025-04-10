@@ -8,43 +8,45 @@
 
 	<h1>Afegir persona</h1>
     <form action="personal_inserted.php" method="post">
-        <label for="nom">Nom:</label>
-        <input id="nom" type="text" name="nom" required>
+        <label for="n">Nom:</label>
+        <input id="n" type="text" name="nom" required>
         <br><br>
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" name="email" required>
-        <br><br>
+<!--         <label for="email">Email:</label> -->
+<!--         <input id="email" type="email" name="email" required> -->
+<!--         <br><br> -->
 
         <label for="r">Selecciona el rol:</label>
         <select id="r" name="rol" required>
             <option value="">-- Selecciona rol --</option>
-            <option value="maitre">Maitre</option>
             <option value="cuiner">Cuiner</option>
             <option value="cambrer">Cambrer</option>
             <option value="administrador">Administrador</option>
         </select>
         <br><br>
 
-        <label for="username">Username:</label>
-        <input id="username" type="text" name="username" required>
+        <label for="u">Username:</label>
+        <input id="u" type="text" name="username" required>
         <br><br>
 
-        <label for="password">Password:</label>
-        <input id="password" type="text" name="password" required>
+        <label for="p">Password:</label>
+        <input id="p" type="text" name="password" required>
         <br><br>
 
-        <label for="host">Host:</label>
-        <input id="host" type="text" name="host" required>
+        <label for="h">Host:</label>
+        <input id="h" type="text" name="host" required>
         <br><br>
 
+        <label for="es_act">Actiu? (No):</label>
+        <input id="es_act" type="range" name="es_actiu" min="0" max="1" required> (Sí)
+        <br><br>
 
         <button type="submit">Afegir persona</button>
     </form>
 
 	<form action="./personal_gestio.php">
     	<input type="submit" value="Tornar al llistat">
-    	<input name="mail" value = "" type="hidden" >
+    	<input name="uname" value = "" type="hidden" >
 	</form>
 
 	<form action="../index.php">

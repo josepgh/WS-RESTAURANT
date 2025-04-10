@@ -1,6 +1,6 @@
 
 <form action="passaParam2.php" method="post">
-  <label for="e">Email:</label>
-  <input id="e" type="text" name="eemail">
+  <label for="u">Username:</label>
+  <input id="u" type="text" name="uusername">
   <input type="submit" value="Enviar">
 </form>

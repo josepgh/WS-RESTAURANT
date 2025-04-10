@@ -12,8 +12,8 @@
     require("../functions/funcions.php");
     $conn = getConnexio();
 
-    $query = "delete from personal where email='$_REQUEST[email]'";
-    
+    $query = "delete from personal where username='$_REQUEST[username]'";
+
     mysqli_query($conn, $query) or die("Problemes amb el DELETE personal: " . mysqli_error($conn));
 
     
@@ -31,38 +31,30 @@
     }
     
 // ======================================================================================    
-    
-    
-//     echo "<tr>
-//                     <td>" . "$_REQUEST[nom]" . "</td>
-//                     <td>" . "$_REQUEST[rol]" . "</td>
-//                     <td>" . "$_REQUEST[email]" . "</td>
-//                 </tr>
-//                 ";
-//    echo "<tr><td colspan = '3'>PERSONAL ELIMINADA AMB EXIT</td></tr>";
-
-    
-
     echo "<h1>Persona HA ESTAT ESBORRADA:</h1>";
     echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
     echo "<h2>Rol:  " . "$_REQUEST[rol]" . "</h2>";
-    echo "<h2>Email:  " . "$_REQUEST[email]" . "</h2>";
+    // echo "<h2>Email:  " . "$_REQUEST[email]" . "</h2>";
     echo "<h2>Username:  " . "$_REQUEST[username]" . "</h2>";
     echo "<h2>Password:  " . "$_REQUEST[password]" . "</h2>";
     echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
-    
+    echo "<h2>Actiu?:  " . "$_REQUEST[es_actiu]" . "</h2>";
 
+    if ($_REQUEST['es_actiu'] == 1){
+        echo "<h2>Estat: ACTIU</h2>";
+    }else{
+        echo "<h2>Estat: BAIXA</h2>";
+    }
+    
     
     mysqli_close($conn);
 ?>    
     
-	
-
 	<br><br>
 	
 	<form action="./personal_gestio.php">
 	<input type="submit" value="Tornar al llistat de personal">
-	<input name="mail" value = "" type="hidden" >
+	<input name="uname" value = "" type="hidden" >
 	</form>
 	
 	<form action="../index.php">

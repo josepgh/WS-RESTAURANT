@@ -18,6 +18,8 @@
 // require '../includes/footer.php';
 ?>
 
+<!-- GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer1'@'localhost'; -->
+
 <table>
 	<thead>
 		<tr>
@@ -26,6 +28,23 @@
 		</tr>
 	</thead>
 	<tbody>
+
+         <tr>
+            <td> TODO?? </td>
+            <td> 
+        		<form action="">
+        		<br>els grants posar-los a la BD i obtenir-los amb un trigger a l'insertar o modificar persona????<br><br>
+        		GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';<br><br>
+        		GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cuiner1'@'localhost';<br><br>
+        		GRANT SELECT, INSERT, UPDATE ON restaurantDB.plats TO 'administrador1'@'localhost';<br><br>
+        		O directament per programa???
+        		
+        		<!--         			<input name="mail" value = "" type="hidden" > -->
+<!--              		<input type="submit" value="PROVES"> -->
+				</form>
+            </td>
+          </tr>
+
 
          <tr>
             <td> TMP </td>
@@ -41,7 +60,7 @@
             <td> GESTIO DE PERSONAL </td>
             <td> 
         		<form action="personal/personal_gestio.php">
-        			<input name="mail" value = "" type="hidden" >
+        			<input name="uname" value = "" type="hidden" >
              		<input type="submit" value="Gestio de personal">
 				</form>
             </td>

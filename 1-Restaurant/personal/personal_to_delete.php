@@ -11,7 +11,7 @@
     require("../functions/funcions.php");
     $conn = getConnexio();
 
-    $query = "select id_personal, nom, rol, email, username, password, host from personal where email = '$_REQUEST[email]'";
+    $query = "select id_personal, nom, rol, username, password, host, es_actiu from personal where username = '$_REQUEST[username]'";
     
     $registres = mysqli_query($conn, $query) or die("Problemes amb el select de personal: " . mysqli_error($conn));
     
@@ -19,7 +19,7 @@
 
     }
     else{
-        echo "<h1>No existeix personal amb l'email:  $_REQUEST[email]<h1>";
+        echo "<h1>No existeix l'USERNAME:  $_REQUEST[username]<h1>";
     }
  		    
  	mysqli_close($conn);
@@ -33,31 +33,25 @@
         <input id="n" name="nom" type="text" value = "<?php echo $row['nom']?>" readonly>
         <br><br>
         
-        <label for="e">Email:</label>
-        <input id="e" name="email" type="email" value = "<?php echo $row['email']?>" readonly>
-        <br><br>
-
         <!-- com el select esta DISABLED pasem el rol amagat EN EL REQUEST -->
         <input name="rol" type="hidden" value = "<?php echo $row['rol']?>">
 
-        <label for="r">Rolllllll Selecciona el rol:</label>
-
+        <label for="r">Rol:</label>
         <select id="r" name="rol" disabled> <!-- si es posa disabled NO S'ENVIA EN EL REQUEST -->
         
-<!--  ============================================================================================ -->
-<!--  ============================================================================================ -->
-<!--  vist a PART 3 - CREATING A CRUD APPLICATION USING MariaDB AND PHP DATA OBJECTS (PDO) -->
-<!--  minut 15 -->
-<!--  https://www.youtube.com/watch?v=Lafx7yrWHfw&ab_channel=CodePH -->
+            <!--  ============================================================================================ -->
+            <!--  ============================================================================================ -->
+            <!--  vist a PART 3 - CREATING A CRUD APPLICATION USING MariaDB AND PHP DATA OBJECTS (PDO) -->
+            <!--  minut 15 -->
+            <!--  https://www.youtube.com/watch?v=Lafx7yrWHfw&ab_channel=CodePH -->
  
             <option value="">-- Selecciona rol --</option>
-            <option value="maitre" <?php echo ($row['rol'] == "maitre" ? "selected" : "")?>>Maitre</option>
             <option value="cuiner" <?php echo ($row['rol'] == "cuiner" ? "selected" : "")?>>Cuiner</option>
             <option value="cambrer" <?php echo ($row['rol'] == "cambrer" ? "selected" : "")?>>Cambrer</option>
             <option value="administrador" <?php echo ($row['rol'] == "administrador" ? "selected" : "")?>>Administrador</option>
 
-<!--  ============================================================================================ -->
-<!--  ============================================================================================ -->
+            <!--  ============================================================================================ -->
+            <!--  ============================================================================================ -->
 
         </select>
        <br><br>
@@ -73,19 +67,22 @@
         <label for="h">Host:</label>
         <input id="h" name="host" type="text" value = "<?php echo $row['host']?>" readonly>
         <br><br>
-        
+
+        <label for="a">Actiu?:</label>
+        <input id="a" name="es_actiu" type="text" value = "<?php echo $row['es_actiu']?>" readonly>
+        <br><br>
+
+        <label for="actiu">Actiu?: (no)</label>
+        <input id="actiu" type="range" name="es_actiu" min="0" max="1" value = "<?php echo $row['es_actiu']?>" disabled> (sí)
+        <br><br>
 
 
         <button type="submit">ESBORRAR DEFINITIVAMENT????</button>
     </form>
 	
-	
-<!-- 		</tbody> -->
-<!-- </table> -->
-
 	<form action="./personal_gestio.php">
     	<input type="submit" value="Tornar al llistat">
-    	<input name="mail" value = "" type="hidden" >
+    	<input name="uname" value = "" type="hidden" >
 	</form>
 
 	<form action="../index.php">

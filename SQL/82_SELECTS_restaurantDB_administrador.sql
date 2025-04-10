@@ -1,17 +1,11 @@
--- SET GLOBAL general_log=1;
---SET GLOBAL general_log_file='D:\\PRJCTS\\WS-RESTAURANT\\SQL\\crea_burguer.log';--OK
---SET GLOBAL general_log_file='crea_restaurant_al_datadir.log'; --FUNCIONA
 
 SET autocommit=FALSE;
---SELECT CURDATE();
---SELECT CURTIME();
 
--- SELECT NOW(), user(), current_user();
+SELECT NOW(), user(), current_user();
 
 USE restaurantDB;
---START TRANSACTION;
 
---SHOW DATABASES;
+SHOW DATABASES;
 
 
 /*
@@ -59,17 +53,7 @@ SELECT User, Db, Host from mysql.db;
 
 select * from personal_view;
 
-SELECT 	User, Host, authentication_string 
-FROM 	mysql.user 
-WHERE 	user <> 'mariadb.sys' AND user <> 'root'
-ORDER BY user;
-
---show Grants for cambrer33@localhost;
---show Grants for guillem@localhost;
---show Grants for cambrer1@localhost;
---show Grants for matre66@localhost;
-CALL ShowAllUserGrants();
-
+--SELECT User, Host, authentication_string FROM mysql.user WHERE user <> 'mariadb.sys' AND user <> 'root';
 
 SELECT 'FI';
 --COMMIT;
