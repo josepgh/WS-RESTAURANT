@@ -45,6 +45,16 @@
             </td>
           </tr>
 
+         <tr>
+            <td> prova set_grants </td>
+            <td> 
+        		<form action="A_PROVES/prova_set_grants.php">
+        			<input name="uname" value = "" type="hidden" >
+             		<input type="submit" value="PROVA SET GRANTS">
+				</form>
+            </td>
+          </tr>
+
 
          <tr>
             <td> TMP </td>

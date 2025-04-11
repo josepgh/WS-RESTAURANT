@@ -17,6 +17,7 @@
     $query = "select id_personal, nom, rol, username, password, host, es_actiu from personal where username = '$_REQUEST[username]'";
     
     $registres = mysqli_query($conn, $query) or die("Problemes amb el select de personal: " . mysqli_error($conn));
+    //$row = mysqli_fetch_array($registres);
     
     //if($row = mysqli_fetch_array($registres)){ 
     // cal mirar els tres tipu d'error: existeix emaaail, existeix username
@@ -32,25 +33,40 @@
         echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
         echo "<h2>Rol:  " . "$_REQUEST[rol]" . "</h2>";
         echo "<h2>Username:  " . "$_REQUEST[username]" . "</h2>";
+        echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
     }
-    else{ // si NO EXISTEIX A LA BD => L'INSERTA
+    else{ // si NO EXISTEIX A LA BD => L'INSERTA + CREA USER A LA BD + LI ATORGA GRANTS (SI CAL !!!!!)
 
         
 
         // $query_nou_usuari = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
         
-         $query_insert = "insert into personal(nom, rol, username, password, host, es_actiu) values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[username]', '$_REQUEST[password]', '$_REQUEST[host]', '$_REQUEST[es_actiu]')";
+         $query_insert = "insert into personal(nom, rol, username, password, host, es_actiu) 
+                        values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[username]', '$_REQUEST[password]', '$_REQUEST[host]', '$_REQUEST[es_actiu]')";
          mysqli_query($conn, $query_insert) or die("Error en l'insert de personal: ". mysqli_error($conn));
 
          $query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
          mysqli_query($conn, $query_nou_usuari_db) or die("Error en CREATE USER: ". mysqli_error($conn));
 
-         if($_REQUEST['es_actiu'] == 1){ // només li atorga els GRANTS si s'insereix amb estat ALTA
+         // ========================================================================================
+         // ============================== IMPORTANT ===============================================
+         // ========================================================================================
+         setGrants($_REQUEST['rol'], $_REQUEST['username'], $_REQUEST['host'], $_REQUEST['es_actiu']);
+         // ========================================================================================
+         // ========================================================================================
+         // ========================================================================================
+         
+         
+         
+//          if($_REQUEST['es_actiu'] == 1){ // li atorga els GRANTS NOMÉS si s'insereix amb estat ALTA
              
-             $query_grants_nou_usuari_db = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO '$_REQUEST[username]'@'$_REQUEST[host]';";
-             mysqli_query($conn, $query_grants_nou_usuari_db) or die("Error en atorgar GRANTS: ". mysqli_error($conn));
+//              $query_grants_nou_usuari_db = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO '$_REQUEST[username]'@'$_REQUEST[host]';";
+//              mysqli_query($conn, $query_grants_nou_usuari_db) or die("Error en atorgar GRANTS: ". mysqli_error($conn));
              
-         }
+//          }else{ // NO FA RES -> ES QUEDA SENSE GRANTS
+             
+             
+//          }
          
 //          $query_grants_nou_usuari_db = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO '$_REQUEST[username]'@'$_REQUEST[host]';";
 //          mysqli_query($conn, $query_grants_nou_usuari_db) or die("Error en atorgar GRANTS: ". mysqli_error($conn));
@@ -74,27 +90,16 @@
         }else{
             echo "<h2>Estat: BAIXA</h2>";
         }
+//         echo "<h2>" . setGrants($row['rol'], $row['username'], $row['host'], $row['es_actiu']) . "<h2>";
+        
         
         
 //         $query_nou_usuari = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
 //         $query_grants_nou_usuari = "GRANT SELECT ON restaurantdb.* TO $_REQUEST[username]@$_REQUEST[host]";
 
-        echo "<tr><td> QUERY ALTA USUARI:  $query_nou_usuari_db</td></tr><br><br>";
-        echo "<tr><td> QUERY GRANTS USUARI:  $query_grants_nou_usuari_db</td></tr><br><br>";
+//         echo "<tr><td> QUERY ALTA USUARI:  $query_nou_usuari_db</td></tr><br><br>";
+//         echo "<tr><td> QUERY GRANTS USUARI:  $query_grants_nou_usuari_db</td></tr><br><br>";
 
-        // ChatGPT executa consulta per crear usuari
-//         if (mysqli_query($conn, $query_nou_usuari)) {
-//             echo "Usuari $_REQUEST[username]@$_REQUEST[host] creat amb exit.<br>";
-//         } else {
-//             echo "Error al crear l'usuari $_REQUEST[username]@$_REQUEST[host] . $conn->error . <br>";
-//         }
-        
-        // ChatGPT executa consulta per grants usuari
-//         if (mysqli_query($conn, $query_grants_nou_usuari)) {
-//             echo "Grants usuari $_REQUEST[username]@$_REQUEST[host] atorgats amb exit.<br>";
-//         } else {
-//             echo "Error al donar grants a l'usuari $_REQUEST[username]@$_REQUEST[host] . $conn->error . <br>";
-//         }
         
     }
     

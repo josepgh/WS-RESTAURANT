@@ -31,5 +31,80 @@ function getConnexio(){
     return $connexio;
 }
 
+// funció que retorna l'string del query dels grants d'un usuari segons categoria,
+// i segons si està de baixa (ELS REVOCA) o d'alta (ELS ATORGA)
+function setGrants($iid_rol, $uusername, $hhost, $ees_actiu){
+
+    $conn = getConnexio();
+    
+    if($ees_actiu == 1){
+        
+        
+        if($iid_rol == 'cambrer'){
+            
+            $query_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO '$uusername'@'$hhost'";
+            mysqli_query($conn, $query_grants) or die("Error en atorgar GRANTS en la funcio setGrants : ". mysqli_error($conn));
+            
+            $query_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO '$uusername'@'$hhost'";
+            mysqli_query($conn, $query_grants) or die("Error en atorgar GRANTS en la funcio setGrants : ". mysqli_error($conn));
+            
+        }elseif($iid_rol == 'cuiner'){
+            
+            $query_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO '$uusername'@'$hhost'";
+            mysqli_query($conn, $query_grants) or die("Error en atorgar GRANTS en la funcio setGrants : ". mysqli_error($conn));
+            
+        }elseif($iid_rol == 'administrador'){
+            
+            $query_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO '$uusername'@'$hhost'";
+            mysqli_query($conn, $query_grants) or die("Error en atorgar GRANTS en la funcio setGrants : ". mysqli_error($conn));
+            
+        }else{
+            
+            die("Error en atorgar GRANTS en la funcio setGrants -> CATEGORIA NO RECONEGUDA : ". mysqli_error($conn));
+        }
+        
+        //$query_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO '$_REQUEST[username]'@'$_REQUEST[host]';";
+//         if(mysqli_query($conn, $query_grants)){
+            
+            
+//         }else{
+            
+            
+//         }
+        
+        
+    }else{
+        
+        $query_revoke = "REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$uusername'@'$hhost'";
+        
+        mysqli_query($conn, $query_revoke) or die("Error en REVOCAR GRANTS en la funcio setGrants : ". mysqli_error($conn));
+        
+        
+//         if(mysqli_query($conn, $query_revoke)){
+            
+            
+//         }else{
+            
+//             die("Error en REVOCAR GRANTS en la funcio setGrants : ". mysqli_error($conn));
+//         }
+        
+    }
+
+        
+        
+        
+    if($ees_actiu == 1){
+        
+        return ($query_grants);
+        
+    }else{
+        
+        return ($query_revoke);
+        
+    }
+        
+        
+    }
+    
                            
 ?>

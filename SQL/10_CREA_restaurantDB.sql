@@ -55,10 +55,12 @@ CREATE TABLE personal(
 					,nom 		VARCHAR(50)
 					,rol		VARCHAR(15) -- CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
 --					,email		VARCHAR(40) UNIQUE
-					,username	VARCHAR(15) UNIQUE
+--											unique
+					,username	VARCHAR(15)
 					,password 	VARCHAR(15)
 					,host		VARCHAR(15)
-					,es_actiu	BOOLEAN DEFAULT TRUE		
+					,es_actiu	BOOLEAN DEFAULT TRUE
+					,UNIQUE (username, host)
 					,FOREIGN KEY (rol) REFERENCES grants_rol(id_rol)
 					);
 
@@ -138,7 +140,9 @@ SET SESSION foreign_key_checks=ON;
 DROP USER IF EXISTS cuiner1@localhost;
 DROP USER IF EXISTS cuiner2@localhost;
 DROP USER IF EXISTS cuiner3@localhost;
-
+DROP USER IF EXISTS cuiner6@localhost;
+DROP USER IF EXISTS cuiner7@localhost;
+  
 DROP USER IF EXISTS cambrer1@localhost;
 DROP USER IF EXISTS cambrer2@localhost;
 DROP USER IF EXISTS cambrer3@localhost;
@@ -152,27 +156,30 @@ DROP USER IF EXISTS cuiner5@localhost;
 DROP USER IF EXISTS nasadmin@localhost;
 
 
-
+-- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
 CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
 CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
 CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
 
 CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cuiner1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
 CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cuiner2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
 CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cuiner3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
 
 CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'administrador1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
 CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'administrador2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
 CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'administrador3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
 
 
 
@@ -292,7 +299,7 @@ END; //
 DELIMITER ;
 
 -- ==========================================================================================================================
-
+/*
 DELIMITER //
 CREATE OR REPLACE TRIGGER grant_privilegis
 BEFORE INSERT ON reserves
@@ -310,7 +317,7 @@ IF NEW.num_persones > _capacitat THEN
 END IF;
 END; //
 DELIMITER ;
-
+*/
 
 -- ==========================================================================================================================
 --                                      VIEWS             https://mariadb.com/kb/en/create-view/
