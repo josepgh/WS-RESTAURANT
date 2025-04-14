@@ -38,14 +38,23 @@
     else{ // si NO EXISTEIX A LA BD => L'INSERTA + CREA USER A LA BD + LI ATORGA GRANTS (SI CAL !!!!!)
 
         
-
-        // $query_nou_usuari = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
-        
-         $query_insert = "insert into personal(nom, rol, username, password, host, es_actiu) 
-                        values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[username]', '$_REQUEST[password]', '$_REQUEST[host]', '$_REQUEST[es_actiu]')";
+//          $hash = hash('sha256', $_REQUEST['password']);
+         
+         $query_insert = "insert into personal(nom, rol, username, password, pwdhash, host, es_actiu)
+                        values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[username]', '$_REQUEST[password]', 'PWDHASH', '$_REQUEST[host]', '$_REQUEST[es_actiu]')";
+         
          mysqli_query($conn, $query_insert) or die("Error en l'insert de personal: ". mysqli_error($conn));
 
+         // ========================================================================================
+         // ============================== IMPORTANT ===============================================
+         // ========================================================================================
+         
          $query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
+         //$query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY 'SHA2('$_REQUEST[password]', 256)'";
+         //$query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY hash('sha256', $_REQUEST[password])";
+         
+         // ========================================================================================
+         
          mysqli_query($conn, $query_nou_usuari_db) or die("Error en CREATE USER: ". mysqli_error($conn));
 
          // ========================================================================================
@@ -53,10 +62,6 @@
          // ========================================================================================
          setGrants($_REQUEST['rol'], $_REQUEST['username'], $_REQUEST['host'], $_REQUEST['es_actiu']);
          // ========================================================================================
-         // ========================================================================================
-         // ========================================================================================
-         
-         
          
 //          if($_REQUEST['es_actiu'] == 1){ // li atorga els GRANTS NOMÉS si s'insereix amb estat ALTA
              

@@ -1,0 +1,81 @@
+<?php
+
+session_start();
+//require_once 'db.php';
+require_once("../functions/funcions.php");
+//function getConnexio($uusuari, $ppasswordhash, $hhost, $ddatabase){
+    
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+//    $host = $_POST['host'];
+    $host = "localhost";
+    $database = "restaurantdb";
+
+    echo "PROPIETARI SESSIÓ : $username PWD: $password <br>";
+    
+//     $passwordhash = $_POST['passwordhash'];
+//     $host = $_POST['host'];
+//     $database = $_POST['database'];  
+//     $conn = getConnexio($username, $passwordhash, $host, $database);
+//     $conn = getConnexio();
+
+    $conn = getUserConnection($host, $username, $password, $database);
+    
+    if(!$conn){
+        
+        echo "NO CONNECTAT: " . $conn->connect_error;
+        header("Location: ../index.html");
+        exit();
+        
+    }else{
+        
+        echo "Connectat a: " . $conn->get_server_info() . "<br>";
+    }
+    
+    //$query = "SELECT * FROM personal WHERE username = '$username';";
+    $query = "SELECT username, password FROM personal WHERE username = '$username';";
+    
+    //$stmt = mysqli_prepare($conn, $query);
+    //mysqli_stmt_bind_param($stmt, "s", $username);
+
+    echo "Query : $query <br>";
+    
+    //mysqli_stmt_execute($stmt);
+    //$result = mysqli_stmt_get_result($stmt);
+
+    $registres = mysqli_query($conn, $query) or die("Problemes amb el select del login: " . $conn->connect_error);
+    
+    
+    
+    echo "Files trobades: " . $registres->num_rows . "<br>" ;
+
+  
+    //$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //echo "passwordhash: var_dump($hashed_password) <br>";
+    
+    if ($row = mysqli_fetch_assoc($registres)) {
+        
+//        echo "Contrassenya de l'usuari $username es $password traduida: var_dump($hashed_password) <br>";
+        echo "Contrassenya de l'usuari $username es $password <br>";
+        
+        
+        if (password_verify($password, $row['password'])) {
+            
+            $_SESSION['username'] = $row['username'];
+            header("Location: welcome.php");
+            exit();
+            
+        } else {
+            echo "Contraseña incorrecta.";
+        }
+    } else {
+        echo "Usuario no encontrado.";
+    }
+
+    mysqli_close($conn);
+} else {
+    header("Location: ../index.html");
+    exit();
+}
+?>

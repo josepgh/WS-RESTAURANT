@@ -27,6 +27,7 @@
 <!--     			<th>Emmaaiill</th> -->
     			<th>Username</th>
     			<th>Password</th>
+    			<th>PWD hash</th>
     			<th>Host</th>
     			<th>Edita</th>
     			<th>Estat</th>
@@ -36,21 +37,22 @@
 	<tbody>
     
     <?php
-        require '../includes/header.php';
+//         require '../includes/header.php';
     
         require("../functions/funcions.php");
+
         $conn = getConnexio();
 
 
         if (($_REQUEST['uname'] == "")){ //si l'username a cercar esta buit -> llista tots el personal
                 
-            $query = "select id_personal, nom, rol, username, password, host, es_actiu from personal";
+            $query = "select id_personal, nom, rol, username, password, pwdhash, host, es_actiu from personal";
             
             //echo "<tr><td colspan = '10'> 1 l'username: $_REQUEST[uname] i la query: $query</td></tr>";
             
         }else{ // si no és buit -> cerca l'username demanat
             
-            $query = "select id_personal, nom, rol, username, password, host, es_actiu from personal where username = '$_REQUEST[uname]'";
+            $query = "select id_personal, nom, rol, username, password, pwdhash, host, es_actiu from personal where username = '$_REQUEST[uname]'";
                               
             //echo "<tr><td colspan = '10'> 2 l'username:  $_REQUEST[uname] i la query: $query</td></tr>";
         }
@@ -74,20 +76,22 @@
                             // echo "<td>" . $row['emmmmmaaiil'] . "</td>";
                             echo "<td>" . $row['username'] . "</td>";
                             echo "<td>" . $row['password'] . "</td>";
+                            echo "<td>" . $row['pwdhash'] . "</td>";
                             echo "<td>" . $row['host'] . "</td>";
                             echo "<td><a href = 'personal_to_update.php?username=" . $row['username'] . "'>edita<a></td>";
-
+                            //-----------------------------------------------------------------------------------------------------------
                             if ($row['es_actiu'] == 1){
                                 echo "<td>ALTA</td>";
                             }else{
                                 echo "<td>BAIXA</td>";
                             }
-                            
+                            //-----------------------------------------------------------------------------------------------------------
                             if ($row['es_actiu'] == 1){
                                 echo "<td>  ( <a href = 'personal_to_switch.php?username=" . $row['username'] . "'>donar de BAIXA )<a></td>";
                             }else{
                                 echo "<td>  ( <a href = 'personal_to_switch.php?username=" . $row['username'] . "'>donar d'ALTA )<a></td>";
                             }
+                            //-----------------------------------------------------------------------------------------------------------
                             echo "<td><a href = 'personal_to_delete.php?username=" . $row['username'] . "'>esborra<a></td>";
                 echo "</tr>";
                 //<option value="cuiner" <?php echo ($row['rol'] == "cuiner" ? "selected" : "")? > >Cuiner</option>

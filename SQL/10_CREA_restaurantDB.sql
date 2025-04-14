@@ -16,16 +16,6 @@ SET autocommit=FALSE;
 SELECT NOW(), user(), current_user();
 
 DROP DATABASE IF EXISTS restaurantDB;
-DROP USER IF EXISTS cambrer1@localhost;
-DROP USER IF EXISTS guillem@localhost;
-DROP USER IF EXISTS matre55@localhost;
-DROP USER IF EXISTS matre66@localhost;
-DROP USER IF EXISTS matre77@localhost;
-DROP USER IF EXISTS llibreter@localhost;
-DROP USER IF EXISTS DSDSD@localhost;
-DROP USER IF EXISTS sssss@localhost;
-DROP USER IF EXISTS nasadmin@localhost;
-DROP USER IF EXISTS admin3@localhost;
 
 START TRANSACTION;
 -- -----------------------------------------------------------------------------------
@@ -52,14 +42,15 @@ CREATE TABLE grants_rol(
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
 --					,id_rol		INTEGER
-					,nom 		VARCHAR(50)
-					,rol		VARCHAR(15) -- CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
+					,nom 		VARCHAR(50) NOT NULL
+					,rol		VARCHAR(15) NOT NULL -- CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
 --					,email		VARCHAR(40) UNIQUE
 --											unique
-					,username	VARCHAR(15)
-					,password 	VARCHAR(15)
-					,host		VARCHAR(15)
-					,es_actiu	BOOLEAN DEFAULT TRUE
+					,username	VARCHAR(15) NOT NULL
+					,password 	VARCHAR(15) NOT NULL
+					,pwdhash 	CHAR(64) NOT NULL DEFAULT "PWDHASH"
+					,host		VARCHAR(15) NOT NULL
+					,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
 					,UNIQUE (username, host)
 					,FOREIGN KEY (rol) REFERENCES grants_rol(id_rol)
 					);
@@ -136,24 +127,17 @@ SET SESSION foreign_key_checks=ON;
 --                                      CREA USUARIS
 -- ---------------------------------------------------------------------------------
 --https://www.geeksforgeeks.org/how-to-create-user-with-grant-privileges-in-mariadb/
-
-DROP USER IF EXISTS cuiner1@localhost;
-DROP USER IF EXISTS cuiner2@localhost;
-DROP USER IF EXISTS cuiner3@localhost;
-DROP USER IF EXISTS cuiner6@localhost;
-DROP USER IF EXISTS cuiner7@localhost;
-  
-DROP USER IF EXISTS cambrer1@localhost;
-DROP USER IF EXISTS cambrer2@localhost;
-DROP USER IF EXISTS cambrer3@localhost;
-
 DROP USER IF EXISTS administrador1@localhost;
 DROP USER IF EXISTS administrador2@localhost;
 DROP USER IF EXISTS administrador3@localhost;
 
+DROP USER IF EXISTS cambrer1@localhost;
+DROP USER IF EXISTS cambrer2@localhost;
+DROP USER IF EXISTS cambrer3@localhost;
 
-DROP USER IF EXISTS cuiner5@localhost;
-DROP USER IF EXISTS nasadmin@localhost;
+DROP USER IF EXISTS cuiner1@localhost;
+DROP USER IF EXISTS cuiner2@localhost;
+DROP USER IF EXISTS cuiner3@localhost;
 
 
 -- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
@@ -174,13 +158,55 @@ GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
 CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
 
+--CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador1'@'localhost' WITH GRANT OPTION;
+
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
+
+--CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION;
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
+
+--CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION;
+
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
+
+/*
+-- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
+CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
+CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
+CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
+
+CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
+CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
+CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
+
 CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
 CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
 CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
-
+*/
 
 
 --CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
@@ -267,15 +293,26 @@ DELIMITER ;
 -- ==========================================================================================================================
 --                                      TRIGGERS
 -- ==========================================================================================================================
-/*
+
+--SELECT 	User, host, authentication_string 
+--FROM 	mysql.user 
+--WHERE 	user <> 'mariadb.sys' AND user <> 'root'
+--ORDER BY user;
+--SET OLD.pwdhash = a_str;
 --CREATE PROCEDURE set_grants_on_insert(IN username VARCHAR(15), IN host VARCHAR(15), actiu BOOLEAN)
+/*
 DELIMITER //
-CREATE OR REPLACE TRIGGER grants_on_insert
-BEFORE INSERT ON personal
+CREATE OR REPLACE TRIGGER set_autentic_str
+AFTER INSERT ON personal
 FOR EACH ROW
 BEGIN
-SELECT NEW.username, NEW.password, NEW.host, NEW.es_actiu;
-CALL set_grants_on_insert(NEW.username, NEW.password, NEW.host, NEW.es_actiu);
+DECLARE a_str VARCHAR(50);
+
+
+SELECT authentication_string INTO a_str FROM mysql.user WHERE User = NEW.username AND host = NEW.host;
+
+INSERT INTO personal(NEW.pwdhash) VALUES(a_str);
+
 END; //
 DELIMITER ;
 */
@@ -323,8 +360,9 @@ DELIMITER ;
 --                                      VIEWS             https://mariadb.com/kb/en/create-view/
 -- ==========================================================================================================================
 
+
 CREATE OR REPLACE VIEW personal_view AS
-SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
+SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.pwdhash, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
 FROM 		personal p, grants_rol g
 WHERE 		p.rol = g.id_rol
 ORDER BY	p.username;
@@ -371,6 +409,93 @@ WHERE 	c.id_comanda = d.id_comanda AND
 GROUP BY c.id_comanda
 ORDER BY c.data_comanda, c.id_comanda;
 
+
+-- ===================== ChatGPT ==========================================================================================
+CREATE OR REPLACE VIEW vista_resumen_privilegios_consolidada AS
+SELECT 
+  base_de_datos,
+  grantee,
+  SUM(schema_privs) AS schema_privs,
+  SUM(table_privs) AS table_privs,
+  COUNT(DISTINCT table_name) AS tablas_con_privs,
+  SUM(column_privs) AS column_privs,
+  COUNT(DISTINCT column_name) AS columnas_con_privs,
+  SUM(schema_privs + table_privs + column_privs) AS total_privs
+FROM (
+  -- Repetimos bloques por cada base de datos
+  -- === BLOQUE PARA mi_base ===
+  -- Privilegios a nivel de esquema
+  SELECT 
+    'restaurantdb' AS base_de_datos,
+    GRANTEE,
+    PRIVILEGE_TYPE,
+    1 AS schema_privs,
+    0 AS table_privs,
+    0 AS column_privs,
+    NULL AS table_name,
+    NULL AS column_name
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+  UNION ALL
+  -- Privilegios a nivel de tabla
+  SELECT 
+    'restaurantdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+  UNION ALL
+  -- Privilegios a nivel de columna
+  SELECT 
+    'restaurantdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+
+  -- === BLOQUE PARA otra_base ===
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    1, 0, 0,
+    NULL, NULL
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+
+  -- === BLOQUE PARA super_base ===
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    1, 0, 0,
+    NULL, NULL
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'llibres'
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'llibres'
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'llibres'
+
+) AS all_privs
+GROUP BY 
+  base_de_datos, grantee;
+
+
+-- ========================================================================================================================
 
 SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_SCHEMA NOT LIKE 'mysql' AND CONSTRAINT_SCHEMA NOT LIKE 'sys';

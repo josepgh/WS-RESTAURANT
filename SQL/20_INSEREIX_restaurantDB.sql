@@ -32,7 +32,21 @@ INSERT INTO personal VALUES(DEFAULT, 'Joan', 'cambrer', 'cambrer3@restaurant.com
 INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'cambrer', 'cambrer4@restaurant.com', 'cambrer4', 'cambrer4', 'localhost', FALSE);
 */
 
---INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, host, es_actiu);
+/*
+--INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, pwdhash, host, es_actiu);
+INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1', 'cuiner1', SHA2('cuiner1', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Kevin José', 'cuiner', 'cuiner2', 'cuiner2', SHA2('cuiner2', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'cuiner', 'cuiner3', 'cuiner3', SHA2('cuiner3', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Vanessa', 'cambrer', 'cambrer1', 'cambrer1', SHA2('cambrer1', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Carlos Enrique', 'cambrer', 'cambrer2', 'cambrer2', SHA2('cambrer2', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Joan', 'cambrer', 'cambrer3', 'cambrer3', SHA2('cambrer3', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administrador', 'administrador1', 'administrador1', SHA2('administrador1', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Teresa', 'administrador', 'administrador2', 'administrador2', SHA2('administrador2', 256), 'localhost', DEFAULT);
+INSERT INTO personal VALUES(DEFAULT, 'Silvia', 'administrador', 'administrador3', 'administrador3', SHA2('administrador3', 256), 'localhost', DEFAULT);
+*/
+
+/*
+--INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, PASSWORD(), host, es_actiu);
 INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1', 'cuiner1', 'localhost', DEFAULT);
 INSERT INTO personal VALUES(DEFAULT, 'Kevin José', 'cuiner', 'cuiner2', 'cuiner2', 'localhost', DEFAULT);
 INSERT INTO personal VALUES(DEFAULT, 'Natàlia', 'cuiner', 'cuiner3', 'cuiner3', 'localhost', DEFAULT);
@@ -41,10 +55,19 @@ INSERT INTO personal VALUES(DEFAULT, 'Carlos Enrique', 'cambrer', 'cambrer2', 'c
 INSERT INTO personal VALUES(DEFAULT, 'Joan', 'cambrer', 'cambrer3', 'cambrer3', 'localhost', DEFAULT);
 INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administrador', 'administrador1', 'administrador1', 'localhost', DEFAULT);
 INSERT INTO personal VALUES(DEFAULT, 'Teresa', 'administrador', 'administrador2', 'administrador2', 'localhost', DEFAULT);
-INSERT INTO personal VALUES(DEFAULT, 'Silvia', 'administrador', 'administrador3', 'administrador3', 'localhost', DEFAULT);
+IN*/
 
 
-
+--INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, PASSWORD(), host, es_actiu);
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Kevin José CUI', 'cuiner', 'cuiner2', 'cuiner2', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Natàlia CUI', 'cuiner', 'cuiner3', 'cuiner3', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Vanessa CAM', 'cambrer', 'cambrer1', 'cambrer1', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Carlos Enrique CAM', 'cambrer', 'cambrer2', 'cambrer2', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Joan CAM', 'cambrer', 'cambrer3', 'cambrer3', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Carla ADM', 'administrador', 'administrador1', 'administrador1', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Teresa ADM', 'administrador', 'administrador2', 'administrador2', 'localhost');
+INSERT INTO personal (nom, rol, username, password, host) VALUES('Anna ADM', 'administrador', 'administrador3', 'administrador3', 'localhost');
 
 --('maitre', 'cuiner', 'cambrer', 'administratiu')
 --INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1@email.com');

@@ -7,8 +7,6 @@
     <title>INDEX</title>
 </head>
 
-
-
 <body>
 
 <table>
@@ -43,6 +41,33 @@
 <!--                     <input type="text" name="password" placeholder="Password" required><br> -->
 <!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
                     <input type="submit" value="Anar al welcome">
+				</form>
+            </td>
+          </tr>
+
+
+         <tr>
+            <td> prova REGISTAR USUARIS</td>
+            <td> 
+        		<form action="login-app/registre_usuari.php" method="POST">
+                    <input type="text" name="username" placeholder="Usename" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
+<!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
+                    <input type="submit" value="Registrar">
+				</form>
+            </td>
+          </tr>
+
+
+
+         <tr>
+            <td> prova LOGOUT </td>
+            <td> 
+        		<form action="login-app/logout.php" method="POST">
+<!--                     <input type="text" name="username" placeholder="Usuario" required><br> -->
+<!--                     <input type="password" name="password" placeholder="Contraseña" required><br> -->
+<!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
+                    <input type="submit" value="Sortir">
 				</form>
             </td>
           </tr>
@@ -134,18 +159,52 @@
 				</form>
             </td>
           </tr>
-
+         <tr>
+            <td> prova set_grants </td>
+            <td> 
+        		<form action="A_PROVES/prova_set_grants.php">
+        			<input name="uname" value = "" type="hidden" >
+             		<input type="submit" value="PROVA SET GRANTS">
+				</form>
+            </td>
+          </tr>
+         <tr>
+         
             <td> TODO?? </td>
             <td> 
         		<form action="">
         		<br>els grants posar-los a la BD i obtenir-los amb un trigger a l'insertar o modificar persona????
         		<h2> MariaDB NO PERMET DDL NI EN TRIGGERS NI EN PROCEDIMENTS </h2>
         		<h2>O directament per programa??? -> ES LA UNICA MANERA </h2>
+        		
+        		<!--         			<input name="mail" value = "" type="hidden" > -->
+<!--              		<input type="submit" value="PROVES"> -->
 				</form>
             </td>
           </tr>
 
     </tbody>
  </table>   
+ 
+ 
 </body>
+
+
 </html>
+
+
+
+
+
+
+
+
+<!--          <tr> -->
+<!--             <td> Llistat de plats per categoria INPUT TEXT</td> -->
+<!--             <td>  -->
+<!--         		<form method="post" action="plats_per_categoria_INPUT_TEXT_1.php"> -->
+<!--             		<input type="submit" value="Llistar plats per categoria INPUT TEX(NO PDO)"> -->
+<!-- 				</form> -->
+<!--             </td> -->
+
+<!--           </tr> -->
