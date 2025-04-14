@@ -59,15 +59,22 @@ IN*/
 
 
 --INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, PASSWORD(), host, es_actiu);
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Kevin José CUI', 'cuiner', 'cuiner2', 'cuiner2', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Natàlia CUI', 'cuiner', 'cuiner3', 'cuiner3', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Vanessa CAM', 'cambrer', 'cambrer1', 'cambrer1', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Carlos Enrique CAM', 'cambrer', 'cambrer2', 'cambrer2', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Joan CAM', 'cambrer', 'cambrer3', 'cambrer3', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Carla ADM', 'administrador', 'administrador1', 'administrador1', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Teresa ADM', 'administrador', 'administrador2', 'administrador2', 'localhost');
-INSERT INTO personal (nom, rol, username, password, host) VALUES('Anna ADM', 'administrador', 'administrador3', 'administrador3', 'localhost');
+
+--VIA ed25519 USING PASSWORD ('cambrer1')
+--INSERT INTO personal (nom, rol, username, password, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', ed25519_password('cuiner1'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Kevin José CUI', 'cuiner', 'cuiner2', 'cuiner2', ed25519_password('cuiner2'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Natàlia CUI', 'cuiner', 'cuiner3', 'cuiner3', ed25519_password('cuiner3'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Vanessa CAM', 'cambrer', 'cambrer1', 'cambrer1', ed25519_password('cambrer1'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Carlos Enrique CAM', 'cambrer', 'cambrer2', 'cambrer2', ed25519_password('cambrer2'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Joan CAM', 'cambrer', 'cambrer3', 'cambrer3', ed25519_password('cambrer3'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Carla ADM', 'administrador', 'administrador1', 'administrador1', ed25519_password('administrador1'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Teresa ADM', 'administrador', 'administrador2', 'administrador2', ed25519_password('administrador2'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Anna ADM', 'administrador', 'administrador3', 'administrador3', ed25519_password('administrador3'), 'localhost');
+
+--					,password 	VARCHAR(15) NOT NULL
+--					,pwdhash 	CHAR(64) NOT NULL
+
 
 --('maitre', 'cuiner', 'cambrer', 'administratiu')
 --INSERT INTO personal VALUES(DEFAULT, 'Antonia', 'cuiner', 'cuiner1@email.com');
