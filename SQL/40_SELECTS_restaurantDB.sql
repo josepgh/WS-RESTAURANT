@@ -20,17 +20,9 @@ SELECT * FROM detalls_comanda;
 SELECT * FROM comandes_view;
 
 
-
-SELECT * FROM reserves_view;
-
-
 SELECT * FROM factures_view;
 --SELECT * FROM factures_total;
 
-
-SELECT * FROM plats_view;
-
-SELECT * FROM reserves;
 
 SELECT DISTINCT User FROM mysql.user;
 
@@ -72,10 +64,15 @@ CALL ShowAllUserGrants();
   
 SELECT * FROM vista_resumen_privilegios_consolidada ORDER BY base_de_datos, total_privs DESC;
   
-select * from personal_view;
+--select * from personal_view; no existeix
 
 select * from personal;
 
+SELECT * FROM reserves;
+
+
+SELECT * FROM reserves_view;
+SELECT * FROM plats_view;
 
 SELECT 'FI';
 --COMMIT;

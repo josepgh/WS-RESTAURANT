@@ -1,0 +1,28 @@
+
+
+tinc un fitxer de personal:
+
+CREATE TABLE personal(
+			id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
+			,nom 		VARCHAR(50) NOT NULL
+			,rol		VARCHAR(15) NOT NULL CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
+			,username	VARCHAR(15) NOT NULL
+			,password 	VARCHAR(15) NOT NULL
+			,pwdhash 	CHAR(64) NOT NULL
+			,host		VARCHAR(15) NOT NULL
+			,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
+			,UNIQUE (username, host)
+			);
+
+i els inserts els faig amb ed25519_password('cuiner2'), per exemple:
+
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Kevin José CUI', 'cuiner', 'cuiner2', 'cuiner2', ed25519_password('cuiner2'), 'localhost');
+INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Natàlia CUI', 'cuiner', 'cuiner3', 'cuiner3', ed25519_password('cuiner3'), 'localhost');
+
+com faig un login amb els camps:
+
+username
+password
+host
+
+tenint en compte el ed25519_password()?

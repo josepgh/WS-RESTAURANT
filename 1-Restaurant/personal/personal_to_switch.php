@@ -1,22 +1,13 @@
-<!-- <html> -->
-<!-- <head> -->
-<!--     <link rel="stylesheet" type="text/css" href="../css/estils.css"> -->
-<!--     <title>Personal to switch</title> -->
-<!-- </head> -->
-<!-- <body> -->
-
 <?php
 
-// Notificar todos los errores de PHP ????????????????
+// Notificar todos los errores de PHP ????
 error_reporting(-1);
 
-   
     require("../functions/funcions.php");
     $conn = getConnexio();
 
     // obté l'username per canviar l'estat i el host (NECESSARI PER DONAR O REVOCAR ELS GRANTS)
     $query = "select username, host, rol, es_actiu from personal where username = '$_REQUEST[username]'";
-
 
     $registres = mysqli_query($conn, $query) or die("Problemes en el select a personal_to_switch.php: " . mysqli_error($conn));
     $row = mysqli_fetch_array($registres);
@@ -24,43 +15,15 @@ error_reporting(-1);
     if ($row['es_actiu'] == 1){ // si esta ACTIU el dona de BAIXA
         
         $query_update = "update personal set es_actiu = 0 where username = '$_REQUEST[username]'";
-        
-//         // mira si l'usuari té algun GRANT:
-//         $query_te_grants = "SELECT COUNT(*) as count FROM mysql.user WHERE User = '$_REQUEST[username]' AND Host = '$row[host]'";
-//         $reg = mysqli_query($conn, $query_te_grants) or die("Problemes en consultar els GRANTS d'un user a la taula mysql.user: " . mysqli_error($conn));
-//         $row_grants = mysqli_fetch_array($reg);
-
-//         echo "1 l'username: $_REQUEST[username] actiu passa a baixa ... <br> i la row_grants_count : $row_grants[count] <br>";
-        
-// //         if($row_grants['count'] > 0 ){ //si te algun GRANT (A PART DE ESTAR A LA BD és a dir 2), fa un REVOKE:
-//              $query_revoke_grants = "REVOKE ALL PRIVILEGES, GRANT OPTION FROM '$_REQUEST[username]'@'$row[host]'";
-//              mysqli_query($conn, $query_revoke_grants) or die("Error en REVOCAR GRANTS al switch: ". mysqli_error($conn));
-// //         }
 
     }else{ // si esta de BAIXA el dona d'ALTA
         
         $query_update = "update personal set es_actiu = 1 where username = '$_REQUEST[username]'";
-        
-        
-//         $query_te_grants = "SELECT COUNT(*) as count FROM mysql.user WHERE User = '$_REQUEST[username]' AND Host = '$row[host]'";
-//         $reg = mysqli_query($conn, $query_te_grants) or die("Problemes en consultar els GRANTS d'un user a la taula mysql.user: " . mysqli_error($conn));
-//         $row_grants = mysqli_fetch_array($reg);
-
-//         echo "2 l'username: $_REQUEST[username] de baixa passa a actiu .... <br> i la row_grants_count : $row_grants[count] <br>";
-        
-
-// //         if($row_grants['count'] == 0){ //si no te grants (A PART DE ESTAR A LA BD és a dir 1) els concedeix:
-//              $query_atorga_grants = "GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO '$_REQUEST[username]'@'$row[host]';";
-//              mysqli_query($conn, $query_atorga_grants) or die("Error en TORNAR a atorgar GRANTS al switch: ". mysqli_error($conn));
-// //         }
-        
+                
     }
     
     mysqli_query($conn, $query_update) or die("Problemes en el switch a personal_to_switch.php: " . mysqli_error($conn));
 
-    
-    
-    
     // torna a fer el select pq dades actualitzades per tal de fer el setGrants correcte
     $registres = mysqli_query($conn, $query) or die("Problemes en el select a personal_to_switch.php: " . mysqli_error($conn));
     $row = mysqli_fetch_array($registres);
@@ -75,8 +38,6 @@ error_reporting(-1);
     //echo "3 l'username: $_REQUEST[username] baixa el dona d'alta <br> i la row_grants_count : $row_grants[count] <br>";
  		    
  	mysqli_close($conn);
- 	
- 	
  	
     // ChatGPT ================================================== explicació al final del fitxer
  	if (isset($_SERVER['HTTP_REFERER'])) {
@@ -96,8 +57,7 @@ error_reporting(-1);
 
 <!-- </html> -->
 
-<!--     $query_drop_user = "REVOQUE ALL PRIVILEGES , GRANT OPTION FROM '$_REQUEST[username]'@'$_REQUEST[host]'"; -->
-
+<!-- $query_drop_user = "REVOQUE ALL PRIVILEGES , GRANT OPTION FROM '$_REQUEST[username]'@'$_REQUEST[host]'"; -->
 
 <!-- Consulta a CHATGPT -> como hacer en php que se ejecute codigo de una pagina y volver a la pagina que la ha llamado automaticamente? -->
 
@@ -109,29 +69,6 @@ error_reporting(-1);
 <!-- 2. Ejecutar el código que necesites. -->
 <!-- 3. Redirigir a la página anterior usando header("Location: ..."). -->
 
-
-//  ? php
-// // archivo: procesar.php
-
-// // Aquí va el código que deseas ejecutar
-// // Por ejemplo:
-// echo "Ejecutando algo...";
-// // Puede ser insertar datos, enviar un correo, etc.
-
-// // Esperamos un momento si quieres que el código tenga efecto visual
-// // sleep(1); // opcional
-
-// // Redirigir a la página que llamó (si existe)
-// if (isset($_SERVER['HTTP_REFERER'])) {
-//     $volver = $_SERVER['HTTP_REFERER'];
-//     header("Location: $volver");
-//     exit();
-// } else {
-//     // Si no hay referer, redirige a una página por defecto
-//     header("Location: index.php");
-//     exit();
-// }
-// ? 
 
 <!-- Consideraciones -->
 <!-- $_SERVER['HTTP_REFERER'] no siempre está presente (depende del navegador). -->

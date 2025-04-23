@@ -34,12 +34,15 @@
         echo "<h2>Rol:  " . "$_REQUEST[rol]" . "</h2>";
         echo "<h2>Username:  " . "$_REQUEST[username]" . "</h2>";
         echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
+        echo "<h2>Estat: " . ($_REQUEST['es_actiu'] == 1 ? "ACTIU" : "BAIXA") . "</h2>";
+        
     }
     else{ // si NO EXISTEIX A LA BD => L'INSERTA + CREA USER A LA BD + LI ATORGA GRANTS (SI CAL !!!!!)
 
         
 //          $hash = hash('sha256', $_REQUEST['password']);
-         
+        //CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cambrer1') PASSWORD EXPIRE NEVER;
+        
          $query_insert = "insert into personal(nom, rol, username, password, pwdhash, host, es_actiu)
                         values('$_REQUEST[nom]', '$_REQUEST[rol]', '$_REQUEST[username]', '$_REQUEST[password]', 'PWDHASH', '$_REQUEST[host]', '$_REQUEST[es_actiu]')";
          
@@ -48,8 +51,10 @@
          // ========================================================================================
          // ============================== IMPORTANT ===============================================
          // ========================================================================================
-         
-         $query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
+
+         //CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cambrer1') PASSWORD EXPIRE NEVER;
+         $query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED VIA ed25519 USING PASSWORD ('$_REQUEST[password]') PASSWORD EXPIRE NEVER";
+         //$query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY '$_REQUEST[password]'";
          //$query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY 'SHA2('$_REQUEST[password]', 256)'";
          //$query_nou_usuari_db = "CREATE USER '$_REQUEST[username]'@'$_REQUEST[host]' IDENTIFIED BY hash('sha256', $_REQUEST[password])";
          
@@ -88,8 +93,7 @@
         echo "<h2>Usename:  " . "$_REQUEST[username]" . "</h2>";
         echo "<h2>Password:  " . "$_REQUEST[password]" . "</h2>";
         echo "<h2>Host:  " . "$_REQUEST[host]" . "</h2>";
-        echo "<h2>Actiu?:  " . "$_REQUEST[es_actiu]" . "</h2>";
-
+        echo "<h2>Estat: " . ($_REQUEST['es_actiu'] == 1 ? "ACTIU" : "BAIXA") . "</h2>";
         if ($_REQUEST['es_actiu'] == 1){
             echo "<h2>Estat: ACTIU</h2>";
         }else{
@@ -112,7 +116,7 @@
 ?>
 
 
-	<form action="./personal_gestio.php">
+	<form action="./gestio_personal.php">
     	<input type="submit" value="Tornar al llistat">
     	<input name="uname" value = "" type="hidden" >
 	</form>

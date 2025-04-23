@@ -1,0 +1,111 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+<!--     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <title>Taula productes</title>
+</head>
+<body>
+
+<?php
+   
+    require("../functions/funcions.php");
+    
+    $conn = getConnexio();
+    
+    $missatge = ""; //aqui el missatge que sortira en pantala
+    
+    IF ($_SERVER["REQUEST_METHOD"] === "POST"){
+//         $id_cat_selected = intval($_POST['id_categoria']);
+        //obtenir dades del formulari
+        //===============================================================================================
+        //===============================================================================================
+        //Consejo rápido de seguridad:
+        //•	No confíes ciegamente en $_REQUEST. Usa $_POST o $_GET según el caso
+        //•	Siempre valida y/o sanitiza los datos del usuario antes de usarlos, aunque uses bind_param()
+        $idplat = intval($_POST['id_plat']);
+        $nom = $_POST['nom'];
+        $descripcio = $_POST['descripcio'];
+        $preu = floatval($_POST['preu']);
+        //$idcategoria = intval($_POST['id_categoria']);
+        //================================================================================================
+        //================================================================================================
+        
+        try{
+            $stmt = $conn->prepare("UPDATE plats SET descripcio = ?, preu = ? where id_plat = ?");
+            $stmt->bind_param("sdi", $descripcio, $preu, $idplat);
+            
+            //if(!$stmt->execute()){
+                //die ("Problema a l'executar update de plat: " . mysqli_error($conn));
+            //}
+            $stmt->execute();
+            $missatge = "Plat actualitzat correctament: $nom";
+            
+        }catch(Throwable $ex){
+            $missatge = "Error a l'actualitzar: " . $ex->getMessage();
+        }
+        
+    }
+    
+
+    $query = "select id_plat, nom, descripcio, preu, id_categoria from plats where id_plat = '$_REQUEST[id_plat]'";
+    
+    $registres = mysqli_query($conn, $query) or
+                            die("Problemes amb el select de personal: " . mysqli_error($conn));
+    
+    if($row = mysqli_fetch_array($registres)){
+	
+    }
+    else{
+        echo "<h1>No existeix el plat:  $_REQUEST[id_plat]<h1>";
+    }
+ 		    
+    mysqli_close($conn);
+?>
+	
+	<h1>Actualitzar plat</h1>
+	
+	<?php if (!empty($missatge)): ?>
+		<p style="font-weigth: bold; color: red;"><?php echo htmlspecialchars($missatge) . " " . htmlspecialchars($preu)?> </p>
+	<?php endif;?>
+
+    <!-- <form action="plat_updated.php" method="POST"> -->
+    <form method="POST">
+    
+    
+        <label for="n">Nom:</label>
+        <input id="n" name="nom" type="text" value = "<?php echo $row['nom']?>" readonly> NO MODIFICABLE
+        <br><br>
+
+        <label for="i">Id Plat:</label>
+        <input id="i" name="id_plat" type="number" value = "<?php echo $row['id_plat']?>" readonly> NO MODIFICABLE
+       <br><br>
+
+        <label for="u">Descripcio:</label>
+        <input id="u" name="descripcio" type="text" value = "<?php echo $row['descripcio']?>" required>
+
+        <br><br>
+
+        <label for="p">Preu:</label>
+        <input id="p" name="preu" type="number" value = "<?php echo $row['preu']?>" required>
+        <br><br>
+
+<!--         <br><br> -->
+        
+		<button type="submit">ACTUALITZA</button><br>
+
+
+<!--         <button type="submit">UPDATE</button> -->
+
+    </form>
+
+	<form action="./prova_gestio_plats.php">
+    	<input type="submit" value="Tornar al llistat">
+<!--     	<input name="uname" value = "" type="hidden" > -->
+	</form>
+
+	<form action="../index.php">
+		<input type="submit" value="Anar a l'inici">
+	</form>
+</body>
+
+</html>

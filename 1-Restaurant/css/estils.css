@@ -1,8 +1,13 @@
 
 /* https://www.w3schools.com/colors/colors_names.asp */
 
+
+/* table.cap{	border: 1px solid; */
+/* 	   text-align: left; */
+
+
+
 table, td, th{
-	
 	border: 1px solid;
 	text-align: center;
 }

@@ -72,15 +72,14 @@
         <input id="a" name="es_actiu" type="text" value = "<?php echo $row['es_actiu']?>" readonly>
         <br><br>
 
-        <label for="actiu">Actiu?: (no)</label>
-        <input id="actiu" type="range" name="es_actiu" min="0" max="1" value = "<?php echo $row['es_actiu']?>" disabled> (sí)
+        <label for="actiu">Estat: (BAIXA)</label>
+        <input id="actiu" type="range" name="es_actiu" min="0" max="1" value = "<?php echo $row['es_actiu']?>" disabled> (ALTA)
         <br><br>
-
 
         <button type="submit">ESBORRAR DEFINITIVAMENT????</button>
     </form>
 	
-	<form action="./personal_gestio.php">
+	<form action="./gestio_personal.php">
     	<input type="submit" value="Tornar al llistat">
     	<input name="uname" value = "" type="hidden" >
 	</form>

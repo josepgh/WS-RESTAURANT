@@ -1,10 +1,21 @@
+<?php
+    session_start();
+    $_SESSION['username'] = "Pep";
+    require ('./includes/header.php');
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
+    <!-- 	Bootstrap CSS (des de CDN) -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
+			integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+	
     <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/estils.css">
-    <title>INDEX</title>
+    <title>RESTRANT</title>
 </head>
 
 
@@ -12,140 +23,161 @@
 <body>
 
 <table>
-<!-- 	<thead> -->
-<!-- 		<tr> -->
-<!-- 			<th>Accio</th> -->
-<!-- 			<th>Executar</th> -->
-<!-- 		</tr> -->
-<!-- 	</thead> -->
-	<tbody>
+		<tr>
+			<td colspan="3"><h4>INDEX</h4></td>
+		</tr>
+</table>
+
+
+
+<table>
+	<thead>
+		<tr>
+			<th>Accio</th>
+			<th>Estat</th>
+			<th>Executar</th>
+			
+		</tr>
+	</thead>
+
+
+         <tr>
+            <td> INDEX PERSONAL </td>
+            <td><h4></h4></td>
+            <td> 
+        		<form action="personal/index_personal.php">
+             		<input type="submit" value="INDEX PERSONAL">
+				</form>
+            </td>
+          </tr>
+
+
+         <tr> 
+            <td> INDEX RESERVES </td>
+            <td><h4></h4></td>
+            <td> 
+        		<form action="reserves/index_reserves.php">
+        		<input type="submit" value="INDEX RESERVES">
+        		
+				</form>
+            </td>
+		</tr>
+
+
+		<tr>
+            <td> INDEX PLATS </td>
+             <td><h4>OK</h4></td>
+            <td> 
+        		<form action="plats/index_plats.php">
+             		<input type="submit" value="INDEX PLATS">
+				</form>
+            </td>
+          </tr>
+		<tr>
+            <td> INDEX COMANDES </td>
+             <td><h4>OK</h4></td>
+            <td> 
+        		<form action="comandes/index_comandes.php">
+             		<input type="submit" value="INDEX COMANDES">
+				</form>
+            </td>
+          </tr>
+		<tr>
+            <td> INDEX TAULES </td>
+             <td><h4>OK</h4></td>
+            <td> 
+        		<form action="taules/index_taules.php">
+             		<input type="submit" value="INDEX TAULES">
+				</form>
+            </td>
+          </tr>
+
+         <tr>
+            <td></td>
+            <td></td>
+          </tr>
+
+
+         <tr>
+            <td> ANAR A LES PROVES </td>
+            <td></td>
+            <td> 
+        		<form action="A_PROVES/index_proves.php">
+             		<input type="submit" value="ANAR A LES PROVES">
+				</form>
+            </td>
+          </tr>
+
+
+
+         <tr>
+            <td></td>
+            <td></td>
+          </tr>
+
 
          <tr>
             <td> ANAR AL LOGIN </td>
+            <td></td>
             <td> 
-        		<form action="login-app/login.html">
-<!--                     <input type="text" name="username" placeholder="Usuario" ><br> -->
-<!-- <!--                     <input type="password" name="password" placeholder="Contraseña" required><br>  -->
-<!--                     <input type="text" name="password" placeholder="Contraseña" ><br> -->
-<!--                     https://www.php.net/manual/es/function.gethostname.php -->
-<!-- <!--         			<input name="host" value = "< ? php echo gethostbyname(gethostname()) ? >" type="hidden" >  -->
-<!--         			<input name="host" value = "localhost" type="hidden" > -->
-                    <input type="submit" value="Anar al LOGIN">
-				</form>
-            </td>
-          </tr>
-         <tr>
-            <td> ANAR AL WELCOME</td>
-            <td> 
-<!--         		<form action="login-app/welcome.php" method="POST"> -->
-        		<form action="login-app/welcome.php">
-<!--                     <input type="text" name="username" placeholder="Usename" required><br> -->
-<!--                     <input type="text" name="password" placeholder="Password" required><br> -->
-<!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
-                    <input type="submit" value="Anar al welcome">
-				</form>
-            </td>
-          </tr>
-
-         <tr>
-            <td> GESTIO DE PERSONAL </td>
-            <td> 
-        		<form action="personal/personal_gestio.php">
-        			<input name="uname" value = "" type="hidden" >
-             		<input type="submit" value="Gestio de personal">
+        		<form action="login-app/index_login.php">
+             		<input type="submit" value="ANAR AL LOGIN">
 				</form>
             </td>
           </tr>
 
 
-         <tr>
-
-         <tr>
-            <td>AFEGIR PERSONA</td>
-            <td> 
-        		<form action="personal/personal_to_insert.php">
-            		<input type="submit" value="AFEGIR persona">
-				</form>
-            </td>
-          </tr>
-          
-         <tr> 
-            <td> Plats VIEW (La carta) </td>
-            <td> 
-        		<form action="plats/plats_view.php">
-            		<input type="submit" value="Plats VIEW (La carta)">
-				</form>
-            </td>
-          </tr>
-          
-         <tr>
-            <td> Llistat de plats per categoria SELECT</td>
-            <td> 
-        		<form action="plats/plats_per_categoria_select.php">
-            		<input type="submit" value="Llistar plats per categoria SELECT">
-				</form>
-            </td>
-          </tr>
-          
 
          <tr> 
-            <td> Gestionar comandes </td>
-            <td> 
-        		<form action="comandes/comandes_view.php">
-            		<input type="submit" value="Gestionar comandes">
-				</form>
+            <td> TAULA RESERVES <br>
+            provoca ERR_CACHE_MISS
+            
             </td>
-		</tr>
-
-         <tr> 
-            <td> Gestionar reserves </td>
+            <td><h4></h4></td>
             <td> 
+            
+ <?php echo "Data " . date("d-m-Y h:i:sa")?>;<br>           		
+<?php echo "Dia " . date('d-m-Y')?>;
+            
         		<form action="reserves/reserves.php">
-            		<input type="submit" value="Gestionar reserves">
+            		<input type="submit" value="Reserves">
 				</form>
             </td>
 		</tr>
-		
+
 
          <tr>
-            <td> Llistar taules </td>
+            <td> TANCAR SESSIO </td>
+            <td><h4></h4></td>
             <td> 
-        		<form action="taules/taules_list.php">
-            		<input type="submit" value="Llistar taules">
-				</form>
-            </td>
-          </tr>
-
-         <tr>
-            <td> SORTIR </td>
-            <td> 
-        		<form action="sortir.php" method="post">
+        		<form action="tancar.php" method="post">
             		<input  type="submit" value="Tancar sessio">
 				</form>
             </td>
           </tr>
 
-         <tr>
-            <td> TMP </td>
-            <td> 
-        		<form action="A_PROVES/passaParam1.php">
-<!--         			<input name="mail" value = "" type="hidden" > -->
-             		<input type="submit" value="PROVES">
-				</form>
-            </td>
-          </tr>
+
 
             <td> TODO?? </td>
+            <td><h4></h4></td>
             <td> 
         		<form action="">
         		<br>els grants posar-los a la BD i obtenir-los amb un trigger a l'insertar o modificar persona????
-        		<h2> MariaDB NO PERMET DDL NI EN TRIGGERS NI EN PROCEDIMENTS </h2>
-        		<h2>O directament per programa??? -> ES LA UNICA MANERA </h2>
+        		<br> MariaDB NO PERMET DDL NI EN TRIGGERS NI EN PROCEDIMENTS
+        		<br>O directament per programa??? -> ES LA UNICA MANERA
 				</form>
             </td>
           </tr>
 
-    </tbody>
- </table>   
+
+ </table> 
+ 
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"  -->
+<!-- 	integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"  -->
+<!-- 	crossorigin="anonymous"></script>   -->
 </body>
 </html>
+<?php
+    require './includes/footer.php';
+?>
+

@@ -1,21 +1,14 @@
 -- ESTUDIANT LES SORTIDES I LOGS:
--- https://mariadb.com/kb/es/general-query-log/
+-- https://mariadb.com/kb/es/general-query-log/ 
 -- https://mariadb.com/docs/server/ref/es11.4/cli/mariadb/
--- https://gist.github.com/joseluisq/40ec9169669aa1848492141fa6f57fcb
--- https://mariadb.com/docs/server/ref/es11.4/cli/mariadb/
--- https://mariadb.com/docs/server/connect/command-line/
-
+-- https://mariadb.com/docs/server/ref/es11.4/cli/mariadb/ 
 --SET GLOBAL general_log=1;
 --SET GLOBAL general_log_file='D:\\PRJCTS\\WS-RESTAURANT\\SQL\\crea_burguer.log';--OK
 --SET GLOBAL general_log_file='crea_restaurant_al_datadir.log'; --FUNCIONA
 
 INSTALL SONAME 'auth_ed25519';
 
-
-SET autocommit=FALSE;
---SELECT CURDATE();
---SELECT CURTIME();
---SELECT NOW();
+SET autocommit=FALSE; --SELECT CURDATE(); --SELECT CURTIME(); --SELECT NOW();
 SELECT NOW(), user(), current_user();
 
 DROP DATABASE IF EXISTS restaurantDB;
@@ -32,35 +25,43 @@ USE restaurantDB;
 --ERROR 1005 (HY000) at line 32: Can't create table `burguerdb`.`comandes` 
 --(errno: 150 "Foreign key constraint is incorrectly formed")
 -- equivalent a SET CONSTRAINTS ALL DEFERRABLE:
---https://mariadb.com/kb/en/server-system-variables/#foreign_key_checks
+
 SET SESSION foreign_key_checks=OFF;
 
+-- Crea la tabla (si aún no existe)
+CREATE TABLE IF NOT EXISTS productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    categoria_id INT NOT NULL,
+    categoria_nombre VARCHAR(100) NOT NULL
+);
+
+/*
 CREATE TABLE grants_rol(
 						id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
-						,id_rol		VARCHAR(15) UNIQUE 
-									CHECK(id_rol IN ('cuiner', 'cambrer', 'administrador'))
+						,id_rol		VARCHAR(15) UNIQUE CHECK(id_rol IN ('cuiner', 'cambrer', 'administrador'))
 						,grants	VARCHAR(50)
 						);
+*/
 
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
---					,id_rol		INTEGER
 					,nom 		VARCHAR(50) NOT NULL
-					,rol		VARCHAR(15) NOT NULL -- CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
---					,email		VARCHAR(40) UNIQUE
---											unique
+					,rol		VARCHAR(15) NOT NULL CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
 					,username	VARCHAR(15) NOT NULL
 					,password 	VARCHAR(15) NOT NULL
 					,pwdhash 	CHAR(64) NOT NULL
 					,host		VARCHAR(15) NOT NULL
 					,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
 					,UNIQUE (username, host)
-					,FOREIGN KEY (rol) REFERENCES grants_rol(id_rol)
 					);
+
+
 
 CREATE TABLE categories(
 						id_categoria	INTEGER PRIMARY KEY AUTO_INCREMENT
-						,nom			VARCHAR(10) CHECK(nom IN ('Entrants', 'Principal', 'Postres', 'Begudes'))
+						,nom			VARCHAR(10) CHECK(nom IN 
+										('Entrants', 'Principal', 'Postres', 'Begudes'))
 						);
 
 CREATE TABLE plats(
@@ -80,15 +81,19 @@ CREATE TABLE taules(
 
 CREATE TABLE reserves(
 					id_reserva 				INTEGER PRIMARY KEY AUTO_INCREMENT
+					,estat_reserva			VARCHAR(7) NOT NULL DEFAULT ('lliure')
 					,id_taula				INTEGER NOT NULL
 					,nom_client				VARCHAR(30) NOT NULL
-					,data_reserva			DATE
+					,data_reserva			DATE NOT NULL
+					,hora_reserva			VARCHAR(2) NOT NULL
 					,num_persones			INTEGER
 					,username				VARCHAR(30)
 --					,id_personal_reserva	INTEGER	NOT NULL
 --					CAL UN TRIGGERR --->>>> CHECK(comensals <= (SELECT taules.max_comensals)
 					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
 --					,FOREIGN KEY (id_personal_reserva) REFERENCES personal(id_personal)
+					,CHECK(estat_reserva IN ('lliure', 'ocupada')) 
+					,CHECK(hora_reserva IN ('13', '15')) 
 					);
 
 -- a la comanda cal inserir el USER() automaticament (l'idCambrer)
@@ -130,6 +135,7 @@ CREATE OR REPLACE FUNCTION ed25519_password RETURNS STRING SONAME "auth_ed25519.
 --                                      CREA USUARIS
 -- ---------------------------------------------------------------------------------
 --https://www.geeksforgeeks.org/how-to-create-user-with-grant-privileges-in-mariadb/
+DROP USER IF EXISTS Josep@localhost;
 DROP USER IF EXISTS administrador1@localhost;
 DROP USER IF EXISTS administrador2@localhost;
 DROP USER IF EXISTS administrador3@localhost;
@@ -141,7 +147,7 @@ DROP USER IF EXISTS cambrer3@localhost;
 DROP USER IF EXISTS cuiner1@localhost;
 DROP USER IF EXISTS cuiner2@localhost;
 DROP USER IF EXISTS cuiner3@localhost;
-DROP USER IF EXISTS cuiner5@localhost;
+DROP USER IF EXISTS cuiner5@cuiner5;
 
 -- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
 CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cambrer1') PASSWORD EXPIRE NEVER;
@@ -188,57 +194,6 @@ GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRAN
 --GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
 --GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
 
-/*
---CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
-CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1';
-GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador1'@'localhost' WITH GRANT OPTION;
-
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
-
---CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
-CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2';
-GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION;
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
-
---CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
-CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3';
-GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION;
-
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
---GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
-*/
-/*
--- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
-CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
-CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer2'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
-CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
-
-CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
-CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
-CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
-
-CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
-CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
-CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
-*/
-
 
 --CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
 -- GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer1'@'localhost';
@@ -270,21 +225,7 @@ SHOW GRANTS FOR guillem@localhost;
 -- ---------------------------------------------------------------------------------
 --                                     PROCEDURES
 -- ---------------------------------------------------------------------------------
-/*
-DELIMITER //
-DROP PROCEDURE IF EXISTS set_grants_on_insert //
-CREATE PROCEDURE set_grants_on_insert(IN username VARCHAR(15), IN password VARCHAR(15), IN host VARCHAR(15), actiu BOOLEAN)
-BEGIN
 
-START TRANSACTION;
-
-CREATE USER CONCAT(" '", username, "'@'", host, "' ") IDENTIFIED BY CONCAT(" '", password, "' ") PASSWORD EXPIRE NEVER;
-COMMIT;
-
-END
-//
-DELIMITER ;
-*/
 -- ===================================================================================================================
 --CREATE USER 'username'@'host' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
 -- ChatGPT ========================================================================================================
@@ -319,8 +260,6 @@ END
 //
 DELIMITER ;
 -- ===================================================================================================================
-
-
 -- ==========================================================================================================================
 --                                      TRIGGERS
 -- ==========================================================================================================================
@@ -331,22 +270,7 @@ DELIMITER ;
 --ORDER BY user;
 --SET OLD.pwdhash = a_str;
 --CREATE PROCEDURE set_grants_on_insert(IN username VARCHAR(15), IN host VARCHAR(15), actiu BOOLEAN)
-/*
-DELIMITER //
-CREATE OR REPLACE TRIGGER set_autentic_str
-AFTER INSERT ON personal
-FOR EACH ROW
-BEGIN
-DECLARE a_str VARCHAR(50);
 
-
-SELECT authentication_string INTO a_str FROM mysql.user WHERE User = NEW.username AND host = NEW.host;
-
-INSERT INTO personal(NEW.pwdhash) VALUES(a_str);
-
-END; //
-DELIMITER ;
-*/
 -- ==========================================================================================================================
 DELIMITER //
 CREATE OR REPLACE TRIGGER check_capacitat_taula
@@ -367,46 +291,26 @@ END; //
 DELIMITER ;
 
 -- ==========================================================================================================================
-/*
-DELIMITER //
-CREATE OR REPLACE TRIGGER grant_privilegis
-BEFORE INSERT ON reserves
-FOR EACH ROW
-BEGIN
-
-DECLARE _id_taula INTEGER UNSIGNED;
-DECLARE _capacitat INTEGER;
-
-SELECT id_taula, capacitat INTO _id_taula, _capacitat FROM taules WHERE id_taula = NEW.id_taula;
-SET @errorMsg = CONCAT('ERROR: taula ', _id_taula, ' de capacitat ', _capacitat, '. NO HI CABEN ', NEW.num_persones); 
-
-IF NEW.num_persones > _capacitat THEN
-	SIGNAL SQLSTATE '40000' SET MESSAGE_TEXT = @errorMsg;
-END IF;
-END; //
-DELIMITER ;
-*/
-
--- ==========================================================================================================================
 --                                      VIEWS             https://mariadb.com/kb/en/create-view/
 -- ==========================================================================================================================
 
-
+/*
 CREATE OR REPLACE VIEW personal_view AS
 SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.pwdhash, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
 FROM 		personal p, grants_rol g
 WHERE 		p.rol = g.id_rol
 ORDER BY	p.username;
+*/
 
-CREATE OR REPLACE VIEW plats_view(categoria_plat, nom_plat, descripcio_plat, preu_plat) AS
-SELECT categories.nom, plats.nom, plats.descripcio, plats.preu
-FROM plats, categories
-WHERE plats.id_categoria = categories.id_categoria
-ORDER BY categories.nom DESC, plats.nom ASC;
+CREATE OR REPLACE VIEW plats_view(id_plat, id_categoria, categoria, nom, descripcio, preu) AS
+SELECT p.id_plat, c.id_categoria, c.nom, p.nom, p.descripcio, p.preu
+FROM plats p, categories c
+WHERE p.id_categoria = c.id_categoria
+ORDER BY c.nom DESC, p.nom ASC;
 
 
-CREATE OR REPLACE VIEW reserves_view(id_reserva, data_reserva, num_taula, capacitat_taula, persones_reserva, nom_client, username) AS 
-SELECT r.id_reserva, r.data_reserva, t.numero, t.capacitat, r.num_persones, r.nom_client, r.username 
+CREATE OR REPLACE VIEW reserves_view(id_reserva, estat_reserva, data_reserva, hora_reserva, num_taula, capacitat_taula, persones_reserva, nom_client, username) AS 
+SELECT r.id_reserva, r.estat_reserva, r.data_reserva, r.hora_reserva, t.numero, t.capacitat, r.num_persones, r.nom_client, r.username 
 FROM reserves r, taules t
 WHERE r.id_taula = t.id_taula
 ORDER BY r.data_reserva, t.numero;
@@ -535,7 +439,6 @@ SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
 WHERE CONSTRAINT_SCHEMA = 'burguerdb' OR CONSTRAINT_SCHEMA = 'llibres';
 
 
-
 COMMIT;
 
 
@@ -551,11 +454,10 @@ COMMIT;
 
 --IF NEW.comensals > (SELECT maxComensals FROM taules WHERE idTaula = NEW.idTaula;) THEN
 --ELSE
-
-
-
-
-
+--****************************************************************************************************************
+--****************************************************************************************************************
+--****************************************************************************************************************
+--****************************************************************************************************************
 
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
@@ -608,13 +510,9 @@ GROUP BY d.id_comanda ASC WITH ROLLUP;
 -- c.data_comanda, c.id_comanda, t.numero, t.capacitat,
 
 */
-
-
-
 --****************************************************************************************************************
 -- In MariaDB you can use JSON_ARRAYAGG and JSON_OBJECT functions to create a JSON array returned by a function:
 --****************************************************************************************************************
-
 /*					
 DELIMITER //
  
@@ -650,7 +548,6 @@ DELIMITER //
 */
 
 /*					
-					
 DELIMITER //
 
 CREATE PROCEDURE GenerateNumbers(IN max_value INT)
@@ -743,4 +640,55 @@ END //
 
 DELIMITER ;
 */
+/*
+--CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador1'@'localhost' WITH GRANT OPTION;
+
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
+
+--CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION;
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
+
+--CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
+CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3';
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION;
+
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
+--GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
+*/
+/*
+-- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
+CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
+CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
+CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
+
+CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
+CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
+CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
+
+CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador1'@'localhost';
+CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador2'@'localhost';
+CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
+*/
+
 

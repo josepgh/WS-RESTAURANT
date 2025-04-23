@@ -1,9 +1,20 @@
+<?php
+    session_start();
+    require '../includes/header.php';
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <!--     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
-    <title>Plats view</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" 
+		rel="stylesheet" crossorigin="anonymous"
+		integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/estils.css">
+
+    <title>Plats view</title>
     
 </head>
 
@@ -23,11 +34,10 @@
         require("../functions/funcions.php");
         $conn = getConnexio();
 
- 		$query = "select categoria_plat, nom_plat, descripcio_plat, preu_plat from plats_view";
+ 		$query = "select categoria, nom, descripcio, preu from plats_view";
 
  		
- 		$registres = mysqli_query($conn, $query) or
- 		die("Problemes amb el select de plats: " . mysqli_error($conn));
+ 		$registres = mysqli_query($conn, $query) or die("Problemes amb el select de plats: " . mysqli_error($conn));
  		
  		
  		if($registres){
@@ -36,10 +46,10 @@
  		        
       
  		        echo "<tr>
-                        <td>" . $row['categoria_plat'] . "</td>
-                        <td>" . $row['nom_plat'] . "</td>
-                        <td>" . $row['descripcio_plat'] . "</td>
-                        <td>" . $row['preu_plat'] . "</td>
+                        <td>" . $row['categoria'] . "</td>
+                        <td>" . $row['nom'] . "</td>
+                        <td>" . $row['descripcio'] . "</td>
+                        <td>" . $row['preu'] . "</td>
                       </tr>
                       ";
  		    }

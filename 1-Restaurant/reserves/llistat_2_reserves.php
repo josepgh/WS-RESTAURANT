@@ -1,9 +1,20 @@
+<?php
+    session_start();
+    require ('../includes/header.php');
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" 
+		rel="stylesheet" crossorigin="anonymous"
+		integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+
 <!--     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
     <title>Taula reserves</title>
-    <link rel="stylesheet" type="text/css" href="../css/estils.css">
 </head>
 
 <!-- =============LA TAULA reserves ======================================== -->
@@ -12,9 +23,11 @@
 	    <thead>
  		    <tr>
  		    <th>Id reserva</th>
+ 		    <th>Estat</th>
  		    <th>Id taula</th>
  		    <th>Client</th>
  		    <th>Data reserva</th> 		    
+ 		    <th>Hora reserva</th> 		    
  		    <th>Num persones</th>
  		    <th>Username</th>
  		    </tr>
@@ -27,7 +40,7 @@
 	       $conn = getConnexio();
 
 	       
-	       $query = "select id_reserva, id_taula, nom_client, data_reserva, num_persones, username from reserves";
+	       $query = "select id_reserva, estat_reserva, id_taula, nom_client, data_reserva, hora_reserva, num_persones, username from reserves";
 	       
 	       $registres = mysqli_query($conn, $query) or
 	                   die("Problemes amb el select de comandes: " . mysqli_error($conn));
@@ -39,9 +52,11 @@
 
  		            echo "<tr>
                         <td>" . $row['id_reserva'] . "</td>
+                        <td>" . $row['estat_reserva'] . "</td>
                         <td>" . $row['id_taula'] . "</td>
                         <td>" . $row['nom_client'] . "</td>
                         <td>" . $row['data_reserva'] . "</td>
+                        <td>" . $row['hora_reserva'] . "</td>
                         <td>" . $row['num_persones'] . "</td>
                         <td>" . $row['username'] . "</td>
                       </tr>
@@ -68,7 +83,9 @@
 		<thead>
 			<tr>
 				<th>Id reserva</th>
+				<th>Estat</th>
 				<th>Data reserva</th>
+				<th>Hora reserva</th>
 				<th>Num taula</th>
 				<th>Capacitat taula</th>
 				<th>Persones reserva</th>
@@ -80,10 +97,10 @@
 
     <?php
         
-
     
     
-    $query = "select id_reserva, data_reserva, num_taula, capacitat_taula, persones_reserva, nom_client, username from reserves_view";
+    
+    $query = "select id_reserva, estat_reserva, data_reserva, hora_reserva, num_taula, capacitat_taula, persones_reserva, nom_client, username from reserves_view";
     
     $registres = mysqli_query($conn, $query) or
     die("Problemes amb el select de comandes: " . mysqli_error($conn));
@@ -95,7 +112,9 @@
 		        
  		        echo "<tr>
                         <td>" . $row['id_reserva'] . "</td>
+                        <td>" . $row['estat_reserva'] . "</td>
                         <td>" . $row['data_reserva'] . "</td>
+                        <td>" . $row['hora_reserva'] . "</td>
                         <td>" . $row['num_taula'] . "</td>
                         <td>" . $row['capacitat_taula'] . "</td>
                         <td>" . $row['persones_reserva'] . "</td>
@@ -126,5 +145,7 @@
 		<input type="submit" value="Tornar a l'inici">
 	</form>
 
- 
 </html>
+<?php
+    require '../includes/footer.php';
+?>

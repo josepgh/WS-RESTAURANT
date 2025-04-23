@@ -1,0 +1,54 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+<!--     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <title>Afegir plat</title>
+</head>
+<body>
+
+	<h1>Afegir plat o beguda</h1>
+	
+    <form action="plat_inserted.php" method="POST">
+            	<p>
+            	<label for="sel">Selecciona una categoria:</label>
+                <select id="id_categoria" name="id_categoria">
+                    <option value="">-- Selecciona categoria --</option>
+                    <?php
+                    $conn = new mysqli("localhost", "root", "mdb", "restaurantdb");
+                    $sql = "SELECT id_categoria, nom FROM categories";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='".$row['id_categoria']."'>".$row['nom']."</option>";
+                    }
+                    mysqli_close($conn);
+                    ?>
+                </select>
+                </p>
+       <br><br>
+    
+        <label for="n">Nom:</label>
+        <input id="n" type="text" name="nom" placeholder="Nom" required>
+        <br><br>
+
+        <label for="u">Descripcio:</label>
+        <input id="u" type="text" name="descripcio" placeholder="Descripcio" required>
+        <br><br>
+
+        <label for="p">Preu:</label>
+        <input id="p" name="preu" type="text" placeholder="Preu" required>
+        <br><br>
+        
+        <button type="submit">Afegir</button>
+    </form>
+
+
+	<form action="./gestio_plats.php">
+    	<input type="submit" value="Tornar al llistat">
+	</form>
+
+	<form action="../index.php">
+		<input type="submit" value="Anar a l'inici">
+	</form>
+</body>
+
+</html>

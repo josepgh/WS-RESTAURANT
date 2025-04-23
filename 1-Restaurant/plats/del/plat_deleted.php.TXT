@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <title>Personal actualitzat</title>
+</head>
+<body>
+    
+<?php
+    
+    require("../functions/funcions.php");
+    $conn = getConnexio();
+    
+    $query_update = "delete from plats where id_plat='$_REQUEST[id_plat]'";
+     
+    mysqli_query($conn, $query_update) or die("Problemes amb l'UPDATE del plat: " . mysqli_error($conn));
+    //$row = mysqli_fetch_array($registres);
+    
+    echo "<h1>Plat HA ESTAT ELIMINAT</h1>";
+    echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
+    echo "<h2>Descripcio:  " . "$_REQUEST[descripcio]" . "</h2>";
+    echo "<h2>Preu:  " . "$_REQUEST[preu]" . "</h2>";
+    
+    mysqli_close($conn);
+?>    
+    
+	<form action="./plats_gestio.php">
+    	<input type="submit" value="Tornar al llistat">
+    	<input name="uname" value = "" type="hidden" >
+	</form>
+	
+	<form action="../index.php">
+		<input type="submit" value="Tornar a l'inici">
+	</form>
+
+</body>
+</html>

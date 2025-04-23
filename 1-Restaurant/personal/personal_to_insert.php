@@ -37,14 +37,14 @@
         <input id="h" type="text" name="host" required>
         <br><br>
 
-        <label for="es_act">Actiu? (No):</label>
-        <input id="es_act" type="range" name="es_actiu" min="0" max="1" required> (Sí)
+        <label for="es_act">Estat: (BAIXA)</label>
+        <input id="es_act" type="range" name="es_actiu" min="0" max="1" required> (ALTA)
         <br><br>
 
         <button type="submit">Afegir persona</button>
     </form>
 
-	<form action="./personal_gestio.php">
+	<form action="./gestio_personal.php">
     	<input type="submit" value="Tornar al llistat">
     	<input name="uname" value = "" type="hidden" >
 	</form>

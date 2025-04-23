@@ -1,86 +1,64 @@
 <?php
-session_start();
-//require_once("../functions/funcions.php");
+// session_start();
 
-//$usuariActual = getUsuariActual();
 
-//https://www.youtube.com/watch?v=GX_qu0gMHHc&ab_channel=fabianbarbon
+if (!($usuari = $_SESSION['username'])){
+    $usuari = "";
+}
 
-//header("Refresh:0");
 
-if (!isset($_SESSION['username'])) {
-    //header("Location: ../index.php?error=cap_username_a_welcomephp");
-//     header("Location: ../error.html?error=header_error_cap_username_a_la_sessio");
-//     exit();
-// $nom = "";
-// $username = "";
-// $rol = "";
-}else{
-    
-//     $nom = $_SESSION[nom];
-//     $username = $_SESSION['username'];
-//     $rol = $_SESSION['rol'];
 
+// if (!($filt_estat_reserva = $_SESSION['filtro_estat'])){
+//     $filt_estat_reserva = "";
+// }
+// if (!($filt_data_reserva = $_SESSION['filtro_data'])){
+//     $filt_data_reserva = "";
+// }
+
+
+//antic
+if (!($nom_cat = $_SESSION['nom_cat_opcio'] ?? '')){
+    $nom_cat="";
+}
+
+if (!($id_cat = $_SESSION['id_cat_opcio'] ?? '')){
+    $id_cat="";
 }
 
 ?>
 
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: LightCyan; border: 1px solid;">
+    <!-- Contenedor izquierda: logo + título -->
+    <div style="width: 50%; display: flex; align-items: center;">
+        <div style="margin-right: 20px;">
+            <img src="/1-Restaurant/img/restaurant_logo.png" alt="Logo" width="90">
+        </div>
+        <div>
+            <h2 style="margin: 0;">Restaurant Ouspassatsperaigua</h2>
+            <a href='https://getbootstrap.com/' class='btn btn-info' role='button'>GET Bootstrap</a>
+        </div>
+    </div>
 
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Mi Proyecto PHP</title>
-    <link rel="stylesheet" href="../css/estils.css">
-</head>
-<body>
-<nav>
-    <a href="index.php">Inicio</a>
-    <a href="contacto.php">Contacto</a>
-</nav>
-</body>
-</html>
-<header>
-    <p>&copy; <?php echo date('Y'); ?> Restaurant Ouspassatsperaigua</p>
+    <!-- Contenedor derecha: botón logout -->  
     
-    <table>
-	<tbody>
+    <div style="width: 40%; margin-right: 20px;">
+            Username: <?php echo $usuari?><br>
+        	Plat: (<?php echo $nom_cat?>) Id: (<?php echo $id_cat?>)<br>
+<!--             Reserva: (< php echo $filt_data_reserva?>) - (< php echo $filt_estat_reserva?>)<br> -->
+            <!--Data res: (< php echo $filt_data?>)<br> -->
 
-<!--          <tr> -->
-<!-- 			<h2>capçalera</h2> -->
-<!-- 			<p>< php echo "nom:  $_SESSION[nom];"? ><p> -->
-<!-- 			<p>username: $username<p> -->
-<!-- 			<p>rol: $rol</p> -->
-<!--           </tr> -->
-<!--          <tr> -->
-<!--             <td> ANAR AL WELCOME</td> -->
-<!--             <td>  -->
-<!--         		<form action="login-app/welcome.php" method="POST"> -->
-<!--         		<form action="login-app/welcome.php"> -->
-<!--                     <input type="text" name="username" placeholder="Usename" required><br> -->
-<!--                     <input type="text" name="password" placeholder="Password" required><br> -->
-<!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
-<!--                     <input type="submit" value="Anar al welcome"> -->
-<!-- 				</form> -->
-<!--             </td> -->
-<!--           </tr> -->
-
-
-<!--          <tr> -->
-<!--             <td> prova REGISTAR USUARIS</td> -->
-<!--             <td>  -->
-<!--         		<form action="login-app/registre_usuari.php" method="POST"> -->
-<!--                     <input type="text" name="username" placeholder="Usename" required><br> -->
-<!--                     <input type="password" name="password" placeholder="Password" required><br> -->
-<!--                     <input type="text" name="password" placeholder="Contraseña" required><br> -->
-<!--                     <input type="submit" value="Registrar"> -->
-<!-- 				</form> -->
-<!--             </td> -->
-<!--           </tr> -->
-</tbody>
-
-</table>
+    </div>
     
+    <div style="width: 5%; margin-right: 20px;">
+        <form action="/1-Restaurant/index.php" method="post">
+            <button type="submit" style="padding: 5px 10px;">INICI</button>
+        </form>
+    </div>
+    
+    <div style="width: 5%; margin-right: 20px;">
+        <form action="/1-Restaurant/tancar.php" method="post">
+            <button type="submit" style="padding: 5px 10px;">Logout</button>
+        </form>
+    </div>
 </header>

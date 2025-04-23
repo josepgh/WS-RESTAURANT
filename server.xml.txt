@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Server>
-	<Port name="HTTP/1.1" protocol="HTTP">8016</Port>
-<PathMapping local="/Prova_PHP" module="Prova_PHP" remote="D:\PRJCTS\WS-BURGER\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\htdocs\Prova_PHP"/>
-<PathMapping local="/test" module="test" remote="D:\PRJCTS\WS-BURGER\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\htdocs\test"/>
-</Server>

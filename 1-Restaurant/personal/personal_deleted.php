@@ -52,7 +52,7 @@
     
 	<br><br>
 	
-	<form action="./personal_gestio.php">
+	<form action="./gestio_personal.php">
 	<input type="submit" value="Tornar al llistat de personal">
 	<input name="uname" value = "" type="hidden" >
 	</form>

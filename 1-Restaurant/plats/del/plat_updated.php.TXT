@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <title>Plat actualitzat</title>
+</head>
+<body>
+    
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+    require("../functions/funcions.php");
+    $conn = getConnexio();
+    
+    //===============================================================================================
+    //===============================================================================================
+    //Consejo rápido de seguridad:
+    //•	No confíes ciegamente en $_REQUEST. Usa $_POST o $_GET según el caso
+    //•	Siempre valida y/o sanitiza los datos del usuario antes de usarlos, aunque uses bind_param()
+    $idplat = $_POST['id_plat'];
+    $descripcio = $_POST['descripcio'];
+    $preu = $_POST['preu'];
+    // Validar/sanitizar si hace falta ==============================================================
+    $idplat = intval($idplat);
+    $descripcio = trim($descripcio);
+    $preu = floatval($preu);
+    //================================================================================================
+    //================================================================================================
+    
+    $stmt = $conn->prepare("UPDATE plats SET descripcio = ?, preu = ? where id_plat = ?");
+    $stmt->bind_param("sdi", $descripcio, $preu, $idplat);
+
+    if(!$stmt->execute()){
+        die ("Problema a l'executar update de plat: " . mysqli_error($conn));
+    }
+    
+    echo "<h1>Plat HA ESTAT ACTUALITZT:</h1>";
+    echo "<h2>Nom:  " . "$_REQUEST[nom]" . "</h2>";
+    echo "<h2>Descripcio:  " . "$_REQUEST[descripcio]" . "</h2>";
+    echo "<h2>Preu:  " . "$_REQUEST[preu]" . "</h2>";
+    
+    $stmt->close();
+    mysqli_close($conn);
+}
+?>    
+	<form action="./gestio_plats.php">
+    	<input type="submit" value="Tornar al llistat">
+	</form>
+	
+	<form action="../index.php">
+		<input type="submit" value="Tornar a l'inici">
+	</form>
+</body>
+</html>

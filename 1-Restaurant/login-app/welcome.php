@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])) {
 	
     
 <!--     	<br><br> -->
-<!-- 	<form action="./personal_gestio.php"> -->
+<!-- 	<form action="./gestio_personal.php"> -->
 <!--     	<input type="submit" value="Tornar al llistat"> -->
 <!--     	<input name="uname" value = "" type="hidden" > -->
 <!-- 	</form> -->
