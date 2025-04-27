@@ -7,6 +7,7 @@ session_start();
 //===========================
 //require("../includes/header.php"); dona problemes amb els modals
 require("../functions/funcions.php");
+
 //per evitar warnings
 //PHP Warning:  Undefined array key "action"
 
@@ -14,12 +15,12 @@ require("../functions/funcions.php");
 // de gestio_plats.php
 // posa el valor i l'opcio del select de categories de plats
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['estat_reserva'])) {
-        $_SESSION['filtro_estat'] = $_POST['estat_reserva'];
+    if (isset($_POST['estat_valor'])) {
+        $_SESSION['estat_valor'] = $_POST['estat_valor'];
     }
-//     if (isset($_POST['filtro_estat'])) {
-//         $_SESSION['filtro_estat'] = $_POST['filtro_estat'];
-//     }
+    if (isset($_POST['estat_opcio'])) {
+        $_SESSION['filtro_estat'] = $_POST['estat_opcio'];
+    }
     //     echo "Categoría guardada en sesión.";
     
     if (isset($_POST['data_reserva'])) {
@@ -27,7 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
 }
+// Recuperar categoria seleccionada
+//$id_cat_opcio = $_SESSION['id_cat_opcio'] ?? '';
+// Recuperar categoria seleccionada (antic)
+//$nom_cat_opcio = $_SESSION['nom_cat_opcio'] ?? '';
+// $estat_opcio = $_SESSION['estat_opcio'] ?? '';
 $filtro_estat = $_SESSION['filtro_estat'] ?? '';
+
+// Recuperar categoria seleccionada (antic)
+$estat_valor = $_SESSION['estat_valor'] ?? '';
+
 $filtro_data = $_SESSION['filtro_data'] ?? '';
 
 // ==================================================================
@@ -48,24 +58,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Escapes special characters in a string for use in an SQL statement,
     // taking into account the current charset of the connection
     // https://www.php.net/manual/es/mysqli.real-escape-string.php
-    // RESERVAR
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'reservar') {     
+    // INSERTAR
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'afegir') {
 
-        $idreserva = intval($_POST['id_reserva']);
+//         $nom =  $conn->real_escape_string($_POST['nom']);
+//         //$id_plat = intval($_POST['id_plat']);
+//         $descripcio = htmlspecialchars($_POST['descripcio'], ENT_QUOTES);
+//         $preu = doubleval($_POST['preu']);
+//         $id_categoria = intval($_POST['id_categoria']);
         
-        $nom = $conn->real_escape_string($_POST['nom_client']);
+//         //$descripcio = $conn->real_escape_string($_POST['descripcio']);
+//         //$conn = getConnexio();
+//         $stmt = $conn->prepare("insert into plats(nom, descripcio, preu, id_categoria) values(?, ?, ?, ?)");
+//         $stmt->bind_param("ssdi", $nom, $descripcio, $preu, $id_categoria);
+    
+//         echo $stmt->execute() ? "✔️ Plat afegit!" : "❌ Error: " . $conn->error;
+//         $stmt->close();
+//         exit;
+//     }
+    // EDITAR
+    //if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'editar') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'reservar') {     
+        $id_plat = intval($_POST['id_plat']);
+        $nom =  $conn->real_escape_string($_POST['nom']);
+        $descripcio = htmlspecialchars($_POST['descripcio'], ENT_QUOTES);
+        $preu = doubleval($_POST['preu']);
+        
+        $stmt = $conn->prepare("UPDATE plats SET descripcio=?, preu=? WHERE id_plat=?");
         //== sdi string-double(float)-integer ===============
-        
-        $stmt = $conn->prepare("UPDATE reserves SET nom_client=? WHERE id_reserva=?");
-        //== sdi string-double(float)-integer ===============, estat_reserva='ocupada'
-        $stmt->bind_param("si",$nom, $idreserva);
-        
-        echo $stmt->execute() ? "✔️ Reserva actualitzada!" : "❌ Error: " . $conn->error;
+        $stmt->bind_param("sdi",$descripcio, $preu, $id_plat);
+        echo $stmt->execute() ? "✔️ Plat actualitzat!" : "❌ Error: " . $conn->error;
         $stmt->close();
-        
         exit;
     }
 
+    
+    // ELIMINAR: NO===>ELS PLATS NO S'ELIMINEN PQ LES COMANDES (HISTÒRIC) EN DEPENEN
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'eliminar') {
+//         $id = (int)$_POST['id'];
+//         $sql = "DELETE FROM persones WHERE id=$id";
+//         echo $conn->query($sql) ? "✔️ Persona eliminada!" : "❌ Error: " . $conn->error;
+//         exit;
+//     }    
     //**(1.2)=============================================================================
     exit; // ✋ Finalitza l'script per no carregar cap HTML
 }
@@ -76,8 +110,6 @@ require('../includes/header.php');
 
 $conn->close();
 ?>
-
-
 <!-- <html lang="ca"> -->
 <html>
 <head>
@@ -91,7 +123,35 @@ $conn->close();
 <body class="p-4">
     <h2 class="mb-4">Gestió de RESERVES</h2>
 
+<!-- div style= width: 50  display: flex; align-items: center -->
     <!-- Filtres -->
+<!--     <div class="col-md-8"> -->
+    		<!-- button class btn btn-primary mb-3" onclick "obreAfegir()">Reservar Taula</button -->
+<!--     </div> -->
+<!--         <div class="col-md-8"> -->
+<!--         	<label for="ca">Selecciona una categoria</label> -->
+<!--             <select id="ca" name="categoria" onchange="guardarCatEnSessio(this)"> -->
+<!--                 <option value="">-- Selecciona categoria --</option> -->
+<!--                 < php -->
+<!--                     $conn = getConnexio(); -->
+<!--                     $stmt = $conn->prepare("SELECT id_categoria, nom FROM categories ORDER BY id_categoria"); -->
+<!--                     $stmt->execute(); -->
+<!--                     $categs = $stmt->get_result(); -->
+                    
+<!--                    while ($cat_row = $categs->fetch_assoc()) { -->
+<!--                             echo "<option value='" . $cat_row['id_categoria'] . "' " -->
+<!--                                                     . ($cat_row['id_categoria'] == $id_cat_opcio ? 'selected' : '') -->
+<!--                                                     . ">" . $cat_row['nom'] . "</option>"; -->
+<!--                     } -->
+<!--                     $stmt->close(); -->
+<!--                     $conn->close(); -->
+<!--                     //mysqli_close($conn); -->
+<!--                 ?> -->
+<!--             </select> -->
+            <!--<h4>Categoria seleccionada: < = htmlspecialchars($nom_cat_opcio ?: 'Ninguna') ></h4> -->
+            <!--<h4>id_cat_opcio == < = $id_cat_opcio  ></h4> -->
+<!--         </div> -->
+<!-- </div> -->
 
 <div style="width: 50%; display: flex; align-items: center;">
     <!-- Filtres -->
@@ -108,7 +168,7 @@ $conn->close();
                 value="<?= htmlspecialchars($filtro_data) ?>"
             >
       </div>
-
+      <!--             <select id="ca" name="categoria" onchange="guardarCatEnSessio(this)"> -->
         <div class="col-md-8">
             <label for="filtro_estat" class="form-label">Estat de la reserva</label>
             <select id="filtro_estat" name="filtro_estat" class="form-select" onchange="guardarEstatEnSessio(this)">
@@ -119,24 +179,29 @@ $conn->close();
             </select>
         </div>
 </div>
-<br>
-    <!--<table class="table table-bordered table-striped mt-4">'; -->
+
+<!--              <table class="table table-bordered table-striped mt-4">'; -->
+
     <table class="table table-bordered table-striped">
         <thead>
             <tr> 	
             		<th>ID</th><th>Estat</th><th>Taula</th><th>Client</th>
-                    <th>Data</th><th>Hora</th><th>Persones</th><th>Reservar</th><th>Iniciar Comanda</th>
+                    <th>Data</th><th>Hora</th><th>Persones</th><th>Reservar</th>
 					<!-- th style= width: 150p >Reservar</th --> 
             </tr>
         </thead>
     <tbody id="taulaReserves">
         
         <?php 
+//         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
+//             $data = $_POST['filtro_data'] ?? '';
+//             $estat = $_POST['filtro_estat'] ?? '';         
+//             guardaFiltrosEnSession($data, $estat);
 
             $conn = getConnexio();
             
             $sql = "SELECT id_reserva, estat_reserva, id_taula, nom_client, data_reserva, hora_reserva, num_persones
-                    FROM reserves WHERE 1=1";
+                FROM reserves WHERE 1=1";
             
             if (!empty($filtro_data)) {
                 $data = $conn->real_escape_string($filtro_data);
@@ -151,7 +216,9 @@ $conn->close();
             $result = $conn->query($sql);
             
             if ($result && $result->num_rows > 0) {
-
+//                 echo '<table class="table table-bordered table-striped mt-4">';
+//                 echo '<thead><tr><th>ID</th><th>Estat</th><th>Taula</th><th>Client</th>
+//                     <th>Data</th><th>Hora</th><th>Persones</th></tr></thead><tbody>';
                 while ($r = $result->fetch_assoc()) {
                     echo "<tr>
                     <td>{$r['id_reserva']}</td>
@@ -171,10 +238,7 @@ $conn->close();
                                                                                 \"{$r['data_reserva']}\",
                                                                                 \"{$r['hora_reserva']}\",
                                                                                 \"{$r['num_persones']}\")'>Reservar</button>
-                    </td>
-                    <td>
-                    <div><a href='../comandes/comandes_view.php?username=" . $r['nom_client'] 
-                                . "' class='btn btn-success' role='button'>COMANDES VIEW</a></div>
+
                     </td>
                   </tr>";
                 }
@@ -182,21 +246,29 @@ $conn->close();
             } else {
                 echo '<div class="alert alert-warning mt-4">No hi ha resultats.</div>';
             }
-
+            
+            
+            
             $conn->close();
+        
             
         ?>
     </tbody>
 	</table>
 
-    <!-- Modal Reservar -->
+
+<!-- <div class="modal fade" id="modalReservar" tabindex="-1" aria-labelledby="novaReservaModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog"> -->
+<!-- Modal Reservar -->
     <div class="modal fade" id="modalReservar" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
+
     <form id="formReservar" class="modal-content">
     	<input type="hidden" name="action" value="reservar">
       <div class="modal-header">
         <h5 class="modal-title" id="novaReservaModalLabel">Reservar</h5>
       </div>
+
       <div class="modal-body">
         <div class="mb-3">
           <label for="id_reserva" class="form-label">Id reserva</label>
@@ -232,6 +304,7 @@ $conn->close();
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel·la</button>
       </div>
     </form>
+   
   </div>
 </div>
 
@@ -272,14 +345,16 @@ function refrescaTaula() {
     $("#taulaReserves").load(location.href + " #taulaReserves>*", "");
 }
 
-function obreReservar(id_reserva, id_taula, estat_reserva, nom_client, data_reserva, hora_reserva, num_persones) {
+//function obreEditar(id_plat, id_categoria, categoria, nom, descripcio, preu) {
+function obreReservar(id_reserva, id_taula, estat_reserva, nom_client, data_reserva, hora_reserva) {
     $('#edit_id_reserva').val(id_reserva);
     $('#edit_id_taula').val(id_taula);
-    $('#edit_estat_reserva').val(estat_reserva); 
+    $('#edit_estat_reserva').val(estat_reserva); //AAAAAAAAAAAAAAAAAAAAAAAAAArrrrrrrrrrrrrrrGGGGGGGGGG
     $('#edit_nom_client').val(nom_client);
     $('#edit_data_reserva').val(data_reserva);
     $('#edit_hora_reserva').val(hora_reserva);
     $('#edit_num_persones').val(num_persones);
+    
     modalReservar.show();
 }
 
@@ -295,10 +370,15 @@ $('#formReservar').on('submit', function(e) {
 });
 
 
-function guardarDataEnSessio(filtro_data) {
-    const data_reserva = filtro_data.value;
-    const dades = new URLSearchParams();
 
+function guardarDataEnSessio(filtro_data) {
+    
+    const data_reserva = filtro_data.value;
+//    const estat_opcio = filtro_estat.options[filtro_estat.selectedIndex].text;
+
+//	const data_reserva = 
+	
+    const dades = new URLSearchParams();
     dades.append('data_reserva', data_reserva);
 
     fetch('', {
@@ -306,40 +386,79 @@ function guardarDataEnSessio(filtro_data) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
+		//body: 'id_categoria_selecc=' + encodeURIComponent(categ_valor)
         body: dades.toString()
     })
     .then(response => response.text())
- 	.then(data => {
-
-	location.reload(); // mostrar resultados filtrados
+     .then(data => {
+		//document.getElementById("resultat").innerHTML = data; // es veu extrany unes dècimes de segon
+         location.reload(); // mostrar resultados filtrados
+         //refrescaTaula();
      })
     .catch(error => {
         console.error("Error:", error);
     });
 }
 
-
 function guardarEstatEnSessio(filtro_estat) {
-    const estat_reserva = $('#filtro_estat').val();
-    const dades = new URLSearchParams();
-
-    dades.append('estat_reserva', estat_reserva);
     
+    const estat_valor = filtro_estat.value;
+    const estat_opcio = filtro_estat.options[filtro_estat.selectedIndex].text;
+
+//	const data_reserva = 
+	
+    const dades = new URLSearchParams();
+    dades.append('estat_valor', estat_valor);
+    dades.append('estat_opcio', estat_opcio);
+
     fetch('', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
+		//body: 'id_categoria_selecc=' + encodeURIComponent(categ_valor)
         body: dades.toString()
     })
-	.then(response => response.text())
- 	.then(data => {
- 	location.reload(); // mostrar resultados filtrados
+    .then(response => response.text())
+     .then(data => {
+		//document.getElementById("resultat").innerHTML = data; // es veu extrany unes dècimes de segon
+         location.reload(); // mostrar resultados filtrados
+         //refrescaTaula();
      })
     .catch(error => {
         console.error("Error:", error);
     });
 }
+
+
+//function guardarEstatEnSessio(estat) {
+
+////const categ_valor = categoria.value;
+//const estat_opcio = filtro_estat.options[filtro_estat.selectedIndex].text;
+
+//const dades = new URLSearchParams();
+////dades.append('categ_valor', categ_valor);
+//dades.append('estat_opcio', estat_opcio);
+
+//fetch('', {
+//  method: 'POST',
+//  headers: {
+//      'Content-Type': 'application/x-www-form-urlencoded'
+//  },
+//	//body: 'id_categoria_selecc=' + encodeURIComponent(categ_valor)
+//  body: dades.toString()
+//})
+//.then(response => response.text())
+//.then(data => {
+//	//document.getElementById("resultat").innerHTML = data; // es veu extrany unes dècimes de segon
+//   location.reload(); // mostrar resultados filtrados
+//   //refrescaTaula();
+//})
+//.catch(error => {
+//  console.error("Error:", error);
+//});
+//}
+
 
 </script>
 

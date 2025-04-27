@@ -1,0 +1,353 @@
+<?php
+
+require_once ('../functions/funcions.php');
+
+
+// $usuari="root";
+// $password="mdb";
+// $host="localhost";
+// $database="restaurantDB";
+
+// $connexio = mysqli_connect($host, $usuari, $password, $database);
+
+// //if($connexio->connect_errno != 0){
+// if($connexio->connect_errno){
+//     $connexio = NULL;
+//     die("Error al connectar amb la base de dades restaurant. Codi error: "
+//         . $connexio->connect_errno . ". Error: "
+//         . $connexio->connect_error);
+// }
+
+
+
+
+$conn = getConnexio();
+
+
+
+// mysqli_query($conn, "DROP DATABASE IF EXISTS restaurantDB;") or die("Error al crear taula  : ". mysqli_error($conn));
+
+mysqli_query($conn, "DROP USER IF EXISTS josep@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador1@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador2@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador3@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador4@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador5@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador6@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador7@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador8@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador9@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS administrador10@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "DROP USER IF EXISTS cambrer1@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer2@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer3@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer4@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer5@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer6@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer7@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer8@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer9@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cambrer10@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+
+mysqli_query($conn, "DROP USER IF EXISTS cuiner1@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner2@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner3@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner4@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner5@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner6@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner7@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner8@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner9@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+mysqli_query($conn, "DROP USER IF EXISTS cuiner10@localhost;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+
+//mysqli_query($conn, "DROP USER IF EXISTS ;") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "USE restaurantDB;") or die("Error al usar restaurantDB  : ". mysqli_error($conn));
+
+
+
+
+
+
+
+
+// (DROP USER IF EXISTS administrador1@localhost;),
+// (DROP USER IF EXISTS administrador2@localhost;),
+// (DROP USER IF EXISTS administrador3@localhost;),
+// (DROP USER IF EXISTS administrador4@localhost;);
+
+
+
+
+// ") or die("Error a l'eliminar usuaris de la BD  : ". mysqli_error($conn));
+
+
+// DROP USER IF EXISTS administrador5@localhost;
+// DROP USER IF EXISTS administrador6@localhost;
+// DROP USER IF EXISTS administrador7@localhost;
+// DROP USER IF EXISTS administrador8@localhost;
+// DROP USER IF EXISTS administrador9@localhost;
+// DROP USER IF EXISTS administrador10@localhost;
+
+// DROP USER IF EXISTS cambrer1@localhost;
+// DROP USER IF EXISTS cambrer2@localhost;
+// DROP USER IF EXISTS cambrer3@localhost;
+// DROP USER IF EXISTS cambrer4@localhost;
+// DROP USER IF EXISTS cambrer5@localhost;
+// DROP USER IF EXISTS cambrer6@localhost;
+// DROP USER IF EXISTS cambrer7@localhost;
+// DROP USER IF EXISTS cambrer8@localhost;
+// DROP USER IF EXISTS cambrer9@localhost;
+// DROP USER IF EXISTS cambrer10@localhost;
+
+// DROP USER IF EXISTS cuiner1@localhost;
+// DROP USER IF EXISTS cuiner2@localhost;
+// DROP USER IF EXISTS cuiner3@localhost;
+// DROP USER IF EXISTS cuiner4@localhost;
+// DROP USER IF EXISTS cuiner5@localhost;
+// DROP USER IF EXISTS cuiner6@localhost;
+// DROP USER IF EXISTS cuiner7@localhost;
+// DROP USER IF EXISTS cuiner8@localhost;
+// DROP USER IF EXISTS cuiner9@localhost;
+// DROP USER IF EXISTS cuiner10@localhost;
+
+
+// mysqli_query($conn, "
+// ") or die("Error al crear taula  : ". mysqli_error($conn));
+
+// mysqli_query($conn, "
+// ") or die("Error al crear taula  : ". mysqli_error($conn));
+
+// mysqli_query($conn, "
+// ") or die("Error al crear taula  : ". mysqli_error($conn));
+
+mysqli_query($conn, "START TRANSACTION") or die("Error en START TRANSACTION : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+
+CREATE TABLE personal(
+					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
+					,nom 		VARCHAR(50) NOT NULL
+					,rol		VARCHAR(15) NOT NULL CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
+					,username	VARCHAR(15) NOT NULL
+					,password 	VARCHAR(15) NOT NULL
+					,pwdhash 	CHAR(64) NOT NULL
+					,host		VARCHAR(15) NOT NULL
+					,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
+					,UNIQUE (username, host)
+					);
+
+                        ") or die("Error al crear taula personals: ". mysqli_error($conn));
+
+mysqli_query($conn, "
+
+CREATE TABLE categories(
+						id_categoria	INTEGER PRIMARY KEY AUTO_INCREMENT
+						,nom			VARCHAR(10) CHECK(nom IN 
+										('Entrants', 'Principal', 'Postres', 'Begudes'))
+						);
+
+
+") or die("Error al crear taula categories : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+    
+CREATE TABLE plats(
+					id_plat			INTEGER PRIMARY KEY AUTO_INCREMENT
+					,nom			VARCHAR(30)
+					,descripcio		VARCHAR(30)
+					,preu 			FLOAT
+					,id_categoria	INTEGER
+					,FOREIGN KEY (id_categoria) REFERENCES categories(id_categoria)
+					);
+    
+    
+") or die("Error al crear taula plats : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+    
+CREATE TABLE taules(
+					id_taula 		INTEGER PRIMARY KEY AUTO_INCREMENT
+					,numero			INTEGER
+					,capacitat		INTEGER
+					);
+    
+    
+") or die("Error al crear taula taules : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+    
+CREATE TABLE reserves(
+					id_reserva 				INTEGER PRIMARY KEY AUTO_INCREMENT
+					,estat_reserva			VARCHAR(7) NOT NULL DEFAULT ('lliure')
+					,id_taula				INTEGER NOT NULL
+					,nom_client				VARCHAR(30) NOT NULL
+					,data_reserva			DATE NOT NULL
+					,hora_reserva			VARCHAR(2) NOT NULL
+					,num_persones			INTEGER
+					,username				VARCHAR(30)
+					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
+					,CHECK(estat_reserva IN ('lliure', 'ocupada')) 
+					,CHECK(hora_reserva IN ('13', '15')) 
+					);
+    
+    
+") or die("Error al crear taula reserves : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+    
+CREATE TABLE comandes(
+					id_comanda 				INTEGER PRIMARY KEY AUTO_INCREMENT
+					,id_taula				INTEGER
+					,data_comanda			DATE
+					,estat					VARCHAR(20) CHECK(estat IN ('En preparacio', 'Lliurat', 'Entregat'))
+					,username				VARCHAR(30)
+					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
+					);
+    
+    
+") or die("Error al crear taula comandes : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "
+    
+CREATE TABLE detalls_comanda(
+					id_detall 	INTEGER PRIMARY KEY AUTO_INCREMENT
+					,id_comanda	INTEGER NOT NULL
+					,id_plat	INTEGER NOT NULL
+					,quantitat	INTEGER
+					,UNIQUE(id_comanda, id_plat)
+					,FOREIGN KEY (id_comanda) REFERENCES comandes(id_comanda)
+					,FOREIGN KEY (id_plat) REFERENCES plats(id_plat)
+					);
+    
+    
+") or die("Error al crear taula detalls_comanda : ". mysqli_error($conn));
+
+
+
+
+
+
+
+mysqli_query($conn, "
+
+CREATE OR REPLACE VIEW vista_resumen_privilegios_consolidada AS
+SELECT 
+  base_de_datos,
+  grantee,
+  SUM(schema_privs) AS schema_privs,
+  SUM(table_privs) AS table_privs,
+  COUNT(DISTINCT table_name) AS tablas_con_privs,
+  SUM(column_privs) AS column_privs,
+  COUNT(DISTINCT column_name) AS columnas_con_privs,
+  SUM(schema_privs + table_privs + column_privs) AS total_privs
+FROM (
+  -- Repetimos bloques por cada base de datos
+  -- === BLOQUE PARA mi_base ===
+  -- Privilegios a nivel de esquema
+  SELECT 
+    'restaurantdb' AS base_de_datos,
+    GRANTEE,
+    PRIVILEGE_TYPE,
+    1 AS schema_privs,
+    0 AS table_privs,
+    0 AS column_privs,
+    NULL AS table_name,
+    NULL AS column_name
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+  UNION ALL
+  -- Privilegios a nivel de tabla
+  SELECT 
+    'restaurantdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+  UNION ALL
+  -- Privilegios a nivel de columna
+  SELECT 
+    'restaurantdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'restaurantdb'
+
+  -- === BLOQUE PARA otra_base ===
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    1, 0, 0,
+    NULL, NULL
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+  UNION ALL
+  SELECT 
+    'llibresmdb', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'llibresmdb'
+
+  -- === BLOQUE PARA super_base ===
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    1, 0, 0,
+    NULL, NULL
+  FROM information_schema.schema_privileges WHERE TABLE_SCHEMA = 'llibres'
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    0, 1, 0,
+    TABLE_NAME, NULL
+  FROM information_schema.table_privileges WHERE TABLE_SCHEMA = 'llibres'
+  UNION ALL
+  SELECT 
+    'llibres', GRANTEE, PRIVILEGE_TYPE,
+    0, 0, 1,
+    TABLE_NAME, COLUMN_NAME
+  FROM information_schema.column_privileges WHERE TABLE_SCHEMA = 'llibres'
+
+) AS all_privs
+GROUP BY 
+  base_de_datos, grantee;
+
+
+") or die("Error en crear VIEW vista_resumen_privilegios_consolidada : ". mysqli_error($conn));
+
+
+mysqli_query($conn, "COMMIT") or die("Error en COMMIT : ". mysqli_error($conn));
+
+
+// mysqli_query($conn, "   
+// ") or die("Error al crear taula  : ". mysqli_error($conn));
+// -- a la comanda cal inserir el USER() automaticament (l'idCambrer)
+
+
+
+
+
+$conn->close();
+
+?>
+
+
+
+
+
+
+
+
+/
+

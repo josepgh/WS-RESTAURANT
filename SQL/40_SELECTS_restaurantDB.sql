@@ -74,6 +74,9 @@ SELECT * FROM reserves;
 SELECT * FROM reserves_view;
 SELECT * FROM plats_view;
 
+SELECT * from personal;
+select * from categories;
+
 SELECT 'FI';
 --COMMIT;
 

@@ -8,7 +8,7 @@ rem -------------------------------------
 
 call 10_CREA_restaurantDB.bat
 
-call 20_INSEREIX_restaurantDB.bat
+rem call 20_INSEREIX_restaurantDB.bat
 
 rem call 30_INSERCIONS_USUARI_guillem.bat
 

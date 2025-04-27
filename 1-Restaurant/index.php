@@ -2,6 +2,8 @@
     session_start();
     $_SESSION['username'] = "Pep";
     require ('./includes/header.php');
+//     require_once ('./functions/populateDBusers.php');
+//     require_once ('./functions/populateDBtables.php');
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
@@ -126,6 +128,15 @@
             </td>
           </tr>
 
+		<tr>
+            <td> CREA BADE DE DADES</td>
+             <td><h4>OK</h4></td>
+            <td> 
+        		<form action="creaDB/creaDB.php">
+             		<input type="submit" value="CREA DB">
+				</form>
+            </td>
+          </tr>
 
 
          <tr> 

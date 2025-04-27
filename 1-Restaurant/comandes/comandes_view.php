@@ -39,7 +39,8 @@
         
         $conn = getConnexio();
 
-        $query = "select data_comanda, id_comanda, num_taula, capacitat_taula, estat_comanda, categoria_plat, plat, quantitat, preu_plat, EUR from comandes_view";
+        $query = "select data_comanda, id_comanda, num_taula, capacitat_taula, estat_comanda
+                         , categoria_plat, plat, quantitat, preu_plat, EUR from comandes_view";
 
  		$registres = mysqli_query($conn, $query) or 
  		                         die("Problemes amb el select de comandes: " . mysqli_error($conn));

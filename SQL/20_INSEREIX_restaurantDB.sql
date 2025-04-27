@@ -15,6 +15,8 @@ START TRANSACTION; -- PREVAL sobre el SET autocommit=TRUE del principi
 
 --INSERT INTO personal VALUES(DEFAULT, nom, rol, username, password, PASSWORD(), host, es_actiu);
 
+
+/*
 --VIA ed25519 USING PASSWORD ('cambrer1')
 --INSERT INTO personal (nom, rol, username, password, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', 'localhost');
 INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', ed25519_password('cuiner1'), 'localhost');
@@ -40,15 +42,17 @@ INSERT INTO personal (nom, rol, username, password, pwdhash, host) VALUES('Anna 
 --INSERT INTO personal VALUES(DEFAULT, 'Carla', 'administratiu', 'administrador2@email.com');
 --INSERT INTO personal VALUES(DEFAULT, 'Nicole', 'cuiner', 'cuiner3@email.com');
 
+*/
 
-
-
+/*
 --INSERT INTO categories VALUES(DEFAULT, '');
 INSERT INTO categories VALUES(DEFAULT, 'Entrants');
 INSERT INTO categories VALUES(DEFAULT, 'Principal');
 INSERT INTO categories VALUES(DEFAULT, 'Postres');
 INSERT INTO categories VALUES(DEFAULT, 'Begudes');
+*/
 
+/*
 --INSERT INTO plats VALUES(DEFAULT, '', '', , );
 INSERT INTO plats VALUES(DEFAULT, 'Amanida verda', 'Amanida verda', 5.80, 1);
 INSERT INTO plats VALUES(DEFAULT, 'Amanida catalana', 'Amanida Catalana', 6.90, 1);
@@ -63,7 +67,9 @@ INSERT INTO plats VALUES(DEFAULT, 'Gelat', 'Gelat', 5.0, 3);
 INSERT INTO plats VALUES(DEFAULT, 'Cava de la casa', 'Cava de la casa', 12.20, 4);
 INSERT INTO plats VALUES(DEFAULT, 'Vi de la bodega', 'Vi de la bodega', 11.90, 4);
 INSERT INTO plats VALUES(DEFAULT, 'Vi Don Simon', 'Destrossa l''estòmac', 0.60, 4);
+*/
 
+/*
 INSERT INTO taules VALUES(DEFAULT, 1, 4);
 INSERT INTO taules VALUES(DEFAULT, 2, 4);
 INSERT INTO taules VALUES(DEFAULT, 3, 8);
@@ -74,28 +80,29 @@ INSERT INTO taules VALUES(DEFAULT, 7, 6);
 INSERT INTO taules VALUES(DEFAULT, 8, 10);
 INSERT INTO taules VALUES(DEFAULT, 9, 12);
 
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 1, 'Clint Eastwood', '2025-05-13', '13', 2, USER()); --maxim
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 2, 'Laura Palmer', '2025-05-13', '15', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 3, 'Keith Richards', '2025-05-13', '13', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 1, '', '2025-05-13', '13', 2, USER()); --maxim
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 2, '', '2025-05-13', '15', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 3, '', '2025-05-13', '13', 2, USER());
 INSERT INTO reserves VALUES(DEFAULT, 'ocupada', 4, 'Ava Gardner', '2025-05-13', '13', 2, USER());
 
 
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 1, 'Sam Spade', '2025-05-14', '15', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 4, 'Pau Cubarsí', '2025-05-14', '13', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 5, 'Mrs Philomena Cunk', '2025-05-14', '15', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 1, '', '2025-05-14', '15', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 4, '', '2025-05-14', '13', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 5, '', '2025-05-14', '15', 2, USER());
 INSERT INTO reserves VALUES(DEFAULT, 'ocupada', 4, 'Marisa', '2025-05-14', '13', 2, USER());
 
 
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 2, 'Ed Wood', '2025-05-15', '15', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 4, 'Magneto Smith', '2025-05-15', '13', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 6, 'Van Morrison', '2025-05-15', '15', 2, USER());
-INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 8, 'Patti Smith', '2025-05-15', '13', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 2, '', '2025-05-15', '15', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 4, '', '2025-05-15', '13', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 6, '', '2025-05-15', '15', 2, USER());
+INSERT INTO reserves VALUES(DEFAULT, DEFAULT, 8, '', '2025-05-15', '13', 2, USER());
 INSERT INTO reserves VALUES(DEFAULT, 'ocupada', 4, 'Patt Highsimith', '2025-05-15', '13', 2, USER());
 
+*/
 -- Orson convida a massa gent -> ERRORRRRRRRR
 --INSERT INTO reserves VALUES(DEFAULT, 1, 'Orson Welles', '2025-05-15', 22, USER());
 
-
+/*
 INSERT INTO comandes(id_taula, data_comanda, estat, username) VALUES(1, NOW(), 'Lliurat', USER());
 INSERT INTO comandes(id_taula, data_comanda, estat, username) VALUES(2, '2025-04-22', 'Lliurat', USER());
 INSERT INTO comandes(id_taula, data_comanda, estat, username) VALUES(3, '2025-04-24', 'Lliurat', USER());
@@ -111,7 +118,7 @@ INSERT INTO detalls_comanda VALUES(DEFAULT, 2, 2, 2);
 INSERT INTO detalls_comanda VALUES(DEFAULT, 2, 3, 4);
 INSERT INTO detalls_comanda VALUES(DEFAULT, 3, 1, 2);
 
-
+*/
 
 -- ¡Listo! Eso te da un total de 29 productos (9 anteriores + 20 nuevos).
 

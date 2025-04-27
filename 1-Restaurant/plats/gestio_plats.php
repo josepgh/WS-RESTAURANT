@@ -1,13 +1,10 @@
 <?php
 session_start();
-
 //Simplement **carrega el header.php només si NO és una petició AJAX:
 // if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['ajax'])) {
 //     require('../includes/header.php');
 // }
-// $today = date("j, n, Y");
 //===========================
-
 //require("../includes/header.php"); dona problemes amb els modals
 require("../functions/funcions.php");
 
@@ -32,10 +29,7 @@ $id_cat_opcio = $_SESSION['id_cat_opcio'] ?? '';
 $nom_cat_opcio = $_SESSION['nom_cat_opcio'] ?? '';
 // ==================================================================
 
-
-///$conn = new mysqli("localhost", "usuari", "contrasenya", "base_de_dades");
 $conn = getConnexio();
-
 
 // **(1.1)============================================================================
 // els modals van bé, però el navegador respon amb un modal amb el codi del header:
@@ -47,8 +41,7 @@ $conn = getConnexio();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: text/plain');
 //====================================================================================
-    
-    // $conn->real_escape_string($ POST[]);
+     // $conn->real_escape_string($ POST[]);
     // Escapes special characters in a string for use in an SQL statement,
     // taking into account the current charset of the connection
     // https://www.php.net/manual/es/mysqli.real-escape-string.php
@@ -70,15 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         exit;
     }
-    
     // EDITAR
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'editar') {
-        //     $id_plat =  (int)$_POST['id_plat'];
-        //     $nom =  $conn->real_escape_string($_POST['nom']);
-        //     $descripcio =  $conn->real_escape_string($_POST['descripcio']);
-        //     $preu =  (float)$_POST['preu'];
-        //     $id_categoria =  (int)$_POST['id_categoria'];
-        
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'editar') {     
         $id_plat = intval($_POST['id_plat']);
         $nom =  $conn->real_escape_string($_POST['nom']);
         $descripcio = htmlspecialchars($_POST['descripcio'], ENT_QUOTES);
@@ -91,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         exit;
     }
+
     
     // ELIMINAR: NO===>ELS PLATS NO S'ELIMINEN PQ LES COMANDES (HISTÒRIC) EN DEPENEN
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'eliminar') {
@@ -98,8 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "DELETE FROM persones WHERE id=$id";
         echo $conn->query($sql) ? "✔️ Persona eliminada!" : "❌ Error: " . $conn->error;
         exit;
-    }
-    
+    }    
     //**(1.2)=============================================================================
     exit; // ✋ Finalitza l'script per no carregar cap HTML
 }
@@ -116,35 +102,21 @@ $conn->close();
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Datepicker Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
-    <!--Option 1: Include in HTML -->
-    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" 
+    			rel="stylesheet">
     <title>Gestió de PLATS</title>
 </head>
 <body class="p-4">
-
     <h2 class="mb-4">Gestió de PLATS</h2>
-
-
-
 
 <div style="width: 50%; display: flex; align-items: center;">
     <!-- Filtres -->
 
-
     <div class="col-md-8">
-
-
     		<button class="btn btn-primary mb-3" onclick="obreAfegir()">Afegir plat/beguda</button>
-
-
-      </div>
-
-
+    </div>
 
         <div class="col-md-8">
-        
-        
         	<label for="ca">Selecciona una categoria</label>
             <select id="ca" name="categoria" onchange="guardarCatEnSessio(this)">
                 <option value="">-- Selecciona categoria --</option>
@@ -166,35 +138,28 @@ $conn->close();
             </select>
             <!--<h4>Categoria seleccionada: < = htmlspecialchars($nom_cat_opcio ?: 'Ninguna') ></h4> -->
             <!--<h4>id_cat_opcio == < = $id_cat_opcio  ></h4> -->
-        
         </div>
 </div>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Id plat</th>
-                <th>Id categoria</th>
-                <th>Categoria</th>
-                <th>Nom</th>
-                <th>Descripcio</th>
-                <th>Preu</th>
+                <th>Id plat</th><th>Id categoria</th><th>Categoria</th><th>Nom</th><th>Descripcio</th><th>Preu</th>
                 <th style="width: 150px">Accions</th>
             </tr>
         </thead>
     <tbody id="taulaPlats">
         
-        <?php
-        
+        <?php 
         if ($id_cat_opcio !== '') { // si no es buit
             
             $conn = getConnexio();
-            $stmt = $conn->prepare("SELECT id_plat, id_categoria, categoria, nom, descripcio, preu FROM plats_view WHERE id_categoria = ? ORDER BY categoria, nom");
+            $stmt = $conn->prepare("SELECT id_plat, id_categoria, categoria, nom, descripcio, preu 
+                                    FROM plats_view WHERE id_categoria = ? ORDER BY categoria, nom");
             $stmt->bind_param("i", $id_cat_opcio);
             $stmt->execute();
             $plats = $stmt->get_result();
             
             while ($plats_row = $plats->fetch_assoc()) {
-
                 echo "<tr>
                     <td>{$plats_row['id_plat']}</td>
                     <td>{$plats_row['id_categoria']}</td>
@@ -206,24 +171,25 @@ $conn->close();
 					<td>{$plats_row['preu']}</td>
                     <td class='text-end'>
                     
-                        <button class='btn btn-sm btn-warning' onclick='obreEditar({$plats_row['id_plat']},
-                                                                                    \"{$plats_row['id_categoria']}\",
-                                                                                    \"{$plats_row['categoria']}\",
-                                                                                    \"{$plats_row['nom']}\",
-                                                                                    \"{$plats_row['descripcio']}\",
-                                                                                    \"{$plats_row['preu']}\")'>Editar</button>
-                        <button class='btn btn-sm btn-danger disabled' onclick='obreEliminar({$plats_row['id_plat']})'>Eliminar</button>
+                    <button class='btn btn-sm btn-warning' onclick='obreEditar({$plats_row['id_plat']},
+                                                                                \"{$plats_row['id_categoria']}\",
+                                                                                \"{$plats_row['categoria']}\",
+                                                                                \"{$plats_row['nom']}\",
+                                                                                \"{$plats_row['descripcio']}\",
+                                                                                \"{$plats_row['preu']}\")'>Editar</button>
+                    <button class='btn btn-sm btn-danger disabled' onclick=
+                                    'obreEliminar({$plats_row['id_plat']})'>Eliminar</button>
                     </td>
                 </tr>";
             }
-            
             $stmt->close();
             $conn->close();
 
         } elseif ($id_cat_opcio) {
             echo "<table><tr><td colspan='7'>No hi plats d'aquesta categoria.</td></tr></table>";
         } else {
-            echo "<table><tr><td colspan='7'><h3>Selecciona una categoria per veure els plats disponibles.</h3></td></tr></table>";
+            echo "<table><tr><td colspan='7'><h3>Selecciona una categoria per veure els plats disponibles
+                                                                                        .</h3></td></tr></table>";
         }
             
         ?>
@@ -239,10 +205,6 @@ $conn->close();
                     <h5 class="modal-title">Afegir PLAT</h5>
                 </div>
                 <div class="modal-body">
-<!--                     <div class="mb-3"> -->
-<!--                         <label class="form-label">Id plat</label> -->
-<!--                         <input type="number" name="id_plat" id="edit_id_plat" class="form-control" readonly> -->
-<!--                     </div> -->
                     <div class="mb-3">
                         <label class="form-label">Id categoria</label>
                         <input type="number" name="id_categoria" class="form-control" required>
@@ -263,10 +225,6 @@ $conn->close();
                         <label class="form-label">Preu</label>
                         <input type="number" name="preu" class="form-control" required>
                     </div>
-<!--                     <div class="mb-3"> -->
-<!--                         <label class="form-label">Data de naixement</label> -->
-<!--                         <input type="date" name="data_naixement" id="edit_data" class="form-control" required> -->
-<!--                     </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Afegir</button>
@@ -391,7 +349,7 @@ function obreEditar(id_plat, id_categoria, categoria, nom, descripcio, preu) {
 $('#formEditar').on('submit', function(e) {
     e.preventDefault();
     $.post('', $(this).serialize(), function(res) {
-          mostrarMissatgeModal(res);
+      	mostrarMissatgeModal(res);
         modalEditar.hide();
         refrescaTaula();
         //location.reload();
@@ -403,7 +361,6 @@ $('#formEditar').on('submit', function(e) {
 
 //function obreAfegir(id_plat, id_categoria, categoria, nom, descripcio, preu) {
 function obreAfegir() {
-
     modalAfegir.show();
 }
 
@@ -469,6 +426,9 @@ function guardarCatEnSessio(categoria) {
         console.error("Error:", error);
     });
 }
+
+
+
 </script>
 
 </body>

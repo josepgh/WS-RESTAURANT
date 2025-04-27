@@ -1,5 +1,5 @@
 <?php
-// session_start();
+//session_start();
 
 
 if (!($usuari = $_SESSION['username'])){
@@ -7,13 +7,12 @@ if (!($usuari = $_SESSION['username'])){
 }
 
 
-
-// if (!($filt_estat_reserva = $_SESSION['filtro_estat'])){
-//     $filt_estat_reserva = "";
-// }
-// if (!($filt_data_reserva = $_SESSION['filtro_data'])){
-//     $filt_data_reserva = "";
-// }
+if (!($filt_estat_reserva = $_SESSION['filtro_estat'])){
+    $filt_estat_reserva = "";
+}
+if (!($filt_data_reserva = $_SESSION['filtro_data'])){
+    $filt_data_reserva = "";
+}
 
 
 //antic
@@ -45,7 +44,7 @@ if (!($id_cat = $_SESSION['id_cat_opcio'] ?? '')){
     <div style="width: 40%; margin-right: 20px;">
             Username: <?php echo $usuari?><br>
         	Plat: (<?php echo $nom_cat?>) Id: (<?php echo $id_cat?>)<br>
-<!--             Reserva: (< php echo $filt_data_reserva?>) - (< php echo $filt_estat_reserva?>)<br> -->
+            Reserva: (<?php echo $filt_data_reserva?>) - (<?php echo $filt_estat_reserva?>)<br>
             <!--Data res: (< php echo $filt_data?>)<br> -->
 
     </div>

@@ -18,13 +18,15 @@ START TRANSACTION;
 --                                      CREA BASE DADES
 -- -----------------------------------------------------------------------------------
 
-CREATE DATABASE restaurantDB;
+CREATE DATABASE IF NOT EXISTS restaurantDB;
 
 USE restaurantDB;
+
 
 --ERROR 1005 (HY000) at line 32: Can't create table `burguerdb`.`comandes` 
 --(errno: 150 "Foreign key constraint is incorrectly formed")
 -- equivalent a SET CONSTRAINTS ALL DEFERRABLE:
+
 
 SET SESSION foreign_key_checks=OFF;
 
@@ -36,13 +38,14 @@ CREATE TABLE IF NOT EXISTS productos (
     categoria_nombre VARCHAR(100) NOT NULL
 );
 
-/*
+/* ELIMINADAAAAAAAAAAAA
 CREATE TABLE grants_rol(
 						id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
 						,id_rol		VARCHAR(15) UNIQUE CHECK(id_rol IN ('cuiner', 'cambrer', 'administrador'))
 						,grants	VARCHAR(50)
 						);
 */
+
 
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
@@ -55,7 +58,6 @@ CREATE TABLE personal(
 					,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
 					,UNIQUE (username, host)
 					);
-
 
 
 CREATE TABLE categories(
@@ -88,10 +90,7 @@ CREATE TABLE reserves(
 					,hora_reserva			VARCHAR(2) NOT NULL
 					,num_persones			INTEGER
 					,username				VARCHAR(30)
---					,id_personal_reserva	INTEGER	NOT NULL
---					CAL UN TRIGGERR --->>>> CHECK(comensals <= (SELECT taules.max_comensals)
 					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
---					,FOREIGN KEY (id_personal_reserva) REFERENCES personal(id_personal)
 					,CHECK(estat_reserva IN ('lliure', 'ocupada')) 
 					,CHECK(hora_reserva IN ('13', '15')) 
 					);
@@ -101,14 +100,9 @@ CREATE TABLE comandes(
 					id_comanda 				INTEGER PRIMARY KEY AUTO_INCREMENT
 					,id_taula				INTEGER
 					,data_comanda			DATE
---					revisar estats possibles					
-					,estat					VARCHAR(20) CHECK(estat IN
-												('En preparacio', 'Lliurat', 'Entregat'))
+					,estat					VARCHAR(20) CHECK(estat IN ('En preparacio', 'Lliurat', 'Entregat'))
 					,username				VARCHAR(30)
 					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
---					,FOREIGN KEY (id_personal_comanda) REFERENCES personal(id_personal)
---					,FOREIGN KEY (idUsuari) REFERENCES usuaris(idUsuari)
---					,FOREIGN KEY (idReserva) REFERENCES reserves(idReserva)
 					);
 
 CREATE TABLE detalls_comanda(
@@ -126,6 +120,7 @@ CREATE TABLE detalls_comanda(
 --ALTER TABLE productes_comanda ADD CONSTRAINT FOREIGN KEY (idProducte) REFERENCES productes(idProducte);
 --ALTER TABLE productes_comanda ADD CONSTRAINT FOREIGN KEY (idComanda) REFERENCES comandes(idComanda);
 
+
 --https://mariadb.com/kb/en/server-system-variables/#foreign_key_checks
 SET SESSION foreign_key_checks=ON;
 
@@ -135,21 +130,45 @@ CREATE OR REPLACE FUNCTION ed25519_password RETURNS STRING SONAME "auth_ed25519.
 --                                      CREA USUARIS
 -- ---------------------------------------------------------------------------------
 --https://www.geeksforgeeks.org/how-to-create-user-with-grant-privileges-in-mariadb/
-DROP USER IF EXISTS Josep@localhost;
+
+
+DROP USER IF EXISTS josep@localhost;
 DROP USER IF EXISTS administrador1@localhost;
 DROP USER IF EXISTS administrador2@localhost;
 DROP USER IF EXISTS administrador3@localhost;
+DROP USER IF EXISTS administrador4@localhost;
+DROP USER IF EXISTS administrador5@localhost;
+DROP USER IF EXISTS administrador6@localhost;
+DROP USER IF EXISTS administrador7@localhost;
+DROP USER IF EXISTS administrador8@localhost;
+DROP USER IF EXISTS administrador9@localhost;
+DROP USER IF EXISTS administrador10@localhost;
 
 DROP USER IF EXISTS cambrer1@localhost;
 DROP USER IF EXISTS cambrer2@localhost;
 DROP USER IF EXISTS cambrer3@localhost;
+DROP USER IF EXISTS cambrer4@localhost;
+DROP USER IF EXISTS cambrer5@localhost;
+DROP USER IF EXISTS cambrer6@localhost;
+DROP USER IF EXISTS cambrer7@localhost;
+DROP USER IF EXISTS cambrer8@localhost;
+DROP USER IF EXISTS cambrer9@localhost;
+DROP USER IF EXISTS cambrer10@localhost;
 
 DROP USER IF EXISTS cuiner1@localhost;
 DROP USER IF EXISTS cuiner2@localhost;
 DROP USER IF EXISTS cuiner3@localhost;
-DROP USER IF EXISTS cuiner5@cuiner5;
+DROP USER IF EXISTS cuiner4@localhost;
+DROP USER IF EXISTS cuiner5@localhost;
+DROP USER IF EXISTS cuiner6@localhost;
+DROP USER IF EXISTS cuiner7@localhost;
+DROP USER IF EXISTS cuiner8@localhost;
+DROP USER IF EXISTS cuiner9@localhost;
+DROP USER IF EXISTS cuiner10@localhost;
+
 
 -- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
+/*
 CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cambrer1') PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
@@ -208,6 +227,8 @@ FLUSH PRIVILEGES;
 SELECT user FROM mysql.user; -- ok
 --SHOW GRANTS FOR cambrer1@localhost;
 --SHOW GRANTS FOR guillem@localhost;
+*/
+
 
 /*
 --DROP USER IF EXISTS guillem@192.168.1.41;
@@ -229,6 +250,7 @@ SHOW GRANTS FOR guillem@localhost;
 -- ===================================================================================================================
 --CREATE USER 'username'@'host' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
 -- ChatGPT ========================================================================================================
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS ShowAllUserGrants //
 CREATE PROCEDURE ShowAllUserGrants()
@@ -259,6 +281,7 @@ BEGIN
 END
 //
 DELIMITER ;
+
 -- ===================================================================================================================
 -- ==========================================================================================================================
 --                                      TRIGGERS
@@ -272,6 +295,7 @@ DELIMITER ;
 --CREATE PROCEDURE set_grants_on_insert(IN username VARCHAR(15), IN host VARCHAR(15), actiu BOOLEAN)
 
 -- ==========================================================================================================================
+
 DELIMITER //
 CREATE OR REPLACE TRIGGER check_capacitat_taula
 BEFORE INSERT ON reserves
@@ -294,13 +318,13 @@ DELIMITER ;
 --                                      VIEWS             https://mariadb.com/kb/en/create-view/
 -- ==========================================================================================================================
 
-/*
-CREATE OR REPLACE VIEW personal_view AS
-SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.pwdhash, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
-FROM 		personal p, grants_rol g
-WHERE 		p.rol = g.id_rol
-ORDER BY	p.username;
-*/
+
+--CREATE OR REPLACE VIEW personal_view AS
+--SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.pwdhash, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
+--FROM 		personal p, grants_rol g
+--WHERE 		p.rol = g.id_rol
+--ORDER BY	p.username;
+
 
 CREATE OR REPLACE VIEW plats_view(id_plat, id_categoria, categoria, nom, descripcio, preu) AS
 SELECT p.id_plat, c.id_categoria, c.nom, p.nom, p.descripcio, p.preu
@@ -437,6 +461,7 @@ WHERE CONSTRAINT_SCHEMA NOT LIKE 'mysql' AND CONSTRAINT_SCHEMA NOT LIKE 'sys';
 
 SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_SCHEMA = 'burguerdb' OR CONSTRAINT_SCHEMA = 'llibres';
+
 
 
 COMMIT;

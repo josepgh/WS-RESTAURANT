@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
 }
+
 $filtro_estat = $_SESSION['filtro_estat'] ?? '';
 $filtro_data = $_SESSION['filtro_data'] ?? '';
 
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Escapes special characters in a string for use in an SQL statement,
     // taking into account the current charset of the connection
     // https://www.php.net/manual/es/mysqli.real-escape-string.php
+    
     // RESERVAR
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'reservar') {     
 
@@ -64,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
         
         exit;
+        
     }
 
     //**(1.2)=============================================================================
@@ -76,8 +79,6 @@ require('../includes/header.php');
 
 $conn->close();
 ?>
-
-
 <!-- <html lang="ca"> -->
 <html>
 <head>
@@ -173,8 +174,7 @@ $conn->close();
                                                                                 \"{$r['num_persones']}\")'>Reservar</button>
                     </td>
                     <td>
-                    <div><a href='../comandes/comandes_view.php?username=" . $r['nom_client'] 
-                                . "' class='btn btn-success' role='button'>COMANDES VIEW</a></div>
+                    <div><a href='../comandes/comandes_view.php?username=" . $r['nom_client'] . "' class='btn btn-success' role='button'>COMANDES VIEW</a></div>
                     </td>
                   </tr>";
                 }

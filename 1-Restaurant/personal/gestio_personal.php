@@ -1,30 +1,16 @@
-<!-- AIXÒS ALENTEIX MOLTÍSSSSSSIM LA RECARREGA DE LA PAGINA -->
-<!-- <php  -->
-<!--     session_start(); -->
-<!--     require '../includes/header.php'; -->
-<!-- > -->
 <?php
 session_start();
 require("../includes/header.php");
 require("../functions/funcions.php");
 ?>
-
 <html>
 <head>
-
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Datepicker Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" 
+    		rel="stylesheet">
     <!--Option 1: Include in HTML -->
-    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> -->
-
-
-
-<!-- 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"  -->
-<!-- 		rel="stylesheet" crossorigin="anonymous" -->
-<!-- 		integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"> -->
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/estils.css">
     <title>Gestio personal</title>
@@ -62,7 +48,8 @@ require("../functions/funcions.php");
         
     }else{ // si no és buit -> cerca l'username demanat
         
-        $query = "select id_personal, nom, rol, username, password, pwdhash, host, es_actiu from personal where username = '$_REQUEST[uname]'";
+        $query = "select id_personal, nom, rol, username, password, pwdhash, host, es_actiu 
+                    from personal where username = '$_REQUEST[uname]'";
                           
         //echo "<tr><td colspan = '10'> 2 l'username:  $_REQUEST[uname] i la query: $query</td></tr>";
     }
@@ -88,37 +75,30 @@ require("../functions/funcions.php");
             echo "<td>" . $row['password'] . "</td>";
             echo "<td>" . $row['pwdhash'] . "</td>";
             echo "<td>" . $row['host'] . "</td>";
-            //echo "<td><a href = 'personal_to_update.php?username=" .
-            //$row['username'] . "'>edita<a></td>";
 
-            //echo "<td><div class='container'><a href='personal_to_update.php?username=" 
-            //. $row['username'] . "' class='btn btn-info' role='button'>Edita</a>
             echo "<td><div><a href='personal_to_update.php?username=" . $row['username'] . 
                         "' class='btn btn-info' role='button'>Edita</a></div></td>";
             
-            //<button type='button' class='btn btn-primary'>Edita</button>
-            
-            //-----------------------------------------------------------------------------------------------------------
+            //<button type='button' class='btn btn-primary'>Edita</button>           
+            //------------------------------------------------------------------------------------------------------
             if ($row['es_actiu'] == 1){
                 echo "<td>ALTA</td>";
             }else{
                 echo "<td>BAIXA</td>";
             }
-            //-----------------------------------------------------------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------
             if ($row['es_actiu'] == 1){
-                echo "<td><div><a href='personal_to_switch.php?username=" . $row['username'] . "' class='btn btn-warning' role='button'>Donar de BAIXA</a></div></td>";
-                //echo "<td>  ( <a href = 'personal_to_switch.php?username=" . $row['username'] . "'>donar de BAIXA )<a></td>";
+                echo "<td><div><a href='personal_to_switch.php?username=" . $row['username'] 
+                        . "' class='btn btn-warning' role='button'>Donar de BAIXA</a></div></td>";
             }else{
-                echo "<td><div><a href='personal_to_switch.php?username=" . $row['username'] . "' class='btn btn-success' role='button'>Donar d'ALTA</a></div></td>";
-                //echo "<td>  ( <a href = 'personal_to_switch.php?username=" . $row['username'] . "'>donar d'ALTA )<a></td>";
-            }
-            //-----------------------------------------------------------------------------------------------------------
-            //echo "<td><a href = 'personal_to_delete.php?username=" . $row['username'] . "'>esborra<a></td>";
+                echo "<td><div><a href='personal_to_switch.php?username=" . $row['username'] 
+                        . "' class='btn btn-success' role='button'>Donar d'ALTA</a></div></td>";
+             }
+            //------------------------------------------------------------------------------------------------------
+
             echo "<td><div><a href='personal_to_delete.php?username=" . $row['username'] . "' class='btn btn-danger' role='button'>Esborra</a></div></td>"; 
         echo "</tr>";
-            
         }
-
     }else{ // si la cerca no dona resultat -> dona opció d'insertar la persona
         echo "<tr>
                 <td colspan = '11'><br><h1>No existeix l'USERNAME: " . $_POST['uname'] . "  <br>
@@ -127,11 +107,8 @@ require("../functions/funcions.php");
             </tr>
             ";
     }
-
     mysqli_close($conn); 
 ?>
-     	
-    	
 	</tbody>
 </table>
 
@@ -144,15 +121,6 @@ require("../functions/funcions.php");
 	<form action="../index.php">
 		<input type="submit" value="Tornar a l'inici">
 	</form>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-<!-- <script  -->
-<!-- src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"  -->
-<!-- integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"  -->
-<!-- crossorigin="anonymous"> -->
-<!-- </script>	 -->
-
 </body>
 
 <?php
