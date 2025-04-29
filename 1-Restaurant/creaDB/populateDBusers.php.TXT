@@ -1,0 +1,171 @@
+<?php
+
+require_once ('../functions/funcions.php');
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Els placeholders (?) només funcionen en sentències DML com SELECT, INSERT, UPDATE i DELETE
+// $stmt_user = "CREATE OR REPLACE USER ?@? IDENTIFIED BY '?' PASSWORD EXPIRE NEVER;";
+// $stmt_user->bind_param("sss", $username, $host, $pwdhash);
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+$conn = getConnexio();
+
+mysqli_query($conn, "START TRANSACTION") or die("Error en START TRANSACTION : ". mysqli_error($conn));
+
+//(DEFAULT, 'Carla ADM', 'administrador', 'administrador1', 'administrador1', ed25519_password('administrador1'), 'localhost', DEFAULT),
+// (DEFAULT, 'Teresa ADM', 'administrador', 'administrador2', 'administrador2', ed25519_password('administrador2'), 'localhost', DEFAULT),
+// (DEFAULT, 'Anna ADM', 'administrador', 'administrador3', 'administrador3', ed25519_password('administrador3'), 'localhost', DEFAULT),
+
+// (DEFAULT, 'Antonia CUI', 'cuiner', 'cuiner1', 'cuiner1', ed25519_password('cuiner1'), 'localhost', DEFAULT),
+// (DEFAULT, 'Kevin José CUI', 'cuiner', 'cuiner2', 'cuiner2', ed25519_password('cuiner2'), 'localhost', DEFAULT),
+// (DEFAULT, 'Natàlia CUI', 'cuiner', 'cuiner3', 'cuiner3', ed25519_password('cuiner3'), 'localhost', DEFAULT),
+
+// (DEFAULT, 'Vanessa CAM', 'cambrer', 'cambrer1', 'cambrer1', ed25519_password('cambrer1'), 'localhost', DEFAULT),
+// (DEFAULT, 'Carlos Enrique CAM', 'cambrer', 'cambrer2', 'cambrer2', ed25519_password('cambrer2'), 'localhost', DEFAULT),
+// (DEFAULT, 'Joan CAM', 'cambrer', 'cambrer3', 'cambrer3', ed25519_password('cambrer3'), 'localhost', DEFAULT);
+
+// $nom = "Carla ADM";
+// $rol = "administrador";
+// $username = "administrador1";
+// $password = "administrador1";
+// $pwdhash =  password_hash($password, PASSWORD_DEFAULT);
+// $host = "localhost";
+// //$es_actiu = 
+
+// $username = $conn->real_escape_string($username);
+// $pwdhash =  $conn->real_escape_string($pwdhash);
+// echo "$pwdhash ---- ";
+// $host = $conn->real_escape_string($host);
+
+
+// $stmt_user = "CREATE OR REPLACE USER '$username'@'$host' IDENTIFIED BY '$pwdhash' PASSWORD EXPIRE NEVER;";
+// $conn->query($stmt_user);
+
+// $stmt = $conn->prepare("INSERT INTO personal VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, DEFAULT)");
+// $stmt->bind_param("ssssss", $nom, $rol, $username, $password, $pwdhash, $host);
+// $stmt->execute();
+// $stmt->close();
+
+//$password = "administrador1";//*A0B70758535DB4A7AA16892FF2B6434415B51686
+//$pwdhash = password_hash($password, PASSWORD_DEFAULT);
+// mysqli_query($conn, "INSERT INTO personal VALUES
+//     (DEFAULT, 'Carla ADM', 'administrador', 'administrador1', 'administrador1', $pwdhash, 'localhost', DEFAULT),
+//     ") or die("Error en l'insert de personal: ". mysqli_error($conn));
+
+
+
+// $nom =
+// $rol =
+// $username =
+// $password =
+// $pwdhash =  password_hash($password, PASSWORD_DEFAULT);
+// $host = "localhost";
+
+
+// ===== administradors ========================================================================================================================================================
+//mysqli_query($conn, "") or die("Error en l'insert de personal: ". mysqli_error($conn));
+mysqli_query($conn, "CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+ mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.* TO administrador1@localhost WITH GRANT OPTION") or die("Error en GRANT : ". mysqli_error($conn));
+//mysqli_query($conn, "FLUSH PRIVILEGES") or die("Error en FLUSH PRIVILEGES : ". mysqli_error($conn));
+
+ 
+ $nom = 'Teresa ADM';
+ $rol = 'administrador';
+ $username = 'administrador2';
+ $password = 'administrador2';
+ $pwdhash =  password_hash($password, PASSWORD_DEFAULT);
+ $host = 'localhost';
+ //$es_actiu =
+ $username = $conn->real_escape_string($username);
+ $pwdhash =  $conn->real_escape_string($pwdhash);
+ $host = $conn->real_escape_string($host);
+ 
+ echo "$pwdhash";
+ $stmt_user = "CREATE OR REPLACE USER '$username'@'$host' IDENTIFIED BY '$pwdhash' PASSWORD EXPIRE NEVER;";
+ $conn->query($stmt_user);
+ 
+ $stmt = $conn->prepare("INSERT INTO personal VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, DEFAULT)");
+ $stmt->bind_param("ssssss", $nom, $rol, $username, $password, $pwdhash, $host);
+ $stmt->execute();
+ $stmt->close();
+ 
+ 
+ 
+mysqli_query($conn, "CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION") or die("Error en GRANT : ". mysqli_error($conn));
+//mysqli_query($conn, "FLUSH PRIVILEGES") or die("Error en FLUSH PRIVILEGES : ". mysqli_error($conn));
+
+mysqli_query($conn, "CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION") or die("Error en GRANT : ". mysqli_error($conn));
+
+// ===== cuiners ========================================================================================================================================================
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cuiner@localhost IDENTIFIED BY 'cuiner' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cuiner'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cuiner1'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cuiner2'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cuiner3'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+
+// ===== cambrers ========================================================================================================================================================
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cambrer@localhost IDENTIFIED BY 'cambrer' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cambrer'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.reserves TO 'cambrer'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cambrer1'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.reserves TO 'cambrer1'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cambrer2'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.reserves TO 'cambrer2'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+// mysqli_query($conn, "CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;") or die("Error CREATE USER : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.comandes TO 'cambrer3'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.reserves TO 'cambrer3'@'localhost'") or die("Error en GRANT : ". mysqli_error($conn));
+
+
+
+mysqli_query($conn, "COMMIT") or die("Error en COMMIT : ". mysqli_error($conn));
+// =====================================================================================================================================================================
+
+// mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION") or die("Error en GRANT : ". mysqli_error($conn));
+//mysqli_query($conn, "GRANT ALL PRIVILEGES ON restaurantDB.* TO ''@'localhost' WITH GRANT OPTION") or die("Error en GRANT : ". mysqli_error($conn));
+
+
+$conn->close();
+
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+    <!-- 	Bootstrap CSS (des de CDN) -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
+			integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+	
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/estils.css">
+    <title>POPULATE db USERS</title>
+</head>
+
+<body>
+	<br><br>
+	<form action="../index.php">
+		<input type="submit" value="Tornar a INDEX INICI">
+	</form>
+</body>
+</html>
+<?php
+    require '../includes/footer.php';
+?>
+
+

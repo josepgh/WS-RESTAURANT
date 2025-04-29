@@ -26,9 +26,9 @@ function getConnexio(){
 //=======================================================================================
 //echo "funcions.php - PROPIETARI SESSIÓ : $username - PWD: $password - HOST: $host<br>";
 // retorna l'usuari propietari de la sessió
-function getUsuariActual() {
-    
-    if (!isset($_SESSION['username'])) {
+function getUsuariActual()
+{
+    if (! isset($_SESSION['username'])) {
         header("Location: ../error.html?error=funcions_php_cap_usuari_a_la_sessio");
         exit();
     }
@@ -36,22 +36,21 @@ function getUsuariActual() {
     $username = $_SESSION['username'];
     $password = $_SESSION['password'];
     $host = $_SESSION['host'];
-    
+
     $conn = getUserConnection($host, $username, $password);
-    
-    if(!$conn){
+
+    if (! $conn) {
         header("Location: ../error.html?error=getUsuariActual_connexio_fallida");
         exit();
     }
 
     $query = "SELECT * FROM personal WHERE username = '$username';";
-   
-    $usuari = mysqli_query($conn, $query) 
-            or die("Problemes amb el select del login: " . $conn->connect_error);
-    
+
+    $usuari = mysqli_query($conn, $query) or die("Problemes amb el select del login: " . $conn->connect_error);
+
     mysqli_close($conn);
-    
-return $usuari;        
+
+    return $usuari;
 }
     
 //===============================================================================
@@ -69,12 +68,25 @@ function getUserConnection($host, $username, $password){
 }
 //======================================================================================
 
+function insertaEnPersonal($nom, $rol, $username, $password, $host){
+    $conn = getConnexio();
 
-
-
-
-
-
+    $sql_hash = "SELECT authentication_string FROM mysql.user WHERE user = ? AND host = ?";
+    $stmt = $conn->prepare($sql_hash);
+    $stmt->bind_param("ss", $username, $host);
+    $stmt->execute();
+    $stmt->bind_result($auth_hash);
+    $stmt->fetch();
+    $stmt->close();
+    if ($auth_hash) {echo "<br>Hash MySQL: <code>$auth_hash</code>";} else {echo "<br>No s'ha pogut obtenir el hash.";}
+    $sql = "INSERT INTO personal VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, DEFAULT);";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssss", $nom, $rol, $username, $password, $auth_hash, $host);
+    $stmt->execute();
+    $stmt->close();
+    
+    $conn->close();
+}
 
 
 

@@ -15,11 +15,6 @@ USE restaurantDB;
 /*
 SELECT * FROM recaptacio_view;
 
-SELECT * FROM comandes;
-SELECT * FROM detalls_comanda;
-SELECT * FROM comandes_view;
-
-
 SELECT * FROM factures_view;
 --SELECT * FROM factures_total;
 
@@ -76,6 +71,12 @@ SELECT * FROM plats_view;
 
 SELECT * from personal;
 select * from categories;
+
+SELECT * FROM comandes;
+--SELECT * FROM detalls_comanda;
+SELECT * FROM plats_comanda;
+
+SELECT * FROM comandes_view;
 
 SELECT 'FI';
 --COMMIT;

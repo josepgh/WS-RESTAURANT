@@ -1,7 +1,6 @@
 -- ESTUDIANT LES SORTIDES I LOGS:
 -- https://mariadb.com/kb/es/general-query-log/ 
 -- https://mariadb.com/docs/server/ref/es11.4/cli/mariadb/
--- https://mariadb.com/docs/server/ref/es11.4/cli/mariadb/ 
 --SET GLOBAL general_log=1;
 --SET GLOBAL general_log_file='D:\\PRJCTS\\WS-RESTAURANT\\SQL\\crea_burguer.log';--OK
 --SET GLOBAL general_log_file='crea_restaurant_al_datadir.log'; --FUNCIONA
@@ -22,12 +21,6 @@ CREATE DATABASE IF NOT EXISTS restaurantDB;
 
 USE restaurantDB;
 
-
---ERROR 1005 (HY000) at line 32: Can't create table `burguerdb`.`comandes` 
---(errno: 150 "Foreign key constraint is incorrectly formed")
--- equivalent a SET CONSTRAINTS ALL DEFERRABLE:
-
-
 SET SESSION foreign_key_checks=OFF;
 
 -- Crea la tabla (si aún no existe)
@@ -38,14 +31,12 @@ CREATE TABLE IF NOT EXISTS productos (
     categoria_nombre VARCHAR(100) NOT NULL
 );
 
-/* ELIMINADAAAAAAAAAAAA
-CREATE TABLE grants_rol(
-						id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
-						,id_rol		VARCHAR(15) UNIQUE CHECK(id_rol IN ('cuiner', 'cambrer', 'administrador'))
-						,grants	VARCHAR(50)
-						);
+/* 
+CREATE TABLE grants_rol( ELIMINADAAAAAAAAAAAA
+id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
+id_rol		VARCHAR(15) UNIQUE CHECK(id_rol IN ('cuiner',...))
+grants	VARCHAR(50));
 */
-
 
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
@@ -53,12 +44,11 @@ CREATE TABLE personal(
 					,rol		VARCHAR(15) NOT NULL CHECK(rol IN ('cuiner', 'cambrer', 'administrador'))				
 					,username	VARCHAR(15) NOT NULL
 					,password 	VARCHAR(15) NOT NULL
-					,pwdhash 	CHAR(64) NOT NULL
+					,pwdhash 	VARCHAR(41) NOT NULL
 					,host		VARCHAR(15) NOT NULL
 					,es_actiu	BOOLEAN NOT NULL DEFAULT TRUE
 					,UNIQUE (username, host)
 					);
-
 
 CREATE TABLE categories(
 						id_categoria	INTEGER PRIMARY KEY AUTO_INCREMENT
@@ -81,58 +71,60 @@ CREATE TABLE taules(
 					,capacitat		INTEGER
 					);
 
+CREATE TABLE estats_reserva(
+						id_estat_reserva	INTEGER PRIMARY KEY AUTO_INCREMENT
+						,nom_estat			VARCHAR(10) CHECK(nom_estat IN
+						('totes', 'lliure', 'ocupada'))
+						);
+
 CREATE TABLE reserves(
 					id_reserva 				INTEGER PRIMARY KEY AUTO_INCREMENT
 					,estat_reserva			VARCHAR(7) NOT NULL DEFAULT ('lliure')
 					,id_taula				INTEGER NOT NULL
-					,nom_client				VARCHAR(30) NOT NULL
+--					,nom_client				VARCHAR(30) NOT NULL
+					,nom_client				VARCHAR(30)
 					,data_reserva			DATE NOT NULL
 					,hora_reserva			VARCHAR(2) NOT NULL
 					,num_persones			INTEGER
-					,username				VARCHAR(30)
 					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
 					,CHECK(estat_reserva IN ('lliure', 'ocupada')) 
 					,CHECK(hora_reserva IN ('13', '15')) 
 					);
 
--- a la comanda cal inserir el USER() automaticament (l'idCambrer)
 CREATE TABLE comandes(
-					id_comanda 				INTEGER PRIMARY KEY AUTO_INCREMENT
-					,id_taula				INTEGER
-					,data_comanda			DATE
-					,estat					VARCHAR(20) CHECK(estat IN ('En preparacio', 'Lliurat', 'Entregat'))
-					,username				VARCHAR(30)
+					id_comanda 		INTEGER PRIMARY KEY AUTO_INCREMENT
+					,id_taula		INTEGER NOT NULL
+					,nom_client		VARCHAR(30) NOT NULL
+					,data_comanda	DATE NOT NULL
+					,hora_comanda	VARCHAR(2) NOT NULL
+					,num_persones	INTEGER
+					,estat_comanda	VARCHAR(20) NOT NULL DEFAULT ('en espera') 
+									CHECK(estat_comanda IN ('en espera', 'en preparacio', 'preparat', 'servit'))
 					,FOREIGN KEY (id_taula) REFERENCES taules(id_taula)
 					);
 
-CREATE TABLE detalls_comanda(
-					id_detall 	INTEGER PRIMARY KEY AUTO_INCREMENT
-					,id_comanda	INTEGER NOT NULL
-					,id_plat	INTEGER NOT NULL
-					,quantitat	INTEGER
+CREATE TABLE plats_comanda(
+					id_plat_comanda 	INTEGER PRIMARY KEY AUTO_INCREMENT
+					,id_comanda			INTEGER NOT NULL
+					,id_plat			INTEGER NOT NULL
+					,quantitat			INTEGER NOT NULL
 					,UNIQUE(id_comanda, id_plat)
 					,FOREIGN KEY (id_comanda) REFERENCES comandes(id_comanda)
 					,FOREIGN KEY (id_plat) REFERENCES plats(id_plat)
 					);
 
-
-
 --ALTER TABLE productes_comanda ADD CONSTRAINT FOREIGN KEY (idProducte) REFERENCES productes(idProducte);
 --ALTER TABLE productes_comanda ADD CONSTRAINT FOREIGN KEY (idComanda) REFERENCES comandes(idComanda);
-
 
 --https://mariadb.com/kb/en/server-system-variables/#foreign_key_checks
 SET SESSION foreign_key_checks=ON;
 
 CREATE OR REPLACE FUNCTION ed25519_password RETURNS STRING SONAME "auth_ed25519.dll";
-
 -- ---------------------------------------------------------------------------------
 --                                      CREA USUARIS
 -- ---------------------------------------------------------------------------------
 --https://www.geeksforgeeks.org/how-to-create-user-with-grant-privileges-in-mariadb/
 
-
-DROP USER IF EXISTS josep@localhost;
 DROP USER IF EXISTS administrador1@localhost;
 DROP USER IF EXISTS administrador2@localhost;
 DROP USER IF EXISTS administrador3@localhost;
@@ -168,6 +160,40 @@ DROP USER IF EXISTS cuiner10@localhost;
 
 
 -- INICIAR LA BASE DE DADES AMB AQUEST USUARIS I ELS SEUS ROLS
+
+CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador1'@'localhost' WITH GRANT OPTION;
+
+CREATE OR REPLACE USER administrador2@localhost IDENTIFIED BY 'administrador2' PASSWORD EXPIRE NEVER;
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRANT OPTION;
+
+CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
+GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION;
+
+
+CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
+
+CREATE OR REPLACE USER cambrer2@localhost IDENTIFIED BY 'cambrer2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer2'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
+
+CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
+
+
+CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
+
+CREATE OR REPLACE USER cuiner2@localhost IDENTIFIED BY 'cuiner2' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
+
+CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED BY 'cuiner3' PASSWORD EXPIRE NEVER;
+GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
+
+
 /*
 CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cambrer1') PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
@@ -213,36 +239,10 @@ GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRAN
 --GRANT SELECT, INSERT, UPDATE ON restaurantDB.personal TO 'administrador3'@'localhost';
 --GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'administrador3'@'localhost';
 
-
---CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
--- GRANT SELECT, INSERT, UPDATE ON restaurantDB.* TO 'cambrer1'@'localhost';
 -- IMPORTANT: https://stackoverflow.com/questions/36463966/mysql-when-is-flush-privileges-in-mysql-really-needed
-
 FLUSH PRIVILEGES; --?????????????????????????????????????????????????????????????
 
---CREATE OR REPLACE USER guillem@localhost IDENTIFIED BY 'guillem' PASSWORD EXPIRE NEVER;
---GRANT ALL PRIVILEGES ON restaurantDB.* TO 'guillem'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
-SELECT user FROM mysql.user; -- ok
---SHOW GRANTS FOR cambrer1@localhost;
---SHOW GRANTS FOR guillem@localhost;
 */
-
-
-/*
---DROP USER IF EXISTS guillem@192.168.1.41;
-DROP USER IF EXISTS guillem@localhost;
---CREATE OR REPLACE USER guillem@192.168.1.41 IDENTIFIED BY 'guillem' PASSWORD EXPIRE NEVER;
-CREATE OR REPLACE USER guillem@localhost IDENTIFIED BY 'guillem' PASSWORD EXPIRE NEVER;
---GRANT ALL PRIVILEGES ON burguerDB.* TO 'guillem'@'192.168.1.41';
---GRANT SELECT ON burguerDB.* TO 'guillem'@'localhost' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON burguerDB.* TO 'guillem'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
---SHOW GRANTS FOR guillem@192.168.1.41;
-SHOW GRANTS FOR guillem@localhost;
-*/
-
 -- ---------------------------------------------------------------------------------
 --                                     PROCEDURES
 -- ---------------------------------------------------------------------------------
@@ -333,16 +333,16 @@ WHERE p.id_categoria = c.id_categoria
 ORDER BY c.nom DESC, p.nom ASC;
 
 
-CREATE OR REPLACE VIEW reserves_view(id_reserva, estat_reserva, data_reserva, hora_reserva, num_taula, capacitat_taula, persones_reserva, nom_client, username) AS 
-SELECT r.id_reserva, r.estat_reserva, r.data_reserva, r.hora_reserva, t.numero, t.capacitat, r.num_persones, r.nom_client, r.username 
+CREATE OR REPLACE VIEW reserves_view(id_reserva, estat_reserva, data_reserva, hora_reserva, num_taula, capacitat_taula, persones_reserva, nom_client) AS 
+SELECT r.id_reserva, r.estat_reserva, r.data_reserva, r.hora_reserva, t.numero, t.capacitat, r.num_persones, r.nom_client
 FROM reserves r, taules t
 WHERE r.id_taula = t.id_taula
-ORDER BY r.data_reserva, t.numero;
+ORDER BY r.data_reserva, t.numero, r.hora_reserva;
 
 
 CREATE OR REPLACE VIEW comandes_view(data_comanda, id_comanda, num_taula, capacitat_taula, estat_comanda, categoria_plat, plat, quantitat, preu_plat, EUR) AS
-SELECT c.data_comanda, c.id_comanda, t.numero, t.capacitat, c.estat, cat.nom, p.nom, d.quantitat, p.preu, ROUND((p.preu * d.quantitat), 2)  
-FROM comandes c, detalls_comanda d, plats p, categories cat, taules t
+SELECT c.data_comanda, c.id_comanda, t.numero, t.capacitat, c.estat_comanda, cat.nom, p.nom, d.quantitat, p.preu, ROUND((p.preu * d.quantitat), 2)  
+FROM comandes c, plats_comanda d, plats p, categories cat, taules t
 WHERE 	c.id_comanda = d.id_comanda AND
 		d.id_plat = p.id_plat AND
 		p.id_categoria = cat.id_categoria AND
@@ -353,7 +353,7 @@ ORDER BY c.data_comanda, c.id_comanda;
 --https://mariadb.com/kb/en/coalesce/
 CREATE OR REPLACE VIEW recaptacio_view(Dia, Recaptacio_euros) AS 
 SELECT COALESCE(c.data_comanda, 'TOTAL PERIODE ->'), ROUND( SUM( (d.quantitat * p.preu)), 2) 
-FROM plats p, comandes c, detalls_comanda d
+FROM plats p, comandes c, plats_comanda d
 WHERE d.id_plat = p.id_plat AND
 		d.id_comanda = c.id_comanda
 GROUP BY c.data_comanda ASC WITH ROLLUP;
@@ -361,7 +361,7 @@ GROUP BY c.data_comanda ASC WITH ROLLUP;
 
 CREATE OR REPLACE VIEW factures_view(Data_comanda, Id_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
 SELECT c.data_comanda, c.id_comanda, t.numero, t.capacitat, SUM(d.quantitat), ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM comandes c, detalls_comanda d, plats p, taules t
+FROM comandes c, plats_comanda d, plats p, taules t
 WHERE 	c.id_comanda = d.id_comanda AND
 		d.id_plat = p.id_plat AND
 		c.id_taula = t.id_taula
@@ -467,10 +467,6 @@ WHERE CONSTRAINT_SCHEMA = 'burguerdb' OR CONSTRAINT_SCHEMA = 'llibres';
 COMMIT;
 
 
-
-
-
-
 --SET GLOBAL general_log=0;
 
 --SELECT constraint_schema, TABLE_NAME, CONSTRAINT_NAME, CHECK_CLAUSE 
@@ -487,7 +483,7 @@ COMMIT;
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
 SELECT COALESCE(c.id_comanda, c.data_comanda, 'TOTAL PERIODE ->'), c.data_comanda, t.numero, t.capacitat, SUM(d.quantitat), ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM comandes c, detalls_comanda d, plats p, taules t
+FROM comandes c, plats_comanda d, plats p, taules t
 WHERE 	c.id_comanda = d.id_comanda AND
 		d.id_plat = p.id_plat AND
 		c.id_taula = t.id_taula
@@ -498,7 +494,7 @@ GROUP BY d.id_comanda ASC WITH ROLLUP;
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, EUR) AS
 SELECT COALESCE(c.id_comanda, 'TOTAL FACTURES ->'), c.data_comanda, t.numero, t.capacitat, ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM comandes c, detalls_comanda d, plats p, taules t
+FROM comandes c, plats_comanda d, plats p, taules t
 WHERE 	c.id_comanda = d.id_comanda AND
 		c.id_taula = t.id_taula AND
 		d.id_plat = p.id_plat
@@ -508,7 +504,7 @@ GROUP BY c.id_comanda, c.data_comanda ASC WITH ROLLUP;
 
 CREATE OR REPLACE VIEW factures_total AS
 SELECT COALESCE(d.id_comanda, 'TOTAL FACTURES ->'), ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM comandes c, detalls_comanda d, plats p
+FROM comandes c, plats_comanda d, plats p
 WHERE 	c.id_comanda = d.id_comanda AND
 		d.id_plat = p.id_plat
 GROUP BY d.id_comanda ASC WITH ROLLUP;
@@ -517,7 +513,7 @@ GROUP BY d.id_comanda ASC WITH ROLLUP;
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
 SELECT COALESCE(c.id_comanda, 'TOTAL FACTURES ->'), c.data_comanda, t.numero, t.capacitat, SUM(d.quantitat), ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM comandes c, detalls_comanda d, plats p, taules t
+FROM comandes c, plaats_comanda d, plats p, taules t
 WHERE 	c.id_comanda = d.id_comanda AND
 		d.id_plat = p.id_plat AND
 		c.id_taula = t.id_taula
@@ -526,7 +522,7 @@ GROUP BY d.id_comanda ASC WITH ROLLUP;
 
 CREATE OR REPLACE VIEW factures_total(Id_comanda, dia, taula, capacitat, EUR) AS
 SELECT COALESCE(d.id_comanda, 'TOTAL FACTURES ->'), c.data_comanda, t.numero, t.capacitat, ROUND(   SUM(p.preu * d.quantitat) , 2)  
-FROM 	comandes c, detalls_comanda d, plats p, taules t
+FROM 	comandes c, plats_comanda d, plats p, taules t
 WHERE 	t.id_taula = c.id_taula AND
 		d.id_plat = p.id_plat AND
 		d.id_comanda = c.id_comanda

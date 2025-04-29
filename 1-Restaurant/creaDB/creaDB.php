@@ -4,7 +4,7 @@ session_start();
 require ('../includes/header.php');
 //require_once ('./creaRestaurantDB.php');
 require_once ('./populateDBusers.php');
-require_once ('./populateDBtables.php');
+//require_once ('./populateDBtables.php');
 
 // require_once ('../creaDB/populateDBusers.php');
 // require_once ('../populate/populateDBusers.php');

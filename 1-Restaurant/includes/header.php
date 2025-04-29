@@ -2,16 +2,27 @@
 //session_start();
 
 
-if (!($usuari = $_SESSION['username'])){
+if (!($usuari = $_SESSION['username'] ?? '')){
     $usuari = "";
 }
 
 
-if (!($filt_estat_reserva = $_SESSION['filtro_estat'])){
-    $filt_estat_reserva = "";
+// if (!($filt_estat_reserva = $_SESSION['filtre_estat'] ?? '')){
+//     $filt_estat_reserva = "";
+// }
+
+if (!($estat_id = $_SESSION['estat_id'] ?? '')){
+    $estat_id = "";
 }
-if (!($filt_data_reserva = $_SESSION['filtro_data'])){
-    $filt_data_reserva = "";
+
+if (!($estat_opcio = $_SESSION['estat_opcio'] ?? '')){
+    $estat_opcio = "";
+}
+
+//$filtre_data = $_SESSION['filtre_data'] ?? date('Y-m-d');
+
+if (!($data_reserva = $_SESSION['filtre_data'] ?? '')){
+    $data_reserva = "";
 }
 
 
@@ -43,8 +54,8 @@ if (!($id_cat = $_SESSION['id_cat_opcio'] ?? '')){
     
     <div style="width: 40%; margin-right: 20px;">
             Username: <?php echo $usuari?><br>
-        	Plat: (<?php echo $nom_cat?>) Id: (<?php echo $id_cat?>)<br>
-            Reserva: (<?php echo $filt_data_reserva?>) - (<?php echo $filt_estat_reserva?>)<br>
+        	Plat: (<?php echo $id_cat?>) Id: (<?php echo $nom_cat?>)<br>
+            Reserva: (<?php echo $data_reserva?>) - (<?php echo $estat_id?>) - (<?php echo $estat_opcio?>)<br>
             <!--Data res: (< php echo $filt_data?>)<br> -->
 
     </div>

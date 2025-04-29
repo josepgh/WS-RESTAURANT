@@ -179,6 +179,16 @@
 				</form>
             </td>
           </tr>
+          
+		<tr>
+            <td> CREA BADE DE DADES</td>
+             <td><h4>OK</h4></td>
+            <td> 
+        		<form action="creaDB/index_CREA_DB.php">
+             		<input type="submit" value="INDEX CREA DB">
+				</form>
+            </td>
+          </tr>
 
 
  </table> 

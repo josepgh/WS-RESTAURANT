@@ -1,3 +1,17 @@
+
+        <div class="col-md-8">
+            <label for="filtro_estat" class="form-label">Estat de la reserva</label>
+            <select id="filtro_estat" name="filtro_estat" class="form-select" onchange="guardarEstatEnSessio(this)">
+                <!--<option value="">-- Tots --</option> -->
+                <option value="totes" <?= $filtro_estat == 'totes' ? 'selected' : '' ?>>Totes</option>
+                <option value="lliure" <?= $filtro_estat == 'lliure' ? 'selected' : '' ?>>Lliure</option>
+                <option value="ocupada" <?= $filtro_estat == 'ocupada' ? 'selected' : '' ?>>Ocupada</option>
+            </select>
+        </div>
+
+
+
+
 <?php
 
 // preguntat a ChatGPT:

@@ -202,18 +202,9 @@ $conn->close();
                                                                             \"{$r['num_persones']}\")'>Reservar/Editar</button>
                 </td><td>";
 
-                //echo "<form action='../comandes/crear_comanda_from_reserves.php' method='post' style='display:inline;'>";
-                //echo "<form action='../comandes/crear_comanda_from_reserves.php' method='post'>";
-                echo "<form action='../comandes/crear_comanda_from_reserves.php' method='post' 
-                        onsubmit=\"return confirm('Vols iniciar la comanda per {$r['nom_client']} el dia {$r['data_reserva']}?');\">";
+                echo "<form action='../comandes/crear_comanda_from_reserves.php' method='post' style='display:inline;'>";
                 echo "<input type='hidden' name='id_taula' value=" . $r['id_taula'] . ">";
-                // ===============================================================================
-                // atencio a aqueta : !!!!!!!!!!!!!!!!!!!! així no talla la cadena els cognoms
-                echo "<input type='hidden' name='nom_client' value=\"{$r['nom_client']}\">";
-                // ===============================================================================
-                echo "<input type='hidden' name='data_comanda' value=" . $r['data_reserva'] . ">";
-                echo "<input type='hidden' name='hora_comanda' value=" . $r['hora_reserva'] . ">";
-                echo "<input type='hidden' name='num_persones' value=" . $r['num_persones'] . ">";
+                echo "<input type='hidden' name='nom_client' value=" . $r['nom_client'] . ">";
                 echo "<button type='submit' class='btn btn-success'>Iniciar COMANDA</button>";
                 echo "</form>";
                 echo "</td><td>";
@@ -356,6 +347,7 @@ $('#formReservar').on('submit', function(e) {
     $.post('', $(this).serialize(), function(res) {
       	mostrarMissatgeModal(res);
         modalReservar.hide();
+        
         refrescaTaula();
         //location.reload();
     });
@@ -365,6 +357,7 @@ $('#formReservar').on('submit', function(e) {
 function guardarDataEnSessio(filtre_data) {
     const data_reserva = filtre_data.value;
     const dades = new URLSearchParams();
+
     dades.append('data_reserva', data_reserva);
 
     fetch('', {
@@ -385,8 +378,10 @@ function guardarDataEnSessio(filtre_data) {
 }
 
 function guardarEstatEnSessio(filtre_estat) {    
+
     const estat_id = filtre_estat.value;
     const estat_opcio = filtre_estat.options[filtre_estat.selectedIndex].text;
+
     const dadess = new URLSearchParams();
     dadess.append('estat_id', estat_id);
     dadess.append('estat_opcio', estat_opcio);

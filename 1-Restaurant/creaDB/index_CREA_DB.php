@@ -24,7 +24,7 @@
 
 <table>
 		<tr>
-			<td colspan="3"><h4>INDEX COMANDES</h4></td>
+			<td colspan="3"><h4>INDEX CREA DB</h4></td>
 		</tr>
 </table>
 
@@ -46,17 +46,26 @@
             <td></td>
           </tr>
 
+<!--          <tr>  -->
+<!--             <td>POPULATE DB USERS</td> -->
+<!--             <td><h4></h4></td> -->
+<!--             <td>  -->
+<!--         		<form action="./populatedbusers.php"> -->
+<!--             		<input type="submit" value="POPULATE DB USERS"> -->
+<!-- 				</form> -->
+<!--             </td> -->
+<!-- 		</tr> -->
+          
+          
          <tr> 
-            <td>Gestio COMANDES des de plats </td>
+            <td>POPULATE DB TABLES</td>
             <td><h4></h4></td>
             <td> 
-        		<form action="./gestio_comandes_de_plats.php">
-            		<input type="submit" value="GESTIO COMANDES des de PLATS">
+        		<form action="./populatedbtables.php">
+            		<input type="submit" value="POPULATE DB TABLES">
 				</form>
             </td>
 		</tr>
-          
-          
 
          <tr> 
             <td> Comandes view </td>
@@ -69,36 +78,22 @@
 		</tr>
 
          <tr> 
-            <td> Prova gestio COMANDES </td>
+            <td></td>
             <td><h4></h4></td>
             <td> 
-        		<form action="./prova_gestio_comandes.php">
-            		<input type="submit" value="Prova gestio COMANDES">
-				</form>
+<!--         		<form action="./prova_gestio_comandes.php"> -->
+<!--             		<input type="submit" value="Prova gestio COMANDES"> -->
+<!-- 				</form> -->
             </td>
 		</tr>
  
          <tr> 
-            <td> CHATGPT RESPONSE 1</td>
+            <td> </td>
             <td><h4></h4></td>
             <td> 
-        		<form action="./comandes_chatgpt_1_response1.php">
-            		<input type="submit" value="ChatGPT response 1">
-				</form>
             </td>
 		</tr>
 
-
-         <tr> 
-            <td> CHATGPT RESPONSE 2</td>
-            <td><h4></h4></td>
-            <td> 
-        		<form action="./comandes_chatgpt_1_response2.php">
-            		<input type="submit" value="ChatGPT response 2">
-				</form>
-            </td>
-		</tr>
-		
 
 
  </table> 

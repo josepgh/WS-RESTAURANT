@@ -50,6 +50,16 @@
 				</form>
             </td>
 		</tr>
+         <tr> 
+            <td> GESTIO RESERVES OKOKOK </td>
+            <td><h4></h4></td>
+            <td> 
+        		<form action="./gestio_reserves_OKOKOK.php">
+        		<input type="submit" value="Gestio reserves OKOKOK">
+        		
+				</form>
+            </td>
+		</tr>
 
          <tr> 
             <td> TAULA RESERVES </td>
