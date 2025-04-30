@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C92B1CAA-B9F0-9E1A-A1C5-97AC70E7412F" schemaObject="FD03623E-CDEB-2FE4-5FED-C61CADC70DF8" name="estats_reserva">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>estats_reserva</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_estat_reserva" id="CB6859F3-A7E3-7054-79C1-C2B497495FFD">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>estats_reserva</sourceObjSchema>
+<sourceObjName>id_estat_reserva</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nom_estat" id="5A9597EB-1324-98F6-EB7F-9C55A2C0D5D3">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>estats_reserva</sourceObjSchema>
+<sourceObjName>nom_estat</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BC14342D-2481-13C9-9D15-81FCEF5540DC" name="PRIMARY">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>PRIMARY</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CB6859F3-A7E3-7054-79C1-C2B497495FFD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

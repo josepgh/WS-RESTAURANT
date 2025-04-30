@@ -1,0 +1,157 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="791EFF04-B15E-5D8B-CB49-D0EE619CE91E" schemaObject="FD03623E-CDEB-2FE4-5FED-C61CADC70DF8" name="comandes">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>comandes</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_comanda" id="8A8F1177-DE65-89D0-6426-0DF26E532A6D">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>id_comanda</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="id_taula" id="DE3074A1-09B6-B449-6AB6-9B1CA642A18C">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>id_taula</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E5347CF3-725B-425F-AB49-696744221FCD" referredColumn="8B384031-966C-B425-FB9F-A73856455E61"/>
+</associations>
+</Column>
+<Column name="nom_client" id="C2FF57AA-F891-8DD8-EFED-D5E7E4BDA09D">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>nom_client</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="data_comanda" id="54168D0B-89FF-0ECE-3E4E-013914D67CE3">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>data_comanda</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hora_comanda" id="1C2DFE7D-0995-5D2F-B8E5-6C62AE66578F">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>hora_comanda</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2</dataTypeSize>
+<ownDataTypeParameters>2,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="num_persones" id="F6408EA2-96C3-D9BF-4845-AEE906C81066">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>num_persones</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="estat_comanda" id="521B5E20-D384-6A17-6C87-9925D8844833">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>comandes</sourceObjSchema>
+<sourceObjName>estat_comanda</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<defaultValue>&apos;en espera&apos;</defaultValue>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BB39C98B-40B0-7E29-69FF-37598BA18923" name="PRIMARY">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>PRIMARY</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8A8F1177-DE65-89D0-6426-0DF26E532A6D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DBB4B7C5-3C68-C18A-65CF-DFB81AAF437D" name="id_taula">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>id_taula</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE3074A1-09B6-B449-6AB6-9B1CA642A18C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9D492AED-2E53-8C95-0C47-1B617B3330CA" name="comandes_ibfk_1">
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE3074A1-09B6-B449-6AB6-9B1CA642A18C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

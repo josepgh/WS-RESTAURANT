@@ -1,0 +1,33 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="estats_reserva" directorySegmentName="seg_0" id="C92B1CAA-B9F0-9E1A-A1C5-97AC70E7412F">
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<schemaObject>FD03623E-CDEB-2FE4-5FED-C61CADC70DF8</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="nom_estat" id="5A9597EB-1324-98F6-EB7F-9C55A2C0D5D3">
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<defaultValue>NULL</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="id_estat_reserva" id="CB6859F3-A7E3-7054-79C1-C2B497495FFD">
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PRIMARY" id="BC14342D-2481-13C9-9D15-81FCEF5540DC">
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

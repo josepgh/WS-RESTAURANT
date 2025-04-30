@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2954940F-DE64-7985-02C2-891276A73E0D" schemaObject="FD03623E-CDEB-2FE4-5FED-C61CADC70DF8" name="taules">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>taules</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_taula" id="8B384031-966C-B425-FB9F-A73856455E61">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>taules</sourceObjSchema>
+<sourceObjName>id_taula</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="numero" id="E7DD8667-98FF-BDA1-682B-FE00FD710406">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>taules</sourceObjSchema>
+<sourceObjName>numero</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="capacitat" id="8C243A3A-060B-5847-3A9D-EC5CA797F142">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>taules</sourceObjSchema>
+<sourceObjName>capacitat</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A221CBB1-9B47-E540-3C46-B386E95B0D34" name="PRIMARY">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>PRIMARY</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8B384031-966C-B425-FB9F-A73856455E61"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

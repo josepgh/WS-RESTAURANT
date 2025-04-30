@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E5347CF3-725B-425F-AB49-696744221FCD" containerWithKeyObject="791EFF04-B15E-5D8B-CB49-D0EE619CE91E" localFKIndex="9D492AED-2E53-8C95-0C47-1B617B3330CA" name="comandes_ibfk_1">
+<sourceConnName>RestaurantDB</sourceConnName>
+<sourceObjSchema>restaurantdb</sourceObjSchema>
+<sourceObjName>comandes_ibfk_1</sourceObjName>
+<createdBy>josep</createdBy>
+<createdTime>2025-04-30 04:52:29 UTC</createdTime>
+<ownerDesignName>RestaurantDB-ER</ownerDesignName>
+<referredTableLongName>restaurantdb.taules</referredTableLongName>
+<deleteRule>RESTRICT</deleteRule>
+<referredTableID>2954940F-DE64-7985-02C2-891276A73E0D</referredTableID>
+<keyObject>A221CBB1-9B47-E540-3C46-B386E95B0D34</keyObject>
+<referredKeyID>A221CBB1-9B47-E540-3C46-B386E95B0D34</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_taula</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
