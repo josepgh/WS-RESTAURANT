@@ -4,8 +4,7 @@
 --SET GLOBAL general_log=1;
 --SET GLOBAL general_log_file='D:\\PRJCTS\\WS-RESTAURANT\\SQL\\crea_burguer.log';--OK
 --SET GLOBAL general_log_file='crea_restaurant_al_datadir.log'; --FUNCIONA
-
-INSTALL SONAME 'auth_ed25519';
+--INSTALL SONAME 'auth_ed25519';
 
 SET autocommit=FALSE; --SELECT CURDATE(); --SELECT CURTIME(); --SELECT NOW();
 SELECT NOW(), user(), current_user();
@@ -30,13 +29,6 @@ CREATE TABLE IF NOT EXISTS productos (
     categoria_id INT NOT NULL,
     categoria_nombre VARCHAR(100) NOT NULL
 );
-
-/* 
-CREATE TABLE grants_rol( ELIMINADAAAAAAAAAAAA
-id_grant	INTEGER PRIMARY KEY AUTO_INCREMENT
-id_rol		VARCHAR(15) UNIQUE CHECK(id_rol IN ('cuiner',...))
-grants	VARCHAR(50));
-*/
 
 CREATE TABLE personal(
 					id_personal	INTEGER PRIMARY KEY AUTO_INCREMENT
@@ -119,11 +111,14 @@ CREATE TABLE plats_comanda(
 --https://mariadb.com/kb/en/server-system-variables/#foreign_key_checks
 SET SESSION foreign_key_checks=ON;
 
-CREATE OR REPLACE FUNCTION ed25519_password RETURNS STRING SONAME "auth_ed25519.dll";
+--CREATE OR REPLACE FUNCTION ed25519_password RETURNS STRING SONAME "auth_ed25519.dll";
 -- ---------------------------------------------------------------------------------
 --                                      CREA USUARIS
 -- ---------------------------------------------------------------------------------
 --https://www.geeksforgeeks.org/how-to-create-user-with-grant-privileges-in-mariadb/
+
+DROP USER IF EXISTS cuiner5@cuiner5;
+DROP USER IF EXISTS josep@192.168.1.35;
 
 DROP USER IF EXISTS administrador1@localhost;
 DROP USER IF EXISTS administrador2@localhost;
@@ -170,7 +165,6 @@ GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador2'@'localhost' WITH GRAN
 CREATE OR REPLACE USER administrador3@localhost IDENTIFIED BY 'administrador3' PASSWORD EXPIRE NEVER;
 GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRANT OPTION;
 
-
 CREATE OR REPLACE USER cambrer1@localhost IDENTIFIED BY 'cambrer1' PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer1'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer1'@'localhost';
@@ -182,7 +176,6 @@ GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer2'@'localhost';
 CREATE OR REPLACE USER cambrer3@localhost IDENTIFIED BY 'cambrer3' PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cambrer3'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.reserves TO 'cambrer3'@'localhost';
-
 
 CREATE OR REPLACE USER cuiner1@localhost IDENTIFIED BY 'cuiner1' PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner1'@'localhost';
@@ -216,9 +209,6 @@ GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner2'@'localhost';
 CREATE OR REPLACE USER cuiner3@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('cuiner3') PASSWORD EXPIRE NEVER;
 GRANT SELECT, INSERT, UPDATE ON restaurantDB.comandes TO 'cuiner3'@'localhost';
 
-
-
-
 --CREATE OR REPLACE USER administrador1@localhost IDENTIFIED BY 'administrador1' PASSWORD EXPIRE NEVER;
 CREATE OR REPLACE USER administrador1@localhost IDENTIFIED VIA ed25519 USING PASSWORD ('administrador1');
 GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador1'@'localhost' WITH GRANT OPTION;
@@ -241,7 +231,6 @@ GRANT ALL PRIVILEGES ON restaurantDB.* TO 'administrador3'@'localhost' WITH GRAN
 
 -- IMPORTANT: https://stackoverflow.com/questions/36463966/mysql-when-is-flush-privileges-in-mysql-really-needed
 FLUSH PRIVILEGES; --?????????????????????????????????????????????????????????????
-
 */
 -- ---------------------------------------------------------------------------------
 --                                     PROCEDURES
@@ -250,10 +239,9 @@ FLUSH PRIVILEGES; --????????????????????????????????????????????????????????????
 -- ===================================================================================================================
 --CREATE USER 'username'@'host' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
 -- ChatGPT ========================================================================================================
-
+--DROP PROCEDURE IF EXISTS ShowAllUserGrants //
 DELIMITER //
-DROP PROCEDURE IF EXISTS ShowAllUserGrants //
-CREATE PROCEDURE ShowAllUserGrants()
+CREATE OR REPLACE PROCEDURE ShowAllUserGrants()
 BEGIN
     DECLARE done INT DEFAULT FALSE;
     DECLARE user_host VARCHAR(512);
@@ -286,16 +274,6 @@ DELIMITER ;
 -- ==========================================================================================================================
 --                                      TRIGGERS
 -- ==========================================================================================================================
-
---SELECT 	User, host, authentication_string 
---FROM 	mysql.user 
---WHERE 	user <> 'mariadb.sys' AND user <> 'root'
---ORDER BY user;
---SET OLD.pwdhash = a_str;
---CREATE PROCEDURE set_grants_on_insert(IN username VARCHAR(15), IN host VARCHAR(15), actiu BOOLEAN)
-
--- ==========================================================================================================================
-
 DELIMITER //
 CREATE OR REPLACE TRIGGER check_capacitat_taula
 BEFORE INSERT ON reserves
@@ -317,13 +295,17 @@ DELIMITER ;
 -- ==========================================================================================================================
 --                                      VIEWS             https://mariadb.com/kb/en/create-view/
 -- ==========================================================================================================================
-
-
 --CREATE OR REPLACE VIEW personal_view AS
 --SELECT		p.id_personal, p.nom, p.rol, p.username, p.password, p.pwdhash, p.host, p.es_actiu, g.id_grant, g.id_rol, g.grants
 --FROM 		personal p, grants_rol g
 --WHERE 		p.rol = g.id_rol
 --ORDER BY	p.username;
+
+CREATE OR REPLACE VIEW vistaUsuarisDB AS
+SELECT 	User, host, password, authentication_string, plugin 
+FROM 	mysql.user 
+WHERE 	user <> 'mariadb.sys' AND user <> 'root'
+ORDER BY user;
 
 
 CREATE OR REPLACE VIEW plats_view(id_plat, id_categoria, categoria, nom, descripcio, preu) AS
@@ -338,7 +320,6 @@ SELECT r.id_reserva, r.estat_reserva, r.data_reserva, r.hora_reserva, t.numero, 
 FROM reserves r, taules t
 WHERE r.id_taula = t.id_taula
 ORDER BY r.data_reserva, t.numero, r.hora_reserva;
-
 
 CREATE OR REPLACE VIEW comandes_view(data_comanda, id_comanda, num_taula, capacitat_taula, estat_comanda, categoria_plat, plat, quantitat, preu_plat, EUR) AS
 SELECT c.data_comanda, c.id_comanda, t.numero, t.capacitat, c.estat_comanda, cat.nom, p.nom, d.quantitat, p.preu, ROUND((p.preu * d.quantitat), 2)  
@@ -357,7 +338,6 @@ FROM plats p, comandes c, plats_comanda d
 WHERE d.id_plat = p.id_plat AND
 		d.id_comanda = c.id_comanda
 GROUP BY c.data_comanda ASC WITH ROLLUP;
-
 
 CREATE OR REPLACE VIEW factures_view(Data_comanda, Id_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
 SELECT c.data_comanda, c.id_comanda, t.numero, t.capacitat, SUM(d.quantitat), ROUND(   SUM(p.preu * d.quantitat) , 2)  
@@ -453,7 +433,6 @@ FROM (
 GROUP BY 
   base_de_datos, grantee;
 
-
 -- ========================================================================================================================
 
 SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
@@ -462,24 +441,18 @@ WHERE CONSTRAINT_SCHEMA NOT LIKE 'mysql' AND CONSTRAINT_SCHEMA NOT LIKE 'sys';
 SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
 WHERE CONSTRAINT_SCHEMA = 'burguerdb' OR CONSTRAINT_SCHEMA = 'llibres';
 
-
-
 COMMIT;
 
 
 --SET GLOBAL general_log=0;
-
 --SELECT constraint_schema, TABLE_NAME, CONSTRAINT_NAME, CHECK_CLAUSE 
 --FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS \G;
-
-
 --IF NEW.comensals > (SELECT maxComensals FROM taules WHERE idTaula = NEW.idTaula;) THEN
 --ELSE
 --****************************************************************************************************************
 --****************************************************************************************************************
 --****************************************************************************************************************
 --****************************************************************************************************************
-
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, Quantitat_plats, EUR) AS
 SELECT COALESCE(c.id_comanda, c.data_comanda, 'TOTAL PERIODE ->'), c.data_comanda, t.numero, t.capacitat, SUM(d.quantitat), ROUND(   SUM(p.preu * d.quantitat) , 2)  
@@ -490,7 +463,6 @@ WHERE 	c.id_comanda = d.id_comanda AND
 GROUP BY d.id_comanda ASC WITH ROLLUP;
 --ORDER BY c.id_comanda, c.data_comanda;
 */
-
 /*
 CREATE OR REPLACE VIEW factures_total(Id_comanda, Data_comanda, Num_taula, Capacitat_taula, EUR) AS
 SELECT COALESCE(c.id_comanda, 'TOTAL FACTURES ->'), c.data_comanda, t.numero, t.capacitat, ROUND(   SUM(p.preu * d.quantitat) , 2)  
@@ -565,12 +537,10 @@ DELIMITER //
 --****************************************************************************************************************
 -- DEMANAT A CHATGPT:
 -- i would an example of one mariadb procedure that returns a table and contains a for clause within
-
 */
 
 /*					
 DELIMITER //
-
 CREATE PROCEDURE GenerateNumbers(IN max_value INT)
 BEGIN
     DECLARE i INT DEFAULT 1;  -- Initialize counter
@@ -593,7 +563,6 @@ BEGIN
 END //
 
    DELIMITER ;
-
 */   
 --****************************************************************************************************************
 

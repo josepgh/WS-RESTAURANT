@@ -45,14 +45,9 @@ SELECT User, Db, Host from mysql.db;
 --SELECT User, Db, Host from mysql.db;
 
 --select * from personal_view;
-
 -- 
---SELECT 	User, host, authentication_string 
-SELECT 	User, host, password, authentication_string, plugin 
-FROM 	mysql.user 
-WHERE 	user <> 'mariadb.sys' AND user <> 'root'
-ORDER BY user;
-
+ 
+SELECT * FROM vistaUsuarisDB;
 
 CALL ShowAllUserGrants();
 

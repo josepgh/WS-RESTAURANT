@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Server>
-	<Port name="HTTP/1.1" protocol="HTTP">8660</Port>
-<PathMapping local="/1-BURGUER" module="1-BURGUER" remote="D:\PRJCTS\WS-BURGER\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\htdocs\1-BURGUER"/>
-<PathMapping local="/1-Restaurant" module="1-Restaurant" remote="D:\PRJCTS\WS-RESTAURANT\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\htdocs\1-Restaurant"/>
-</Server>
+	<Port name="HTTP/1.1" protocol="HTTP">8529</Port>
+<PathMapping local="/Restaurant" module="Restaurant" remote="D:\PRJCTS\WS-RESTAURANT\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\htdocs\Restaurant"/></Server>

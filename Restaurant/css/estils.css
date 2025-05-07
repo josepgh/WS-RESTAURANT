@@ -1,0 +1,162 @@
+
+/* https://www.w3schools.com/colors/colors_names.asp */
+
+
+/* table.cap{	border: 1px solid; */
+/* 	   text-align: left; */
+
+/* Blau més fosc o clar, segons preferències 
+
+   padding-top: 0.1rem;
+   padding-bottom: 0.1rem;
+
+*/
+
+
+/* Et recomano que usis un contenidor div per a cada línia i una mica de CSS bàsic per alinear els label i els input.
+🔧 HTML corregit: */
+
+.form-group {
+    margin-bottom: 10px;
+}
+label {
+    display: inline-block;
+    width: 100px; /* ajusta segons calgui */
+    text-align: right;
+    margin-right: 10px;
+}
+input[type="text"],
+input[type="password"] {
+    width: 200px;
+}
+.centrat {
+    width: 400px;
+    margin: 50px auto;
+}
+/* =================================================================================================================== */
+
+/*
+.centrat{
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	
+}
+*/
+
+.table-striped>tbody>tr>td,
+.table-stripped>tbody>tr>th{
+   font-size: 1.2rem; /* opcional: lletra una mica més petita */
+   vertical-align: middle;
+   padding-top: 0.1rem;
+   padding-bottom: 0.1rem;
+   
+}
+
+.table-striped thead th {
+   background-color: Navy;
+   color: white;
+}
+
+
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: LightCyan;
+   
+ }
+
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: PowderBlue;
+
+ }
+ 
+ 
+.table td button,
+.table td .btn,
+.table.botons, 
+.tr.botons
+ {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    line-height: 1;
+    vertical-align: middle;
+} 
+
+/*
+.table td, .table th {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+*/
+
+
+
+
+
+
+ 
+table, td, th{
+	border: 1px solid;
+	text-align: center;
+}
+
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+
+th{
+	background-color: navy;
+	color: white;
+}
+
+
+tr:nth-child(even){
+/* 	background-color: PaleTurquoise; */
+	background-color: LightCyan;
+	/*opacity: 0.1;*/
+	}
+
+tr:nth-child(odd){
+	
+		background-color: PowderBlue;
+	
+/* 		background-color: Azure; */
+	
+/* 	background-color: Khaki; */
+	/*opacity: 0.1;*/
+	}
+
+tr:hover {
+	background-color: LightGreen;
+/* 	background-color: Lavender; */
+/* 	background-color: tomato;	 */
+	}
+
+/* 
+table.botons, tr.botons{
+	border: colapse;
+	background-color: white;
+	
+	width: 50%;
+	text-align: left;
+ 	background-color: white; 
+}	
+*/
+
+tr.error{
+	background-color: red;
+}
+.error {color: red;}
+
+/* tr.botons{ */
+/* 	text-align: left;	 */
+/* } */
+

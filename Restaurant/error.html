@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 50px;
+        }
+        .error-box {
+            display: inline-block;
+            padding: 30px;
+            border: 1px solid #ccc;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 60px;
+            color: #e74c3c;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        .error {
+            color: red;
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+		<!--<h1>403 - Accés Denegat</h1> -->
+		<!--<p>No tens permís per veure aquesta pàgina.</p> -->
+        <p class="error" id="missatge-error"></p>
+        <!--<p><a href="index.html">Tornar a l'inici</a></p> -->
+        <form action="./index.html">
+        	<input type="submit" value="Tornar a l'INICI">
+    	</form>
+        
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get('error');
+        const lloc = params.get('lloc');
+        const missatge = document.getElementById("missatge-error");
+
+        if (lloc) {
+            missatge.innerHTML += lloc + "<br>";
+        }
+
+        if (error === 'camps_buits') {
+            missatge.innerHTML += "Cal completar tots els camps";
+            
+        } else if (error === 'no_existeix_usuari_al_host') {
+            missatge.innerHTML += "No existeix usuari al host";
+            
+        } else if (error === 'usuari_no_existeix') {
+        	missatge.innerHTML += "Usuari no exsteix";
+            
+        } else if (error === 'camp_buit_funcions') {
+        	missatge.innerHTML += "Error camps buits a funcions.php";
+        
+        } else if (error === 'no_entra_funcionsphp') {
+        	missatge.innerHTML += "Error NO ENTRA A funcions.php";
+        
+	    } else if (error === 'no_entra_loginphp') {
+	    	missatge.innerHTML += "Error NO ENTRA A login.php";
+	    
+		} else if (error === 'welcome_php_cap_username_a_la_sessio') {
+			missatge.innerHTML += "welcome.php -> cap username a la sessio";
+			//<h1 id="demo">Error cap username a la sessio: welcome.php</h1>
+		    
+		} else if (error === 'funcions_php_cap_usuari_a_la_sessio') {
+			missatge.innerHTML += "Error cap usuari. No hi ha sessio iniciada: funcions.php";
+		    
+		} else if (error === 'infoUsuariActual_connexio_fallida') {
+			missatge.innerHTML += "Error connexio a infoUsuariActual(): funcions.php";
+		    
+		} else if (error === 'getUserConnection_connexio_fallida') {
+			missatge.innerHTML += "Error connexio a getUserConnection(): funcions.php";
+		    
+		} else if (error === 'header_error_cap_username_a_la_sessio') {
+			missatge.innerHTML += "Error a la capçalera: cap usuari a la sessio: header.php";
+		    
+		} else if (error === 'password_incorrecte_password_verify') {
+			missatge.innerHTML += "Error en el password_verify: login.php";
+		} else if (error) {
+            missatge.innerHTML += "Error sense string: " + error;
+            
+        } else {
+            missatge.innerHTML += "Error sense string else: " + error;
+        }
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+ShowAllUserGrants();
+SELECT * FROM vistaUsuarisDB;

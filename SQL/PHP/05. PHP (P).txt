@@ -1,5 +1,0 @@
-Crear un programa que permeti afegir el nom d'un curs i posteriorment efectuar el borrat d'aquest registre a la taula "cursos". Mostrar un missatge si no existeix el curs.
-
-Efectuar la modificació del nom del curs a la taula "cursos". Per a la cerca, utilitza el codi del curs.
-
-Efectuar el borrat de tots els registres de la taula "cursos".
